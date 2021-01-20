@@ -56,10 +56,26 @@ const generateIncomeTax = ({ salary }) => {
   }
 
   return {
-    totalTaxable: TOTAL_TAXABLE,
-    taxBand1,
-    taxBand2,
-    taxBand3,
+    totalTaxable: {
+      yearly: TOTAL_TAXABLE.toFixed(2),
+      monthly: (TOTAL_TAXABLE / 12).toFixed(2),
+      yearly: (TOTAL_TAXABLE / 52).toFixed(2),
+    },
+    taxBand1: {
+      yearly: taxBand1.toFixed(2),
+      monthly: (taxBand1 / 12).toFixed(2),
+      weekly: (taxBand1 / 52).toFixed(2),
+    },
+    taxBand2: {
+      yearly: taxBand2.toFixed(2),
+      monthly: (taxBand2 / 12).toFixed(2),
+      weekly: (taxBand2 / 52).toFixed(2),
+    },
+    taxBand3: {
+      yearly: taxBand3.toFixed(2),
+      monthly: (taxBand3 / 12).toFixed(2),
+      weekly: (taxBand3 / 52).toFixed(2),
+    },
   };
 };
 
