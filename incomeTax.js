@@ -1,6 +1,5 @@
 const generateIncomeTax = ({ salary }) => {
   const SALARY = salary;
-
   const TAX_FREE_ALLOWANCE = 12_500;
   const IS_SALARY_OVER_100K = SALARY > 100_000;
 
@@ -59,7 +58,7 @@ const generateIncomeTax = ({ salary }) => {
     totalTaxable: {
       yearly: TOTAL_TAXABLE.toFixed(2),
       monthly: (TOTAL_TAXABLE / 12).toFixed(2),
-      yearly: (TOTAL_TAXABLE / 52).toFixed(2),
+      weekly: (TOTAL_TAXABLE / 52).toFixed(2),
     },
     taxBand1: {
       yearly: taxBand1.toFixed(2),
@@ -76,6 +75,7 @@ const generateIncomeTax = ({ salary }) => {
       monthly: (taxBand3 / 12).toFixed(2),
       weekly: (taxBand3 / 52).toFixed(2),
     },
+    allowance: TAX_FREE_ALLOWANCE - amountOffPersonalAllowance,
   };
 };
 
