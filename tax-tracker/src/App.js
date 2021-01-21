@@ -5,7 +5,7 @@ import s from './App.module.css';
 import Table from './containers/Table/TableContainer';
 
 const App = () => {
-  const [input, setInput] = useState(0);
+  const [input, setInput] = useState(undefined);
   const [valueSubmit, setValueSubmit] = useState(undefined);
   const onEnter = (e) => {
     e.preventDefault();
@@ -15,7 +15,7 @@ const App = () => {
     const {
       target: { value },
     } = e;
-    setInput(value);
+    setInput(parseInt(value));
   };
   return (
     <div className={s.app}>

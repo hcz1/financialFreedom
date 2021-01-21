@@ -75,6 +75,11 @@ export const generateIncomeTax = ({ salary }) => {
       monthly: (taxBand3 / 12).toFixed(2),
       weekly: (taxBand3 / 52).toFixed(2),
     },
+    total: {
+      yearly: (taxBand1 + taxBand2 + taxBand3).toFixed(2),
+      monthly: ((taxBand1 + taxBand2 + taxBand3) / 12).toFixed(2),
+      weekly: ((taxBand1 + taxBand2 + taxBand3) / 52).toFixed(2),
+    },
     allowance: TAX_FREE_ALLOWANCE - amountOffPersonalAllowance,
   };
 };

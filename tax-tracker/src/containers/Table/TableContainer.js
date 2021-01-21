@@ -2,27 +2,40 @@ import React, { useMemo } from 'react';
 import classnames from 'classnames';
 import { useTable } from 'react-table';
 import TableComponent from '../../components/TableComponent/TableComponent';
-import { generateIncomeTax } from '../../data/incomeTax';
-import s from './style.module.scss';
 import { formatNumber } from '../../helpers/helpers';
+import { generateIncomeTax, nationalInsurance } from '../../data';
+import s from './style.module.scss';
 
 const Table = ({ className, value }) => {
-  const { totalTaxable, taxBand1, taxBand2, taxBand3 } = generateIncomeTax({
+  const {
+    totalTaxable,
+    taxBand1,
+    taxBand2,
+    taxBand3,
+    total,
+  } = generateIncomeTax({
+    salary: value,
+  });
+
+  const { yearly: NIYearly, monthly: NIMonthly } = nationalInsurance({
     salary: value,
   });
   const data = useMemo(
     () => [
       {
         col1: 'Gross Wage',
-        col2: `£${
-          typeof value === 'string' ? formatNumber(value) : value.toFixed(2)
-        }`,
+        col2: `£${formatNumber(value.toFixed(2))}`,
         col3: `£${formatNumber((value / 12).toFixed(2))}`,
       },
       {
         col1: 'Total Taxable',
         col2: `£${formatNumber(totalTaxable.yearly)}`,
         col3: `£${formatNumber(totalTaxable.monthly)}`,
+      },
+      {
+        col1: 'National Insurance',
+        col2: `£${formatNumber(NIYearly)}`,
+        col3: `£${formatNumber(NIMonthly)}`,
       },
       {
         col1: 'Band 1 20%',
@@ -39,14 +52,25 @@ const Table = ({ className, value }) => {
         col2: `£${formatNumber(taxBand3.yearly)}`,
         col3: `£${formatNumber(taxBand3.monthly)}`,
       },
+      {
+        col1: 'Take Home',
+        col2: `£${formatNumber(value - total.yearly - NIYearly)}`,
+        col3: `£${formatNumber(
+          (value / 12 - total.monthly - NIMonthly).toFixed(2)
+        )}`,
+      },
     ],
     [
+      NIMonthly,
+      NIYearly,
       taxBand1.monthly,
       taxBand1.yearly,
       taxBand2.monthly,
       taxBand2.yearly,
       taxBand3.monthly,
       taxBand3.yearly,
+      total.monthly,
+      total.yearly,
       totalTaxable.monthly,
       totalTaxable.yearly,
       value,
