@@ -64,7 +64,12 @@ const Table = ({ className, value, isStudentLoan }) => {
       {
         col1: 'Take Home',
         col2: `£${formatNumber(
-          value - total.yearly - NIYearly - (isStudentLoan ? SLYearly : 0)
+          (
+            value -
+            total.yearly -
+            NIYearly -
+            (isStudentLoan ? SLYearly : 0)
+          ).toFixed(2)
         )}`,
         col3: `£${formatNumber(
           (
