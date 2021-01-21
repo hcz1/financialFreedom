@@ -17,27 +17,27 @@ const Table = ({ className, value }) => {
         col2: `£${
           typeof value === 'string' ? formatNumber(value) : value.toFixed(2)
         }`,
-        col3: `£${(value / 12).toFixed(2)}`,
+        col3: `£${formatNumber((value / 12).toFixed(2))}`,
       },
       {
         col1: 'Total Taxable',
-        col2: `£${totalTaxable.yearly}`,
-        col3: `£${totalTaxable.monthly}`,
+        col2: `£${formatNumber(totalTaxable.yearly)}`,
+        col3: `£${formatNumber(totalTaxable.monthly)}`,
       },
       {
         col1: 'Band 1 20%',
-        col2: `£${taxBand1.yearly}`,
-        col3: `£${taxBand1.monthly}`,
+        col2: `£${formatNumber(taxBand1.yearly)}`,
+        col3: `£${formatNumber(taxBand1.monthly)}`,
       },
       {
         col1: 'Band 2 40%',
-        col2: `£${taxBand2.yearly}`,
-        col3: `£${taxBand2.monthly}`,
+        col2: `£${formatNumber(taxBand2.yearly)}`,
+        col3: `£${formatNumber(taxBand2.monthly)}`,
       },
       {
         col1: 'Band 3 45%',
-        col2: taxBand3.yearly,
-        col3: `£${taxBand3.monthly}`,
+        col2: `£${formatNumber(taxBand3.yearly)}`,
+        col3: `£${formatNumber(taxBand3.monthly)}`,
       },
     ],
     [
