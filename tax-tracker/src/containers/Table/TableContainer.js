@@ -3,10 +3,10 @@ import classnames from 'classnames';
 import { useTable } from 'react-table';
 import TableComponent from '../../components/TableComponent/TableComponent';
 import { formatNumber } from '../../helpers/helpers';
-import { generateIncomeTax, nationalInsurance } from '../../data';
+import { generateIncomeTax, nationalInsurance, studentLoan } from '../../data';
 import s from './style.module.scss';
 
-const Table = ({ className, value }) => {
+const Table = ({ className, value, isStudentLoan }) => {
   const {
     totalTaxable,
     taxBand1,
@@ -20,6 +20,10 @@ const Table = ({ className, value }) => {
   const { yearly: NIYearly, monthly: NIMonthly } = nationalInsurance({
     salary: value,
   });
+
+  const { yearly: SLYearly, montly: SLMonthly } = studentLoan({
+    salary: value,
+  });
   const data = useMemo(
     () => [
       {
@@ -31,6 +35,11 @@ const Table = ({ className, value }) => {
         col1: 'Total Taxable',
         col2: `£${formatNumber(totalTaxable.yearly)}`,
         col3: `£${formatNumber(totalTaxable.monthly)}`,
+      },
+      {
+        col1: 'Student Loan',
+        col2: isStudentLoan ? `£${formatNumber(SLYearly)}` : '£0.00',
+        col3: isStudentLoan ? `£${formatNumber(SLMonthly)}` : '£0.00',
       },
       {
         col1: 'National Insurance',
@@ -54,15 +63,25 @@ const Table = ({ className, value }) => {
       },
       {
         col1: 'Take Home',
-        col2: `£${formatNumber(value - total.yearly - NIYearly)}`,
+        col2: `£${formatNumber(
+          value - total.yearly - NIYearly - (isStudentLoan ? SLYearly : 0)
+        )}`,
         col3: `£${formatNumber(
-          (value / 12 - total.monthly - NIMonthly).toFixed(2)
+          (
+            value / 12 -
+            total.monthly -
+            NIMonthly -
+            (isStudentLoan ? SLMonthly : 0)
+          ).toFixed(2)
         )}`,
       },
     ],
     [
       NIMonthly,
       NIYearly,
+      SLMonthly,
+      SLYearly,
+      isStudentLoan,
       taxBand1.monthly,
       taxBand1.yearly,
       taxBand2.monthly,
