@@ -4,6 +4,8 @@ const Form = ({
   onEnter,
   onChange,
   handleChange,
+  handlePensionChange,
+  pensionValue,
   onCheckbox,
   value,
   isStudentLoan,
@@ -11,7 +13,18 @@ const Form = ({
   return (
     <form className={s.form} onSubmit={onEnter}>
       <span>
-        £<input type='number' onChange={handleChange} value={value} />
+        £ <input type='number' onChange={handleChange} value={value} />
+      </span>
+      <span>
+        Pension{' '}
+        <input
+          type='number'
+          min='0'
+          max='100'
+          onChange={handlePensionChange}
+          value={pensionValue}
+        />{' '}
+        %
       </span>
       <div>
         Student Loan?

@@ -1,26 +1,38 @@
 import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { formatNumber } from './helpers/helpers';
 import Form from './containers/Form';
-import s from './App.module.css';
 import Table from './containers/Table/TableContainer';
+import s from './App.module.css';
 
 const App = () => {
+  const history = useHistory();
   const [input, setInput] = useState(undefined);
   const [valueSubmit, setValueSubmit] = useState(undefined);
   const [isStudentLoanValue, setIsStudentLoanValue] = useState(false);
   const [isStudentLoanValueSubmit, setIsStudentLoanValueSubmit] = useState(
     false
   );
+  const [pensionInput, setPensionInput] = useState(0);
+  const [pensionValueSubmitted, setPensionValueSubmitted] = useState(0);
   const onEnter = (e) => {
     e.preventDefault();
     setValueSubmit(input);
     setIsStudentLoanValueSubmit(isStudentLoanValue);
+    setPensionValueSubmitted(pensionInput);
+    history.push({ search: `salary=${input}` });
   };
   const handleChange = (e) => {
     const {
       target: { value },
     } = e;
     setInput(parseInt(value));
+  };
+  const handlePensionChange = (e) => {
+    const {
+      target: { value },
+    } = e;
+    setPensionInput(parseInt(value));
   };
   const onCheckbox = (e) => {
     setIsStudentLoanValue((prevStudentLoan) => !prevStudentLoan);
@@ -34,6 +46,8 @@ const App = () => {
         onCheckbox={onCheckbox}
         value={input}
         isStudentLoan={isStudentLoanValue}
+        handlePensionChange={handlePensionChange}
+        pensionValue={pensionInput}
       />
       {!!valueSubmit && (
         <>
@@ -42,6 +56,7 @@ const App = () => {
             className={s['table-container']}
             value={valueSubmit}
             isStudentLoan={isStudentLoanValueSubmit}
+            pensionValue={pensionValueSubmitted}
           />
         </>
       )}

@@ -6,7 +6,9 @@ import { formatNumber } from '../../helpers/helpers';
 import { generateIncomeTax, nationalInsurance, studentLoan } from '../../data';
 import s from './style.module.scss';
 
-const Table = ({ className, value, isStudentLoan }) => {
+const Table = ({ className, value, isStudentLoan, pensionValue }) => {
+  const pensionPercentage = pensionValue / 100;
+  const adjustedSalary = (1 - pensionPercentage) * value;
   const {
     totalTaxable,
     taxBand1,
@@ -14,27 +16,32 @@ const Table = ({ className, value, isStudentLoan }) => {
     taxBand3,
     total,
   } = generateIncomeTax({
-    salary: value,
+    salary: adjustedSalary,
   });
 
   const { yearly: NIYearly, monthly: NIMonthly } = nationalInsurance({
-    salary: value,
+    salary: adjustedSalary,
   });
 
   const { yearly: SLYearly, montly: SLMonthly } = studentLoan({
-    salary: value,
+    salary: adjustedSalary,
   });
   const data = useMemo(
     () => [
       {
         col1: 'Gross Wage',
-        col2: `£${formatNumber(value.toFixed(2))}`,
-        col3: `£${formatNumber((value / 12).toFixed(2))}`,
+        col2: `£${formatNumber(adjustedSalary.toFixed(2))}`,
+        col3: `£${formatNumber((adjustedSalary / 12).toFixed(2))}`,
       },
       {
         col1: 'Total Taxable',
         col2: `£${formatNumber(totalTaxable.yearly)}`,
         col3: `£${formatNumber(totalTaxable.monthly)}`,
+      },
+      {
+        col1: 'Pension Contribution',
+        col2: `£${formatNumber((pensionPercentage * value).toFixed(2))}`,
+        col3: `£${formatNumber(((pensionPercentage * value) / 12).toFixed(2))}`,
       },
       {
         col1: 'Student Loan',
@@ -65,7 +72,7 @@ const Table = ({ className, value, isStudentLoan }) => {
         col1: 'Take Home',
         col2: `£${formatNumber(
           (
-            value -
+            adjustedSalary -
             total.yearly -
             NIYearly -
             (isStudentLoan ? SLYearly : 0)
@@ -73,7 +80,7 @@ const Table = ({ className, value, isStudentLoan }) => {
         )}`,
         col3: `£${formatNumber(
           (
-            value / 12 -
+            adjustedSalary / 12 -
             total.monthly -
             NIMonthly -
             (isStudentLoan ? SLMonthly : 0)
@@ -82,22 +89,24 @@ const Table = ({ className, value, isStudentLoan }) => {
       },
     ],
     [
-      NIMonthly,
-      NIYearly,
-      SLMonthly,
-      SLYearly,
-      isStudentLoan,
-      taxBand1.monthly,
-      taxBand1.yearly,
-      taxBand2.monthly,
-      taxBand2.yearly,
-      taxBand3.monthly,
-      taxBand3.yearly,
-      total.monthly,
-      total.yearly,
-      totalTaxable.monthly,
+      adjustedSalary,
       totalTaxable.yearly,
+      totalTaxable.monthly,
+      pensionPercentage,
       value,
+      isStudentLoan,
+      SLYearly,
+      SLMonthly,
+      NIYearly,
+      NIMonthly,
+      taxBand1.yearly,
+      taxBand1.monthly,
+      taxBand2.yearly,
+      taxBand2.monthly,
+      taxBand3.yearly,
+      taxBand3.monthly,
+      total.yearly,
+      total.monthly,
     ]
   );
   const columns = useMemo(
