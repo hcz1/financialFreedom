@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
+import queryString from 'query-string';
 import { formatNumber } from './helpers/helpers';
 import Form from './containers/Form';
 import Table from './containers/Table/TableContainer';
@@ -7,20 +8,33 @@ import s from './App.module.css';
 
 const App = () => {
   const history = useHistory();
-  const [input, setInput] = useState(undefined);
-  const [valueSubmit, setValueSubmit] = useState(undefined);
-  const [isStudentLoanValue, setIsStudentLoanValue] = useState(false);
-  const [isStudentLoanValueSubmit, setIsStudentLoanValueSubmit] = useState(
-    false
+  const { search } = useLocation();
+  const queryStrings = queryString.parse(search);
+  const initalState = {
+    salary: queryStrings.salary || 0,
+    studentLoan: queryStrings.studentLoan || false,
+    pension: queryStrings.pension || 0,
+  };
+  const [input, setInput] = useState(initalState.salary);
+  const [valueSubmit, setValueSubmit] = useState(initalState.salary);
+  const [isStudentLoanValue, setIsStudentLoanValue] = useState(
+    initalState.studentLoan
   );
-  const [pensionInput, setPensionInput] = useState(0);
-  const [pensionValueSubmitted, setPensionValueSubmitted] = useState(0);
+  const [isStudentLoanValueSubmit, setIsStudentLoanValueSubmit] = useState(
+    initalState.studentLoan
+  );
+  const [pensionInput, setPensionInput] = useState(initalState.pension);
+  const [pensionValueSubmitted, setPensionValueSubmitted] = useState(
+    initalState.pension
+  );
   const onEnter = (e) => {
     e.preventDefault();
     setValueSubmit(input);
     setIsStudentLoanValueSubmit(isStudentLoanValue);
     setPensionValueSubmitted(pensionInput);
-    history.push({ search: `salary=${input}` });
+    history.push({
+      search: `salary=${input}&studentLoan=${isStudentLoanValue}&pension=${pensionInput}`,
+    });
   };
   const handleChange = (e) => {
     const {
