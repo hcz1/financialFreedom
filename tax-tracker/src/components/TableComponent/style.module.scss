@@ -1,7 +1,6 @@
 table {
   border-spacing: 0;
   border: 1px solid black;
-
   tr {
     :first-child {
       font-weight: bold;
@@ -19,9 +18,13 @@ table {
     padding: 0.5rem;
     border-bottom: 1px solid black;
     border-right: 1px solid black;
-
     :last-child {
       border-right: 0;
+    }
+  }
+  tbody {
+    tr:last-child {
+      font-weight: bold;
     }
   }
 }

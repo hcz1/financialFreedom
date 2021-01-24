@@ -7,9 +7,9 @@ const App = () => {
   const { search } = useLocation();
   const queryStrings = queryString.parse(search);
   const initalState = {
-    salary: queryStrings.salary || 0,
+    salary: parseInt(queryStrings.salary) ? parseInt(queryStrings.salary) : 0,
     studentLoan: queryStrings.studentLoan || false,
-    pension: queryStrings.pension || 0,
+    pension: parseInt(queryStrings.pension) || 0,
   };
   return (
     <div className={s.app}>
