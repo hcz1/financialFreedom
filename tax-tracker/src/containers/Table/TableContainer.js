@@ -24,7 +24,7 @@ const Table = ({ className, value, isStudentLoan, pensionValue }) => {
   });
 
   const { yearly: SLYearly, montly: SLMonthly } = studentLoan({
-    salary: adjustedSalary,
+    salary: value,
   });
   const data = useMemo(
     () =>
