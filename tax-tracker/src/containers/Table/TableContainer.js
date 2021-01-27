@@ -6,7 +6,7 @@ import { formatNumber } from '../../helpers/helpers';
 import { generateIncomeTax, nationalInsurance, studentLoan } from '../../data';
 import s from './style.module.scss';
 
-const Table = ({ className, value, isStudentLoan, pensionValue }) => {
+const Table = ({ className, value, studentLoanType, pensionValue }) => {
   const pensionPercentage = pensionValue / 100;
   const adjustedSalary = (1 - pensionPercentage) * value;
   const {
@@ -25,7 +25,12 @@ const Table = ({ className, value, isStudentLoan, pensionValue }) => {
 
   const { yearly: SLYearly, montly: SLMonthly } = studentLoan({
     salary: value,
+    type: studentLoanType.plan_1 ? 'plan_1' : 'plan_2',
   });
+  const isStudentLoan = useMemo(
+    () => studentLoanType.plan_1 || studentLoanType.plan_2,
+    [studentLoanType.plan_1, studentLoanType.plan_2]
+  );
   const data = useMemo(
     () =>
       [
@@ -55,8 +60,12 @@ const Table = ({ className, value, isStudentLoan, pensionValue }) => {
         },
         {
           col1: 'Student Loan',
-          col2: isStudentLoan ? `£${formatNumber(SLYearly)}` : '£0.00',
-          col3: isStudentLoan ? `£${formatNumber(SLMonthly)}` : '£0.00',
+          col2:
+            isStudentLoan && SLYearly ? `£${formatNumber(SLYearly)}` : '£0.00',
+          col3:
+            isStudentLoan && SLMonthly
+              ? `£${formatNumber(SLMonthly)}`
+              : '£0.00',
         },
         {
           col1: 'National Insurance',

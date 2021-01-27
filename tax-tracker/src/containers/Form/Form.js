@@ -8,7 +8,7 @@ const Form = ({
   pensionValue,
   onCheckbox,
   value,
-  isStudentLoan,
+  studentLoanType,
 }) => {
   return (
     <form className={s.form} onSubmit={onEnter}>
@@ -26,9 +26,22 @@ const Form = ({
         />{' '}
         %
       </span>
-      <div>
-        Student Loan?
-        <input type='checkbox' onChange={onCheckbox} checked={isStudentLoan} />
+      <div className={s.studentLoan}>
+        <p>Student Loan?</p>
+        Plan 1
+        <input
+          name='plan_1'
+          type='checkbox'
+          onChange={onCheckbox}
+          checked={studentLoanType.plan_1}
+        />
+        Plan 2
+        <input
+          name='plan_2'
+          type='checkbox'
+          onChange={onCheckbox}
+          checked={studentLoanType.plan_2}
+        />
       </div>
       <button type='submit'>Submit</button>
     </form>

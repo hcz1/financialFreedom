@@ -20,8 +20,13 @@ const Tax = ({ salary, studentLoan, pension }) => {
     setValueSubmit(input);
     setIsStudentLoanValueSubmit(isStudentLoanValue);
     setPensionValueSubmitted(pensionInput);
+    const studentLoan = isStudentLoanValue.plan_1
+      ? '&studentLoan=plan_1'
+      : isStudentLoanValue.plan_2
+      ? '&studentLoan=plan_2'
+      : '';
     history.push({
-      search: `salary=${input}&studentLoan=${isStudentLoanValue}&pension=${pensionInput}`,
+      search: `salary=${input}${studentLoan}&pension=${pensionInput}`,
     });
   };
   const handleChange = (e) => {
@@ -37,7 +42,22 @@ const Tax = ({ salary, studentLoan, pension }) => {
     setPensionInput(parseInt(value));
   };
   const onCheckbox = (e) => {
-    setIsStudentLoanValue((prevStudentLoan) => !prevStudentLoan);
+    const {
+      target: { name },
+    } = e;
+    if (name === 'plan_1') {
+      setIsStudentLoanValue((prevStudentLoan) => ({
+        ...prevStudentLoan,
+        plan_1: !prevStudentLoan.plan_1,
+        plan_2: false,
+      }));
+    } else if (name === 'plan_2') {
+      setIsStudentLoanValue((prevStudentLoan) => ({
+        ...prevStudentLoan,
+        plan_1: false,
+        plan_2: !prevStudentLoan.plan_2,
+      }));
+    }
   };
   return (
     <div className={s.tax}>
@@ -47,7 +67,7 @@ const Tax = ({ salary, studentLoan, pension }) => {
         handleChange={handleChange}
         onCheckbox={onCheckbox}
         value={input}
-        isStudentLoan={isStudentLoanValue}
+        studentLoanType={isStudentLoanValue}
         handlePensionChange={handlePensionChange}
         pensionValue={pensionInput}
       />
@@ -55,9 +75,9 @@ const Tax = ({ salary, studentLoan, pension }) => {
         <>
           <h2>{`Salary submitted: £${formatNumber(valueSubmit)}`}</h2>
           <Table
-            className={s['table-container']}
+            className={s.tableContainer}
             value={valueSubmit}
-            isStudentLoan={isStudentLoanValueSubmit}
+            studentLoanType={isStudentLoanValueSubmit}
             pensionValue={pensionValueSubmitted}
           />
         </>
