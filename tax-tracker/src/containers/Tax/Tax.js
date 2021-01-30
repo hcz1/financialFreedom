@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { STUDNET_LOAN_TYPES } from '../../helpers/constants';
+import { STUDENT_LOAN_TYPES } from '../../helpers/constants';
 import Form from '../Form';
 import Table from '../Table';
 import s from './style.module.scss';
@@ -20,7 +20,7 @@ const Tax = ({ salary, studentLoan, pension }) => {
     setValueSubmit(input);
     setIsStudentLoanValueSubmit(isStudentLoanValue);
     setPensionValueSubmitted(pensionInput);
-    const studentLoan = STUDNET_LOAN_TYPES.includes(isStudentLoanValue)
+    const studentLoan = STUDENT_LOAN_TYPES.includes(isStudentLoanValue)
       ? `&studentLoan=${isStudentLoanValue}`
       : '';
     history.push({

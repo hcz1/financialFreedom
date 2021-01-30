@@ -3,7 +3,7 @@ export const STUDENT_LOAN_TYPES_ENUM = {
   PLAN_2: 'plan_2',
 };
 
-export const STUDNET_LOAN_TYPES = [
+export const STUDENT_LOAN_TYPES = [
   STUDENT_LOAN_TYPES_ENUM.PLAN_1,
   STUDENT_LOAN_TYPES_ENUM.PLAN_2,
 ];
