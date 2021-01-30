@@ -1,4 +1,5 @@
 import React from 'react';
+import { STUDENT_LOAN_TYPES_ENUM } from '../../helpers/constants';
 import s from './style.module.scss';
 const Form = ({
   onEnter,
@@ -33,14 +34,14 @@ const Form = ({
           name='plan_1'
           type='checkbox'
           onChange={onCheckbox}
-          checked={studentLoanType.plan_1}
+          checked={studentLoanType === STUDENT_LOAN_TYPES_ENUM.PLAN_1}
         />
         Plan 2
         <input
           name='plan_2'
           type='checkbox'
           onChange={onCheckbox}
-          checked={studentLoanType.plan_2}
+          checked={studentLoanType === STUDENT_LOAN_TYPES_ENUM.PLAN_2}
         />
       </div>
       <button type='submit'>Submit</button>

@@ -25,11 +25,11 @@ const Table = ({ className, value, studentLoanType, pensionValue }) => {
 
   const { yearly: SLYearly, montly: SLMonthly } = studentLoan({
     salary: value,
-    type: studentLoanType.plan_1 ? 'plan_1' : 'plan_2',
+    type: studentLoanType,
   });
   const isStudentLoan = useMemo(
-    () => studentLoanType.plan_1 || studentLoanType.plan_2,
-    [studentLoanType.plan_1, studentLoanType.plan_2]
+    () => ['plan_1', 'plan_2'].includes(studentLoanType),
+    [studentLoanType]
   );
   const data = useMemo(
     () =>

@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { STUDNET_LOAN_TYPES } from '../../helpers/constants';
 import { formatNumber } from '../../helpers/helpers';
 import Form from '../Form';
 import Table from '../Table';
@@ -20,10 +21,8 @@ const Tax = ({ salary, studentLoan, pension }) => {
     setValueSubmit(input);
     setIsStudentLoanValueSubmit(isStudentLoanValue);
     setPensionValueSubmitted(pensionInput);
-    const studentLoan = isStudentLoanValue.plan_1
-      ? '&studentLoan=plan_1'
-      : isStudentLoanValue.plan_2
-      ? '&studentLoan=plan_2'
+    const studentLoan = STUDNET_LOAN_TYPES.includes(isStudentLoanValue)
+      ? `&studentLoan=${isStudentLoanValue}`
       : '';
     history.push({
       search: `salary=${input}${studentLoan}&pension=${pensionInput}`,
@@ -45,20 +44,12 @@ const Tax = ({ salary, studentLoan, pension }) => {
     const {
       target: { name },
     } = e;
-    if (name === 'plan_1') {
-      setIsStudentLoanValue((prevStudentLoan) => ({
-        ...prevStudentLoan,
-        plan_1: !prevStudentLoan.plan_1,
-        plan_2: false,
-      }));
-    } else if (name === 'plan_2') {
-      setIsStudentLoanValue((prevStudentLoan) => ({
-        ...prevStudentLoan,
-        plan_1: false,
-        plan_2: !prevStudentLoan.plan_2,
-      }));
-    }
+    setIsStudentLoanValue((prevName) => (prevName !== name ? name : undefined));
   };
+  const salarySubmitted = useMemo(
+    () => `Salary submitted: £${formatNumber(valueSubmit)}`,
+    [valueSubmit]
+  );
   return (
     <div className={s.tax}>
       <h1>Fill in your yearly salary</h1>
@@ -73,7 +64,7 @@ const Tax = ({ salary, studentLoan, pension }) => {
       />
       {!!valueSubmit && (
         <>
-          <h2>{`Salary submitted: £${formatNumber(valueSubmit)}`}</h2>
+          <h2>{salarySubmitted}</h2>
           <Table
             className={s.tableContainer}
             value={valueSubmit}
