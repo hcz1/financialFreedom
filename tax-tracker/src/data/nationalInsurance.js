@@ -11,9 +11,9 @@ export const nationalInsurance = ({ salary }) => {
       (4167 - 792) * NI_BAND_1 + Math.round((monthlySalary - 4167) * NI_BAND_2);
   }
   return {
-    yearly: (niRate * 12).toFixed(2),
-    monthly: niRate.toFixed(2),
-    weekly: ((niRate * 12) / 52).toFixed(2),
+    yearly: niRate * 12,
+    monthly: niRate,
+    weekly: (niRate * 12) / 52,
   };
 };
 // £183 to £962 a week (£792 to £4,167 a month)	12%

@@ -23,7 +23,7 @@ const Table = ({ className, value, studentLoanType, pensionValue }) => {
     salary: adjustedSalary,
   });
 
-  const { yearly: SLYearly, montly: SLMonthly } = studentLoan({
+  const { yearly: SLYearly = 0, montly: SLMonthly = 0 } = studentLoan({
     salary: value,
     type: studentLoanType,
   });
@@ -48,8 +48,8 @@ const Table = ({ className, value, studentLoanType, pensionValue }) => {
           : undefined,
         {
           col1: 'Total Taxable',
-          col2: `£${formatNumber(totalTaxable.yearly)}`,
-          col3: `£${formatNumber(totalTaxable.monthly)}`,
+          col2: `£${formatNumber(totalTaxable.yearly.toFixed(2))}`,
+          col3: `£${formatNumber(totalTaxable.monthly.toFixed(2))}`,
         },
         {
           col1: 'Pension Contribution',
@@ -61,48 +61,45 @@ const Table = ({ className, value, studentLoanType, pensionValue }) => {
         {
           col1: 'Student Loan',
           col2:
-            isStudentLoan && SLYearly ? `£${formatNumber(SLYearly)}` : '£0.00',
+            isStudentLoan && SLYearly
+              ? `£${formatNumber(SLYearly.toFixed(2))}`
+              : '£0.00',
           col3:
             isStudentLoan && SLMonthly
-              ? `£${formatNumber(SLMonthly)}`
+              ? `£${formatNumber(SLMonthly.toFixed(2))}`
               : '£0.00',
         },
         {
           col1: 'National Insurance',
-          col2: `£${formatNumber(NIYearly)}`,
-          col3: `£${formatNumber(NIMonthly)}`,
+          col2: `£${formatNumber(NIYearly.toFixed(2))}`,
+          col3: `£${formatNumber(NIMonthly.toFixed(2))}`,
         },
         {
           col1: 'Band 1 20%',
-          col2: `£${formatNumber(taxBand1.yearly)}`,
-          col3: `£${formatNumber(taxBand1.monthly)}`,
+          col2: `£${formatNumber(taxBand1.yearly.toFixed(2))}`,
+          col3: `£${formatNumber(taxBand1.monthly.toFixed(2))}`,
         },
         {
           col1: 'Band 2 40%',
-          col2: `£${formatNumber(taxBand2.yearly)}`,
-          col3: `£${formatNumber(taxBand2.monthly)}`,
+          col2: `£${formatNumber(taxBand2.yearly.toFixed(2))}`,
+          col3: `£${formatNumber(taxBand2.monthly.toFixed(2))}`,
         },
         {
           col1: 'Band 3 45%',
-          col2: `£${formatNumber(taxBand3.yearly)}`,
-          col3: `£${formatNumber(taxBand3.monthly)}`,
+          col2: `£${formatNumber(taxBand3.yearly.toFixed(2))}`,
+          col3: `£${formatNumber(taxBand3.monthly.toFixed(2))}`,
         },
         {
           col1: 'Take Home',
           col2: `£${formatNumber(
-            (
-              adjustedSalary -
-              total.yearly -
-              NIYearly -
-              (isStudentLoan ? SLYearly : 0)
-            ).toFixed(2)
+            (adjustedSalary - total.yearly - NIYearly - SLYearly).toFixed(2)
           )}`,
           col3: `£${formatNumber(
             (
               adjustedSalary / 12 -
               total.monthly -
               NIMonthly -
-              (isStudentLoan ? SLMonthly : 0)
+              SLMonthly
             ).toFixed(2)
           )}`,
         },

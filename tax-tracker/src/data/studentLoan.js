@@ -5,10 +5,10 @@ export const studentLoan = ({ salary, type }) => {
   const studentLoanRate = 0.09;
   const montlyLoanPayments =
     (monthlySalary - studentLoanThreshold) * studentLoanRate;
-
+  const yearlyLoanPayments = montlyLoanPayments * 12;
   return {
-    yearly: (montlyLoanPayments * 12).toFixed(2),
-    montly: montlyLoanPayments.toFixed(2),
-    weekly: (montlyLoanPayments / 4).toFixed(2),
+    yearly: yearlyLoanPayments,
+    montly: montlyLoanPayments,
+    weekly: yearlyLoanPayments / 52,
   };
 };
