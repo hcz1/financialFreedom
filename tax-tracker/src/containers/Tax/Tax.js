@@ -1,7 +1,6 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { STUDNET_LOAN_TYPES } from '../../helpers/constants';
-import { formatNumber } from '../../helpers/helpers';
 import Form from '../Form';
 import Table from '../Table';
 import s from './style.module.scss';
@@ -46,10 +45,6 @@ const Tax = ({ salary, studentLoan, pension }) => {
     } = e;
     setIsStudentLoanValue((prevName) => (prevName !== name ? name : undefined));
   };
-  const salarySubmitted = useMemo(
-    () => `Salary submitted: £${formatNumber(valueSubmit)}`,
-    [valueSubmit]
-  );
   return (
     <div className={s.tax}>
       <h1>Fill in your yearly salary</h1>
@@ -63,15 +58,12 @@ const Tax = ({ salary, studentLoan, pension }) => {
         pensionValue={pensionInput}
       />
       {!!valueSubmit && (
-        <>
-          <h2>{salarySubmitted}</h2>
-          <Table
-            className={s.tableContainer}
-            value={valueSubmit}
-            studentLoanType={isStudentLoanValueSubmit}
-            pensionValue={pensionValueSubmitted}
-          />
-        </>
+        <Table
+          className={s.tableContainer}
+          value={valueSubmit}
+          studentLoanType={isStudentLoanValueSubmit}
+          pensionValue={pensionValueSubmitted}
+        />
       )}
     </div>
   );

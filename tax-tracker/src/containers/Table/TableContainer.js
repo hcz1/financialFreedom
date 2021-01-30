@@ -58,17 +58,19 @@ const Table = ({ className, value, studentLoanType, pensionValue }) => {
             ((pensionPercentage * value) / 12).toFixed(2)
           )}`,
         },
-        {
-          col1: 'Student Loan',
-          col2:
-            isStudentLoan && SLYearly
-              ? `£${formatNumber(SLYearly.toFixed(2))}`
-              : '£0.00',
-          col3:
-            isStudentLoan && SLMonthly
-              ? `£${formatNumber(SLMonthly.toFixed(2))}`
-              : '£0.00',
-        },
+        isStudentLoan
+          ? {
+              col1: 'Student Loan',
+              col2:
+                isStudentLoan && SLYearly
+                  ? `£${formatNumber(SLYearly.toFixed(2))}`
+                  : '£0.00',
+              col3:
+                isStudentLoan && SLMonthly
+                  ? `£${formatNumber(SLMonthly.toFixed(2))}`
+                  : '£0.00',
+            }
+          : undefined,
         {
           col1: 'National Insurance',
           col2: `£${formatNumber(NIYearly.toFixed(2))}`,
