@@ -1,18 +1,21 @@
 import React from 'react';
 import { useFormik } from 'formik';
-
+import classnames from 'classnames';
 import Label from '../../components/label/label';
 import InputGroup from '../../components/input-group';
 import InputGroupAddon from '../../components/input-group-add-on';
 import Input from '../../components/input';
 import s from './style.module.scss';
-const Form = ({ grossSalary, pension, studentLoan, onSubmit }) => {
+const Form = ({ className, grossSalary, pension, studentLoan, onSubmit }) => {
   const formik = useFormik({
     initialValues: { grossSalary, pension, studentLoan },
     onSubmit,
   });
   return (
-    <form onSubmit={formik.handleSubmit} className={s.form}>
+    <form
+      onSubmit={formik.handleSubmit}
+      className={classnames(s.form, className)}
+    >
       <Label htmlFor='grossSalary'>
         <b>I earn</b> (pre tax)
       </Label>

@@ -7,7 +7,6 @@ import s from './style.module.scss';
 
 const Tax = ({ className, salary, studentLoan, pension }) => {
   const history = useHistory();
-  const [hasSubmit, setHasSubmit] = useState(false);
   const [options, setOptions] = useState({
     grossSalary: salary,
     studentLoan,
@@ -17,7 +16,6 @@ const Tax = ({ className, salary, studentLoan, pension }) => {
     (values) => {
       console.log(values);
       setOptions((prev) => ({ ...prev, ...values }));
-      setHasSubmit(true);
       const params = new URLSearchParams({
         salary: values.grossSalary,
         studentLoan: values.studentLoan,
@@ -30,19 +28,18 @@ const Tax = ({ className, salary, studentLoan, pension }) => {
   return (
     <div className={classnames(s.tax, className)}>
       <Form
+        className={s.form}
         grossSalary={salary}
         pension={pension}
         studentLoan={studentLoan}
         onSubmit={onSubmit}
       />
-      {hasSubmit && (
-        <Table
-          className={s.tableContainer}
-          value={parseInt(options.grossSalary)}
-          studentLoanType={options.studentLoan}
-          pensionValue={options.pension}
-        />
-      )}
+      <Table
+        className={s.table}
+        value={parseInt(options.grossSalary)}
+        studentLoanType={options.studentLoan}
+        pensionValue={options.pension}
+      />
     </div>
   );
 };

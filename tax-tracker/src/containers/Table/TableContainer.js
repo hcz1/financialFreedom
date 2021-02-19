@@ -39,13 +39,13 @@ const Table = ({ className, value, studentLoanType, pensionValue }) => {
           col2: `£${formatNumber(value.toFixed(2))}`,
           col3: `£${formatNumber((value / 12).toFixed(2))}`,
         },
-        pensionValue !== 0
-          ? {
-              col1: 'Adjusted Wage',
-              col2: `£${formatNumber(adjustedSalary.toFixed(2))}`,
-              col3: `£${formatNumber((adjustedSalary / 12).toFixed(2))}`,
-            }
-          : undefined,
+
+        {
+          col1: 'Adjusted Wage',
+          col2: `£${formatNumber(adjustedSalary.toFixed(2))}`,
+          col3: `£${formatNumber((adjustedSalary / 12).toFixed(2))}`,
+        },
+
         {
           col1: 'Total Taxable',
           col2: `£${formatNumber(totalTaxable.yearly.toFixed(2))}`,
@@ -58,19 +58,17 @@ const Table = ({ className, value, studentLoanType, pensionValue }) => {
             ((pensionPercentage * value) / 12).toFixed(2)
           )}`,
         },
-        isStudentLoan
-          ? {
-              col1: 'Student Loan',
-              col2:
-                isStudentLoan && SLYearly
-                  ? `£${formatNumber(SLYearly.toFixed(2))}`
-                  : '£0.00',
-              col3:
-                isStudentLoan && SLMonthly
-                  ? `£${formatNumber(SLMonthly.toFixed(2))}`
-                  : '£0.00',
-            }
-          : undefined,
+        {
+          col1: 'Student Loan',
+          col2:
+            isStudentLoan && SLYearly
+              ? `£${formatNumber(SLYearly.toFixed(2))}`
+              : '£0.00',
+          col3:
+            isStudentLoan && SLMonthly
+              ? `£${formatNumber(SLMonthly.toFixed(2))}`
+              : '£0.00',
+        },
         {
           col1: 'National Insurance',
           col2: `£${formatNumber(NIYearly.toFixed(2))}`,
@@ -108,7 +106,6 @@ const Table = ({ className, value, studentLoanType, pensionValue }) => {
       ].filter(Boolean),
     [
       value,
-      pensionValue,
       adjustedSalary,
       totalTaxable.yearly,
       totalTaxable.monthly,

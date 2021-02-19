@@ -7,7 +7,12 @@ table {
     }
   }
   tr {
+    td {
+      width: 116px;
+      text-align: right;
+    }
     :first-child {
+      text-align: left;
       font-weight: bold;
     }
     :last-child {
