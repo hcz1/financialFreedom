@@ -1,6 +1,23 @@
+@import '/common/variables.scss';
 .app {
-  // text-align: center;
-  .tax {
-    margin: 32px 16px;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  justify-content: space-between;
+  .container {
+    .tax {
+      margin: 32px 16px;
+    }
+  }
+  footer {
+    span {
+      margin-right: 10px;
+    }
+    width: 100%;
+    background-color: $green;
+    padding: 20px;
+    color: white;
+    font-weight: bold;
+    text-align: center;
   }
 }

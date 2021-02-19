@@ -17,8 +17,13 @@ const App = () => {
   };
   return (
     <div className={s.app}>
-      <Header />
-      <Tax className={s.tax} {...initalState} />
+      <div className={s.container}>
+        <Header />
+        <Tax className={s.tax} {...initalState} />
+      </div>
+      <footer>
+        <span>&#169; SimpleSalary {new Date().getFullYear()}</span>
+      </footer>
     </div>
   );
 };
