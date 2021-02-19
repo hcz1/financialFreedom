@@ -6,9 +6,9 @@ import InputGroup from '../../components/input-group';
 import InputGroupAddon from '../../components/input-group-add-on';
 import Input from '../../components/input';
 import s from './style.module.scss';
-const Form = ({ className, grossSalary, pension, studentLoan, onSubmit }) => {
+const Form = ({ className, grossSalary, pension, studentLoan, onSubmit, multiplier }) => {
   const formik = useFormik({
-    initialValues: { grossSalary, pension, studentLoan },
+    initialValues: { grossSalary, pension, studentLoan, multiplier },
     onSubmit,
   });
   return (
@@ -32,6 +32,25 @@ const Form = ({ className, grossSalary, pension, studentLoan, onSubmit }) => {
           name='grossSalary'
         />
       </InputGroup>
+
+      <InputGroup>
+      <Label htmlFor='multiplier'>
+        <b>In A</b>
+      </Label>
+      <select 
+        name="multiplier"
+        touched={formik.touched.multiplier}
+        value={formik.values.multiplier}
+        onChange={formik.handleChange}
+        onBlur={formik.handleBlur}
+        >
+        <option selected value="1">Year</option>
+        <option value="12">Month</option>
+        <option value="52">Week</option>
+        <option value="260">Day</option>
+      </select>
+      </InputGroup>
+
       <Label htmlFor='pension'>
         <b>My Pension Contribution</b>
       </Label>

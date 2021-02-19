@@ -10,7 +10,7 @@ const Tax = ({ className, salary, studentLoan, pension }) => {
   const [options, setOptions] = useState({
     grossSalary: salary,
     studentLoan,
-    pension,
+    pension    
   });
   const onSubmit = useCallback(
     (values) => {
@@ -20,7 +20,9 @@ const Tax = ({ className, salary, studentLoan, pension }) => {
         salary: values.grossSalary,
         studentLoan: values.studentLoan,
         pension: values.pension,
+        multiplier: values.multiplier
       });
+      console.log(params);
       history.push({ search: params.toString() });
     },
     [history]
@@ -39,6 +41,7 @@ const Tax = ({ className, salary, studentLoan, pension }) => {
         value={parseInt(options.grossSalary)}
         studentLoanType={options.studentLoan}
         pensionValue={options.pension}
+        multiplier={options.multiplier}
       />
     </div>
   );

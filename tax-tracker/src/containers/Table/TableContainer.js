@@ -6,9 +6,10 @@ import { formatNumber } from '../../helpers/helpers';
 import { generateIncomeTax, nationalInsurance, studentLoan } from '../../data';
 import s from './style.module.scss';
 
-const Table = ({ className, value, studentLoanType, pensionValue }) => {
+const Table = ({ className, value, studentLoanType, pensionValue, multiplier }) => {
   const pensionPercentage = pensionValue / 100;
-  const adjustedSalary = (1 - pensionPercentage) * value;
+  const adjustedSalary = (1 - pensionPercentage) * (value * multiplier);
+  const yearlySalary = value * multiplier
   const {
     totalTaxable,
     taxBand1,
@@ -24,7 +25,7 @@ const Table = ({ className, value, studentLoanType, pensionValue }) => {
   });
 
   const { yearly: SLYearly = 0, montly: SLMonthly = 0 } = studentLoan({
-    salary: value,
+    salary: (value),
     type: studentLoanType,
   });
   const isStudentLoan = useMemo(
@@ -36,8 +37,8 @@ const Table = ({ className, value, studentLoanType, pensionValue }) => {
       [
         {
           col1: 'Gross Wage',
-          col2: `£${formatNumber(value.toFixed(2))}`,
-          col3: `£${formatNumber((value / 12).toFixed(2))}`,
+          col2: `£${formatNumber((yearlySalary).toFixed(2))}`,
+          col3: `£${formatNumber((yearlySalary / 12).toFixed(2))}`,
         },
 
         {
@@ -53,9 +54,9 @@ const Table = ({ className, value, studentLoanType, pensionValue }) => {
         },
         {
           col1: 'Pension Contribution',
-          col2: `£${formatNumber((pensionPercentage * value).toFixed(2))}`,
+          col2: `£${formatNumber((pensionPercentage * yearlySalary).toFixed(2))}`,
           col3: `£${formatNumber(
-            ((pensionPercentage * value) / 12).toFixed(2)
+            ((pensionPercentage * yearlySalary) / 12).toFixed(2)
           )}`,
         },
         {
@@ -105,7 +106,7 @@ const Table = ({ className, value, studentLoanType, pensionValue }) => {
         },
       ].filter(Boolean),
     [
-      value,
+      yearlySalary,
       adjustedSalary,
       totalTaxable.yearly,
       totalTaxable.monthly,
