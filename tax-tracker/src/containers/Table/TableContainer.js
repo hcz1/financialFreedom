@@ -6,10 +6,11 @@ import { formatNumber } from '../../helpers/helpers';
 import { generateIncomeTax, nationalInsurance, studentLoan } from '../../data';
 import s from './style.module.scss';
 
-const Table = ({ className, value, studentLoanType, pensionValue, multiplier }) => {
+const Table = ({ className, value, studentLoanType, pensionValue, multiplier }) => {  
+  multiplier = (multiplier === undefined) ? 1 : multiplier;
   const pensionPercentage = pensionValue / 100;
-  const adjustedSalary = (1 - pensionPercentage) * ((multiplier != null) ? value * multiplier : 0);
-  const yearlySalary = (multiplier != null) ? value * multiplier : 0
+  const adjustedSalary = (1 - pensionPercentage) * (value * multiplier);
+  const yearlySalary = value * multiplier;
   const {
     totalTaxable,
     taxBand1,
