@@ -1,0 +1,12 @@
+.inputGroup {
+  display: flex;
+  margin-bottom: 25px;
+  & > input:not(:first-child) {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+  & > input:not(:last-child) {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+}

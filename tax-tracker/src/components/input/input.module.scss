@@ -1,0 +1,44 @@
+@import '../../common/variables.scss';
+.input {
+  position: relative;
+  width: 100%;
+  padding: 12px 15px;
+  border: 0;
+  border-radius: $input-border-radius;
+  background-color: rgba($green, 0.1504587572674419);
+  font: inherit;
+  border-color: unset;
+  font-size: 13px;
+  line-height: 1.3;
+  color: $black;
+  font-size: 18px;
+  line-height: 22px;
+  font-weight: bold;
+  transition: all 0.15s ease-in-out;
+  cursor: pointer;
+  appearance: none;
+  &:hover {
+    cursor: text;
+  }
+  // &:focus {
+  //   border-color: var(--color-primary);
+  //   outline: none;
+  //   background: var(--color-primary-contrast);
+  // }
+  &:disabled {
+    background-color: rgba($green, 0.6);
+    &::placeholder {
+      color: darken($green, 10%);
+    }
+  }
+}
+.inputError {
+  // border-color: var(--color-error-lighten);
+  background: rgba($input-error, 0.05);
+  // color: var(--color-tertiary);
+  &:focus,
+  &:hover {
+    border-color: $input-error;
+    outline: none;
+  }
+}

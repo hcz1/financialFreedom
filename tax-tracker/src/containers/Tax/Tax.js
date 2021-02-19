@@ -1,68 +1,46 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { STUDENT_LOAN_TYPES } from '../../helpers/constants';
+import classnames from 'classnames';
 import Form from '../Form';
 import Table from '../Table';
 import s from './style.module.scss';
 
-const Tax = ({ salary, studentLoan, pension }) => {
+const Tax = ({ className, salary, studentLoan, pension }) => {
   const history = useHistory();
-  const [input, setInput] = useState(salary);
-  const [valueSubmit, setValueSubmit] = useState(salary);
-  const [isStudentLoanValue, setIsStudentLoanValue] = useState(studentLoan);
-  const [isStudentLoanValueSubmit, setIsStudentLoanValueSubmit] = useState(
-    studentLoan
+  const [hasSubmit, setHasSubmit] = useState(false);
+  const [options, setOptions] = useState({
+    grossSalary: salary,
+    studentLoan,
+    pension,
+  });
+  const onSubmit = useCallback(
+    (values) => {
+      console.log(values);
+      setOptions((prev) => ({ ...prev, ...values }));
+      setHasSubmit(true);
+      const params = new URLSearchParams({
+        salary: values.grossSalary,
+        studentLoan: values.studentLoan,
+        pension: values.pension,
+      });
+      history.push({ search: params.toString() });
+    },
+    [history]
   );
-  const [pensionInput, setPensionInput] = useState(pension);
-  const [pensionValueSubmitted, setPensionValueSubmitted] = useState(pension);
-  const onEnter = (e) => {
-    e.preventDefault();
-    setValueSubmit(input);
-    setIsStudentLoanValueSubmit(isStudentLoanValue);
-    setPensionValueSubmitted(pensionInput);
-    const studentLoan = STUDENT_LOAN_TYPES.includes(isStudentLoanValue)
-      ? `&studentLoan=${isStudentLoanValue}`
-      : '';
-    history.push({
-      search: `salary=${input}${studentLoan}&pension=${pensionInput}`,
-    });
-  };
-  const handleChange = (e) => {
-    const {
-      target: { value },
-    } = e;
-    setInput(parseInt(value));
-  };
-  const handlePensionChange = (e) => {
-    const {
-      target: { value },
-    } = e;
-    setPensionInput(parseInt(value));
-  };
-  const onCheckbox = (e) => {
-    const {
-      target: { name },
-    } = e;
-    setIsStudentLoanValue((prevName) => (prevName !== name ? name : undefined));
-  };
   return (
-    <div className={s.tax}>
-      <h1>Fill in your yearly salary</h1>
+    <div className={classnames(s.tax, className)}>
       <Form
-        onEnter={onEnter}
-        handleChange={handleChange}
-        onCheckbox={onCheckbox}
-        value={input}
-        studentLoanType={isStudentLoanValue}
-        handlePensionChange={handlePensionChange}
-        pensionValue={pensionInput}
+        grossSalary={salary}
+        pension={pension}
+        studentLoan={studentLoan}
+        onSubmit={onSubmit}
       />
-      {!!valueSubmit && (
+      {hasSubmit && (
         <Table
           className={s.tableContainer}
-          value={valueSubmit}
-          studentLoanType={isStudentLoanValueSubmit}
-          pensionValue={pensionValueSubmitted}
+          value={parseInt(options.grossSalary)}
+          studentLoanType={options.studentLoan}
+          pensionValue={options.pension}
         />
       )}
     </div>

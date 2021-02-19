@@ -1,8 +1,9 @@
 import { useLocation } from 'react-router-dom';
 import queryString from 'query-string';
-import s from './App.module.css';
-import Tax from './containers/Tax/Tax';
+import Header from './components/Header';
 import { STUDENT_LOAN_TYPES } from './helpers/constants';
+import Tax from './containers/Tax/Tax';
+import s from './App.module.scss';
 
 const App = () => {
   const { search } = useLocation();
@@ -16,7 +17,8 @@ const App = () => {
   };
   return (
     <div className={s.app}>
-      <Tax {...initalState} />
+      <Header />
+      <Tax className={s.tax} {...initalState} />
     </div>
   );
 };
