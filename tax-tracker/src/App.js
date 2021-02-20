@@ -23,7 +23,7 @@ const App = () => {
         <Tax className={s.tax} {...initalState} />
       </div>
       <footer>
-        <span>&#169; SimpleSalary {new Date().getFullYear()}</span>
+        <span>&#169; SimpleSalary {new Date().getFullYear()} <a href="TermsAndConditions.html">Privacy & Terms</a></span>
       </footer>
     </div>
   );
