@@ -5,24 +5,23 @@ import Form from '../Form';
 import Table from '../Table';
 import s from './style.module.scss';
 
-const Tax = ({ className, salary, studentLoan, pension }) => {
+const Tax = ({ className, salary, studentLoan, pension, multiplier = '1' }) => {
   const history = useHistory();
   const [options, setOptions] = useState({
     grossSalary: salary,
     studentLoan,
-    pension    
+    pension,
+    multiplier: multiplier,
   });
   const onSubmit = useCallback(
     (values) => {
-      console.log(values);
       setOptions((prev) => ({ ...prev, ...values }));
       const params = new URLSearchParams({
         salary: values.grossSalary,
         studentLoan: values.studentLoan,
         pension: values.pension,
-        multiplier: values.multiplier
+        multiplier: values.multiplier,
       });
-      console.log(params);
       history.push({ search: params.toString() });
     },
     [history]
@@ -31,9 +30,10 @@ const Tax = ({ className, salary, studentLoan, pension }) => {
     <div className={classnames(s.tax, className)}>
       <Form
         className={s.form}
-        grossSalary={salary}
-        pension={pension}
-        studentLoan={studentLoan}
+        grossSalary={options.grossSalary}
+        pension={options.pension}
+        studentLoan={options.studentLoan}
+        multiplier={options.multiplier}
         onSubmit={onSubmit}
       />
       <Table

@@ -14,6 +14,7 @@ const App = () => {
       ? queryStrings.studentLoan
       : undefined,
     pension: parseInt(queryStrings.pension) || 0,
+    multiplier: queryStrings.multiplier,
   };
   return (
     <div className={s.app}>

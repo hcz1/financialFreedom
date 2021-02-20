@@ -6,8 +6,14 @@ import { formatNumber } from '../../helpers/helpers';
 import { generateIncomeTax, nationalInsurance, studentLoan } from '../../data';
 import s from './style.module.scss';
 
-const Table = ({ className, value, studentLoanType, pensionValue, multiplier }) => {  
-  multiplier = (multiplier === undefined) ? 1 : multiplier;
+const Table = ({
+  className,
+  value,
+  studentLoanType,
+  pensionValue,
+  multiplier,
+}) => {
+  multiplier = multiplier === undefined ? 1 : multiplier;
   const pensionPercentage = pensionValue / 100;
   const adjustedSalary = (1 - pensionPercentage) * (value * multiplier);
   const yearlySalary = value * multiplier;
@@ -26,7 +32,7 @@ const Table = ({ className, value, studentLoanType, pensionValue, multiplier }) 
   });
 
   const { yearly: SLYearly = 0, montly: SLMonthly = 0 } = studentLoan({
-    salary: (value),
+    salary: value,
     type: studentLoanType,
   });
   const isStudentLoan = useMemo(
@@ -38,7 +44,7 @@ const Table = ({ className, value, studentLoanType, pensionValue, multiplier }) 
       [
         {
           col1: 'Gross Wage',
-          col2: `£${formatNumber((yearlySalary).toFixed(2))}`,
+          col2: `£${formatNumber(yearlySalary.toFixed(2))}`,
           col3: `£${formatNumber((yearlySalary / 12).toFixed(2))}`,
         },
 
@@ -55,7 +61,9 @@ const Table = ({ className, value, studentLoanType, pensionValue, multiplier }) 
         },
         {
           col1: 'Pension Contribution',
-          col2: `£${formatNumber((pensionPercentage * yearlySalary).toFixed(2))}`,
+          col2: `£${formatNumber(
+            (pensionPercentage * yearlySalary).toFixed(2)
+          )}`,
           col3: `£${formatNumber(
             ((pensionPercentage * yearlySalary) / 12).toFixed(2)
           )}`,
