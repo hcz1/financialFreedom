@@ -50,10 +50,7 @@ const TableComponent = ({
                     // Apply the cell props
                     return (
                       <td {...cell.getCellProps()}>
-                        {
-                          // Render the cell contents
-                          cell.render('Cell')
-                        }
+                        <span>{cell.render('Cell')}</span>
                       </td>
                     );
                   })

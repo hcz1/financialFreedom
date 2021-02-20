@@ -1,6 +1,6 @@
+@import '../../common/variables.scss';
 table {
   border-spacing: 0;
-  border: 1px solid black;
   thead {
     tr {
       font-weight: bold;
@@ -13,21 +13,14 @@ table {
     }
     :first-child {
       text-align: left;
-      font-weight: bold;
-    }
-    :last-child {
-      td {
-        border-bottom: 0;
-      }
     }
   }
-
   th,
   td {
     margin: 0;
     padding: 0.5rem;
-    border-bottom: 1px solid black;
-    border-right: 1px solid black;
+    border-bottom: 2px solid rgba(96, 219, 146, 0.150459);
+    height: 25px;
     :last-child {
       border-right: 0;
     }
