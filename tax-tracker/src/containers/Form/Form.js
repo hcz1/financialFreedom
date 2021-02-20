@@ -6,7 +6,22 @@ import InputGroup from '../../components/input-group';
 import InputGroupAddon from '../../components/input-group-add-on';
 import Input from '../../components/input';
 import s from './style.module.scss';
-const Form = ({ className, grossSalary, pension, studentLoan, onSubmit, multiplier }) => {
+
+const multiplierArr = [
+  { id: 'Year', value: '1', name: 'multiplier' },
+  { id: 'Month', value: '12', name: 'multiplier' },
+  { id: 'Week', value: '52', name: 'multiplier' },
+  { id: 'Day', value: '260', name: 'multiplier' },
+];
+
+const Form = ({
+  className,
+  grossSalary,
+  pension,
+  studentLoan,
+  onSubmit,
+  multiplier,
+}) => {
   const formik = useFormik({
     initialValues: { grossSalary, pension, studentLoan, multiplier },
     onSubmit,
@@ -32,25 +47,28 @@ const Form = ({ className, grossSalary, pension, studentLoan, onSubmit, multipli
           name='grossSalary'
         />
       </InputGroup>
-
-      <InputGroup>
       <Label htmlFor='multiplier'>
-        <b>In A</b>
+        <b>Per</b>
       </Label>
-      <select 
-        name="multiplier"
-        touched={formik.touched.multiplier}
-        value={formik.values.multiplier}
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        >
-        <option selected value="1">Year</option>
-        <option value="12">Month</option>
-        <option value="52">Week</option>
-        <option value="260">Day</option>
-      </select>
+      <InputGroup className={classnames(s.radioContainer, s.horitonzal)}>
+        {multiplierArr.map((item, idx) => (
+          <div className={s.radio} key={idx}>
+            <div className={s.radioContents}>
+              <input
+                id={item.id}
+                value={item.value}
+                type='radio'
+                name={item.name}
+                touched={formik.touched.multiplier}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                checked={formik.values.multiplier === item.value}
+              />{' '}
+              {item.id}
+            </div>
+          </div>
+        ))}
       </InputGroup>
-
       <Label htmlFor='pension'>
         <b>My Pension Contribution</b>
       </Label>

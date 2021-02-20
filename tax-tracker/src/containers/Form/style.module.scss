@@ -1,11 +1,19 @@
 @import '../../common/variables.scss';
 .form {
+  width: 343px;
   .radioContainer {
+    &.horitonzal {
+      flex-direction: row;
+      flex-wrap: wrap;
+      .radio {
+        margin-bottom: 6px;
+      }
+    }
     .radio {
       display: flex;
       align-items: center;
       border-radius: 4px;
-      &:first-of-type {
+      &:nth-child(odd) {
         margin-right: 15px;
       }
       width: 164px;
