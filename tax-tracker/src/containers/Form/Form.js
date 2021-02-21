@@ -5,6 +5,7 @@ import Label from '../../components/label/label';
 import InputGroup from '../../components/input-group';
 import InputGroupAddon from '../../components/input-group-add-on';
 import Input from '../../components/input';
+import RadioButton from './RadioButton';
 import s from './style.module.scss';
 
 const multiplierArr = [
@@ -12,6 +13,23 @@ const multiplierArr = [
   { id: 'Month', value: '12', name: 'multiplier' },
   { id: 'Week', value: '52', name: 'multiplier' },
   { id: 'Day', value: '260', name: 'multiplier' },
+];
+
+const studentLoanArr = [
+  {
+    id: 'plan_1',
+    value: 'plan_1',
+    type: 'radio',
+    name: 'studentLoan',
+    display: 'Plan 1',
+  },
+  {
+    id: 'plan_2',
+    value: 'plan_2',
+    type: 'radio',
+    name: 'studentLoan',
+    display: 'Plan 2',
+  },
 ];
 
 const Form = ({
@@ -52,21 +70,20 @@ const Form = ({
       </Label>
       <InputGroup className={classnames(s.radioContainer, s.horitonzal)}>
         {multiplierArr.map((item, idx) => (
-          <div className={s.radio} key={idx}>
-            <div className={s.radioContents}>
-              <input
-                id={item.id}
-                value={item.value}
-                type='radio'
-                name={item.name}
-                touched={formik.touched.multiplier}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                checked={formik.values.multiplier === item.value}
-              />{' '}
-              {item.id}
-            </div>
-          </div>
+          <RadioButton
+            className={s.radio}
+            key={idx}
+            id={item.id}
+            value={item.value}
+            type='radio'
+            name={item.name}
+            touched={formik.touched.multiplier}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            checked={formik.values.multiplier === item.value}
+          >
+            {item.id}
+          </RadioButton>
         ))}
       </InputGroup>
       <Label htmlFor='pension'>
@@ -89,36 +106,20 @@ const Form = ({
         <b>Student Loan?</b>
       </Label>
       <InputGroup className={s.radioContainer}>
-        <div className={s.radio}>
-          <div className={s.radioContents}>
-            <input
-              id='plan_1'
-              value='plan_1'
-              type='radio'
-              name='studentLoan'
-              touched={formik.touched.studentLoan}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              checked={formik.values.studentLoan === 'plan_1'}
-            />{' '}
-            Plan 1
-          </div>
-        </div>
-        <div className={s.radio}>
-          <div className={s.radioContents}>
-            <input
-              id='plan_2'
-              value='plan_2'
-              type='radio'
-              name='studentLoan'
-              touched={formik.touched.studentLoan}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              checked={formik.values.studentLoan === 'plan_2'}
-            />{' '}
-            Plan 2
-          </div>
-        </div>
+        {studentLoanArr.map((item, key) => (
+          <RadioButton
+            className={s.radio}
+            key={key}
+            id={item.id}
+            value={item.value}
+            name={item.name}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            checked={formik.values.studentLoan === item.value}
+          >
+            {item.display}
+          </RadioButton>
+        ))}
       </InputGroup>
       <button className={s.btn} type='submit'>
         Calculate my taxes

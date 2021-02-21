@@ -2,58 +2,16 @@
 .form {
   width: 343px;
   .radioContainer {
+    .radio {
+      &:nth-child(odd) {
+        margin-right: 15px;
+      }
+    }
     &.horitonzal {
       flex-direction: row;
       flex-wrap: wrap;
       .radio {
         margin-bottom: 6px;
-      }
-    }
-    .radio {
-      display: flex;
-      align-items: center;
-      border-radius: 4px;
-      &:nth-child(odd) {
-        margin-right: 15px;
-      }
-      width: 164px;
-      height: 44px;
-      background-color: rgba($green, 0.1504587572674419);
-      .radioContents {
-        color: $black;
-        font-weight: bold;
-        font-size: 18px;
-        line-height: 22px;
-        margin-left: 10px;
-        input {
-          margin-right: 10px;
-        }
-        input[type='radio']:after {
-          width: 20px;
-          height: 20px;
-          border-radius: 100%;
-          top: -4px;
-          left: -3px;
-          position: relative;
-          background-color: #fff;
-          content: '';
-          display: inline-block;
-          visibility: visible;
-          border: 1px solid $green;
-        }
-        input[type='radio']:checked:after {
-          width: 20px;
-          height: 20px;
-          border-radius: 100%;
-          top: -4px;
-          left: -3px;
-          position: relative;
-          background-color: $green;
-          content: '';
-          display: inline-block;
-          visibility: visible;
-          border: 1px solid white;
-        }
       }
     }
   }
