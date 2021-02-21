@@ -1,5 +1,8 @@
 import React from 'react';
 import { useFormik } from 'formik';
+import { usePopperTooltip } from 'react-popper-tooltip';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import classnames from 'classnames';
 import Label from '../../components/label/label';
 import InputGroup from '../../components/input-group';
@@ -47,6 +50,13 @@ const Form = ({
   onSubmit,
   multiplier,
 }) => {
+  const {
+    getArrowProps,
+    getTooltipProps,
+    setTooltipRef,
+    setTriggerRef,
+    visible,
+  } = usePopperTooltip();
   const formik = useFormik({
     initialValues: { grossSalary, pension, studentLoan, multiplier },
     onSubmit,
@@ -111,6 +121,23 @@ const Form = ({
       </InputGroup>
       <Label htmlFor='studentLoan'>
         <b>Student Loan?</b>
+        <FontAwesomeIcon
+          className={s.icon}
+          forwardedRef={setTriggerRef}
+          icon={faInfoCircle}
+        />
+        {visible && (
+          <div
+            ref={setTooltipRef}
+            {...getTooltipProps({
+              className: classnames('tooltip-container', s.tooltip),
+            })}
+          >
+            <p>Plan 1: Your course started pre 2012</p>
+            <p>Plan 2: Your course started post 2012</p>
+            <div {...getArrowProps({ className: 'tooltip-arrow' })} />
+          </div>
+        )}
       </Label>
       <InputGroup className={s.radioContainer}>
         {studentLoanArr.map((item, key) => (

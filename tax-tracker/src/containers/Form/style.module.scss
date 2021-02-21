@@ -1,6 +1,16 @@
 @import '../../common/variables.scss';
 .form {
   width: 343px;
+  .tooltip {
+    color: $black;
+    font-weight: bold;
+    padding: 20px;
+  }
+  label {
+    .icon {
+      margin-left: 10px;
+    }
+  }
   .radioContainer {
     display: flex;
     flex-direction: row;

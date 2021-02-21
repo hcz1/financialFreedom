@@ -4,6 +4,7 @@ import Header from './components/Header';
 import { STUDENT_LOAN_TYPES } from './helpers/constants';
 import Tax from './containers/Tax/Tax';
 import s from './App.module.scss';
+import 'react-popper-tooltip/dist/styles.css';
 
 const App = () => {
   const { search } = useLocation();
