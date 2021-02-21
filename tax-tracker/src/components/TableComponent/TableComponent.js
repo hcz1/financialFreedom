@@ -1,5 +1,6 @@
 import React from 'react';
 import classnames from 'classnames';
+import { usePopperTooltip } from 'react-popper-tooltip';
 import s from './style.module.scss';
 
 const TableComponent = ({
@@ -9,7 +10,15 @@ const TableComponent = ({
   getTableBodyProps,
   rows,
   prepareRow,
+  icons,
 }) => {
+  const {
+    getArrowProps,
+    getTooltipProps,
+    setTooltipRef,
+    setTriggerRef,
+    visible,
+  } = usePopperTooltip();
   return (
     <table className={classnames(s.table, className)} {...getTableProps()}>
       <thead>
@@ -46,11 +55,34 @@ const TableComponent = ({
               <tr {...row.getRowProps()}>
                 {
                   // Loop over the rows cells
-                  row.cells.map((cell) => {
+                  row.cells.map((cell, i) => {
                     // Apply the cell props
+                    const generateCell = cell.render('Cell');
+                    const icon = icons.find(
+                      (item) => item.col === cell.render('Cell').props.value
+                    );
                     return (
                       <td {...cell.getCellProps()}>
-                        <span>{cell.render('Cell')}</span>
+                        <span>{generateCell}</span>
+                        {!!icon && icon.icon(setTriggerRef)}
+                        {visible && !!icon && (
+                          <div
+                            ref={setTooltipRef}
+                            {...getTooltipProps({
+                              className: classnames(
+                                'tooltip-container',
+                                s.tooltip
+                              ),
+                            })}
+                          >
+                            {<icon.PopperContent />}
+                            <div
+                              {...getArrowProps({
+                                className: 'tooltip-arrow',
+                              })}
+                            />
+                          </div>
+                        )}
                       </td>
                     );
                   })
