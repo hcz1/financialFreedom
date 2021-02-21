@@ -11,9 +11,8 @@ const Table = ({
   value,
   studentLoanType,
   pensionValue,
-  multiplier,
+  multiplier = 1,
 }) => {
-  multiplier = multiplier === undefined ? 1 : multiplier;
   const pensionPercentage = pensionValue / 100;
   const adjustedSalary = (1 - pensionPercentage) * (value * multiplier);
   const yearlySalary = value * multiplier;
@@ -32,7 +31,7 @@ const Table = ({
   });
 
   const { yearly: SLYearly = 0, montly: SLMonthly = 0 } = studentLoan({
-    salary: value,
+    salary: yearlySalary,
     type: studentLoanType,
   });
   const isStudentLoan = useMemo(

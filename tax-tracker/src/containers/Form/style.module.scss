@@ -2,14 +2,18 @@
 .form {
   width: 343px;
   .radioContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
     .radio {
-      &:nth-child(odd) {
-        margin-right: 15px;
+      flex: 0 1 49%;
+      &.third {
+        flex: 0 1 32%;
       }
+      height: 44px;
     }
     &.horitonzal {
-      flex-direction: row;
-      flex-wrap: wrap;
       .radio {
         margin-bottom: 6px;
       }

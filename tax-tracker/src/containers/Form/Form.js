@@ -17,6 +17,13 @@ const multiplierArr = [
 
 const studentLoanArr = [
   {
+    id: 'none',
+    value: 'none',
+    type: 'radio',
+    name: 'studentLoan',
+    display: 'None',
+  },
+  {
     id: 'plan_1',
     value: 'plan_1',
     type: 'radio',
@@ -108,7 +115,7 @@ const Form = ({
       <InputGroup className={s.radioContainer}>
         {studentLoanArr.map((item, key) => (
           <RadioButton
-            className={s.radio}
+            className={classnames(s.radio, s.third)}
             key={key}
             id={item.id}
             value={item.value}

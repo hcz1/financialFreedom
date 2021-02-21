@@ -5,7 +5,13 @@ import Form from '../Form';
 import Table from '../Table';
 import s from './style.module.scss';
 
-const Tax = ({ className, salary, studentLoan, pension, multiplier = '1' }) => {
+const Tax = ({
+  className,
+  salary,
+  studentLoan = 'none',
+  pension,
+  multiplier = '1',
+}) => {
   const history = useHistory();
   const [options, setOptions] = useState({
     grossSalary: salary,
