@@ -68,8 +68,11 @@
       function gtag() {
         dataLayer.push(arguments);
       }
-      gtag('js', new Date());
-      gtag('config', 'G-E59QD38NLN', { anonymize_ip: true });
+      var host = window.location.hostname;
+      if (host !== 'localhost') {
+        gtag('js', new Date());
+        gtag('config', 'G-E59QD38NLN', { anonymize_ip: true });
+      }
 
       function setCookies() {
         var s = document.createElement('script');

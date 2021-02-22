@@ -11,9 +11,10 @@ const RadioButton = ({
   onChange,
   onBlur,
   checked,
+  onClick,
   children,
 }) => (
-  <div className={classnames(s.radio, className)}>
+  <div className={classnames(s.radio, className)} onClick={onClick}>
     <div className={s.radioContents}>
       <input
         id={id}

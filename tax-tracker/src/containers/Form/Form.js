@@ -89,6 +89,9 @@ const Form = ({
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             checked={formik.values.multiplier === item.value}
+            onClick={() => {
+              formik.setFieldValue(item.name, item.value);
+            }}
           >
             {item.id}
           </RadioButton>
@@ -128,6 +131,9 @@ const Form = ({
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             checked={formik.values.studentLoan === item.value}
+            onClick={() => {
+              formik.setFieldValue(item.name, item.value);
+            }}
           >
             {item.display}
           </RadioButton>
