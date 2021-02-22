@@ -3,6 +3,15 @@
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.1/cookieconsent.min.css"
+    />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.1/cookieconsent.min.js"
+      data-cfasync="false"
+    ></script>
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1, maximum-scale=1.0,user-scalable=0"
@@ -17,6 +26,73 @@
     <title>SimpleSalary</title>
   </head>
   <body>
+    <script>
+      var popup;
+      window.addEventListener('load', function () {
+        window.cookieconsent.initialise(
+          {
+            //set revokeBtn if you don't want to see a tiny pullup bar overlapping your website
+            //if revokeBtn is set, make sure to include a link to cookie settings in your footer
+            //you can open your banner again with: popup.open();
+            revokeBtn: "<div class='cc-revoke'></div>",
+            type: 'opt-in',
+            theme: 'classic',
+            palette: {
+              popup: {
+                background: '#61db92',
+                text: '#fff',
+              },
+              button: {
+                background: '#373839',
+                text: '#fff',
+              },
+            },
+            onInitialise: function (status) {
+              // request gtag.js on page-load when the client already consented
+              if (status == cookieconsent.status.allow) setCookies();
+            },
+            onStatusChange: function (status) {
+              // resquest gtag cookies on a new consent
+              if (this.hasConsented()) setCookies();
+              else deleteCookies(this.options.cookie.name);
+            },
+          },
+          function (p) {
+            popup = p;
+          }
+        );
+      });
+
+      //it is absolutely crucial to define gtag in the global scope
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', 'G-E59QD38NLN', { anonymize_ip: true });
+
+      function setCookies() {
+        var s = document.createElement('script');
+        s.type = 'text/javascript';
+        s.async = 'true';
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=G-E59QD38NLN';
+        var x = document.getElementsByTagName('script')[0];
+        x.parentNode.insertBefore(s, x);
+
+        // you can add facebook-pixel and other cookies here
+      }
+
+      function deleteCookies(cookieconsent_name) {
+        var keep = [cookieconsent_name, 'DYNSRV'];
+
+        document.cookie.split(';').forEach(function (c) {
+          c = c.split('=')[0].trim();
+          if (!~keep.indexOf(c))
+            document.cookie =
+              c + '=;' + 'expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/';
+        });
+      }
+    </script>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
   </body>

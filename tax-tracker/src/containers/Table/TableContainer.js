@@ -3,8 +3,6 @@ import classnames from 'classnames';
 import { useTable } from 'react-table';
 import TableComponent from '../../components/TableComponent/TableComponent';
 import { formatNumber } from '../../helpers/helpers';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { generateIncomeTax, nationalInsurance, studentLoan } from '../../data';
 import s from './style.module.scss';
 
@@ -164,21 +162,12 @@ const Table = ({
             PopperContent: () => (
               <div>
                 <p>
-                  Adjusted wage is your salary offset with the amount you pay
-                  into your pension
+                  Adjusted wage is your salary minus the amount you pay into
+                  your pension
                 </p>
-                <p>this amount is what your tax is based on</p>
+                <p>The adjusted wage is what your tax is based on</p>
               </div>
             ),
-            icon: (setTriggerRef) => {
-              return (
-                <FontAwesomeIcon
-                  className={s.icon}
-                  forwardedRef={setTriggerRef}
-                  icon={faInfoCircle}
-                />
-              );
-            },
           },
         ]}
         {...tableInstance}

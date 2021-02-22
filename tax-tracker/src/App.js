@@ -28,6 +28,9 @@ const App = () => {
         <span>
           <a href='terms-and-conditions.html'>Terms & Conditions</a>
         </span>
+        <span style={{ cursor: 'pointer' }} onClick={() => window.popup.open()}>
+          Cookie Policy
+        </span>
       </footer>
     </div>
   );

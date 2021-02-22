@@ -1,10 +1,9 @@
 @import '../../common/variables.scss';
 .form {
   width: 343px;
-  .tooltip {
-    color: $black;
-    font-weight: bold;
-    padding: 20px;
+  .popper {
+    display: inline;
+    margin-left: 5px;
   }
   label {
     .icon {

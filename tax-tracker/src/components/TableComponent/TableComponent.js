@@ -1,7 +1,7 @@
 import React from 'react';
 import classnames from 'classnames';
-import { usePopperTooltip } from 'react-popper-tooltip';
 import s from './style.module.scss';
+import Popper from '../Popper/Popper';
 
 const TableComponent = ({
   className,
@@ -12,13 +12,6 @@ const TableComponent = ({
   prepareRow,
   icons,
 }) => {
-  const {
-    getArrowProps,
-    getTooltipProps,
-    setTooltipRef,
-    setTriggerRef,
-    visible,
-  } = usePopperTooltip();
   return (
     <table className={classnames(s.table, className)} {...getTableProps()}>
       <thead>
@@ -64,24 +57,10 @@ const TableComponent = ({
                     return (
                       <td {...cell.getCellProps()}>
                         <span>{generateCell}</span>
-                        {!!icon && icon.icon(setTriggerRef)}
-                        {visible && !!icon && (
-                          <div
-                            ref={setTooltipRef}
-                            {...getTooltipProps({
-                              className: classnames(
-                                'tooltip-container',
-                                s.tooltip
-                              ),
-                            })}
-                          >
-                            {<icon.PopperContent />}
-                            <div
-                              {...getArrowProps({
-                                className: 'tooltip-arrow',
-                              })}
-                            />
-                          </div>
+                        {!!icon && (
+                          <Popper>
+                            <icon.PopperContent />
+                          </Popper>
                         )}
                       </td>
                     );
