@@ -1,4 +1,5 @@
 export const generateIncomeTax = ({ salary }) => {
+
   const SALARY = salary;
   const TAX_FREE_ALLOWANCE = 12_500;
   const IS_SALARY_OVER_100K = SALARY > 100_000;

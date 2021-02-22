@@ -4,6 +4,7 @@ import { useTable } from 'react-table';
 import TableComponent from '../../components/TableComponent/TableComponent';
 import { formatNumber } from '../../helpers/helpers';
 import { generateIncomeTax, nationalInsurance, studentLoan } from '../../data';
+import { generateIncomeTax2 } from '../../data/incomeTax2'
 import s from './style.module.scss';
 
 const Table = ({
@@ -22,8 +23,9 @@ const Table = ({
     taxBand2,
     taxBand3,
     total,
-  } = generateIncomeTax({
+  } = generateIncomeTax2({
     salary: adjustedSalary,
+    year: "20/21"
   });
 
   const { yearly: NIYearly, monthly: NIMonthly } = nationalInsurance({
@@ -38,6 +40,7 @@ const Table = ({
     () => ['plan_1', 'plan_2'].includes(studentLoanType),
     [studentLoanType]
   );
+  
   const data = useMemo(
     () =>
       [
@@ -101,15 +104,10 @@ const Table = ({
         {
           col1: 'Take Home',
           col2: `£${formatNumber(
-            (adjustedSalary - total.yearly - NIYearly - SLYearly).toFixed(2)
+            (total.yearly - NIYearly - SLYearly).toFixed(2)
           )}`,
           col3: `£${formatNumber(
-            (
-              adjustedSalary / 12 -
-              total.monthly -
-              NIMonthly -
-              SLMonthly
-            ).toFixed(2)
+            (total.monthly - NIMonthly - SLMonthly).toFixed(2)
           )}`,
         },
       ].filter(Boolean),

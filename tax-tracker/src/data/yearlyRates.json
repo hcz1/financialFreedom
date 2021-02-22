@@ -1,0 +1,26 @@
+[
+    {
+        "year":"21/22",
+        "personalAllowance": 12500,
+        "band1": 37500,
+        "band2": 50000,
+        "band3": 150000,
+        "incomeLimitPersonalAllowence": 100000
+    },
+    {      
+        "year":"20/21",  
+        "personalAllowance": 12500,
+        "band1": 37500,
+        "band2": 50000,
+        "band3": 150000,
+        "incomeLimitPersonalAllowence": 100000
+    },
+    {
+        "year":"19/20",  
+        "personalAllowance": 12500,
+        "band1": 37500,
+        "band2": 50000,
+        "band3": 150000,
+        "incomeLimitPersonalAllowence": 100000
+    }
+]
