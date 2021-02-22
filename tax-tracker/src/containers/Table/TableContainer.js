@@ -161,9 +161,9 @@ const Table = ({
             col: 'Adjusted Wage',
             PopperContent: () => (
               <div>
-                <p>
-                  Adjusted wage is your salary minus the amount you pay into
-                  your pension
+                <p style={{ marginBottom: '12px' }}>
+                  <b>Adjusted wage</b> is your salary minus the amount you pay
+                  into your pension
                 </p>
                 <p>The adjusted wage is what your tax is based on</p>
               </div>
