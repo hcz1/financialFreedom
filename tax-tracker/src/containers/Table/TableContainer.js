@@ -3,8 +3,8 @@ import classnames from 'classnames';
 import { useTable } from 'react-table';
 import TableComponent from '../../components/TableComponent/TableComponent';
 import { formatNumber } from '../../helpers/helpers';
-import { generateIncomeTax, nationalInsurance, studentLoan } from '../../data';
-import { generateIncomeTax2 } from '../../data/incomeTax2'
+import { nationalInsurance, studentLoan } from '../../data';
+import { generateIncomeTax } from '../../data/incomeTax'
 import s from './style.module.scss';
 
 const Table = ({
@@ -23,7 +23,7 @@ const Table = ({
     taxBand2,
     taxBand3,
     total,
-  } = generateIncomeTax2({
+  } = generateIncomeTax({
     salary: adjustedSalary,
     year: "20/21"
   });
@@ -36,6 +36,7 @@ const Table = ({
     salary: yearlySalary,
     type: studentLoanType,
   });
+
   const isStudentLoan = useMemo(
     () => ['plan_1', 'plan_2'].includes(studentLoanType),
     [studentLoanType]

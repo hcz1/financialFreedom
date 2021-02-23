@@ -1,86 +1,81 @@
-export const generateIncomeTax = ({ salary }) => {
+import yearlyRate from "./yearlyRates.json";
 
-  const SALARY = salary;
-  const TAX_FREE_ALLOWANCE = 12_500;
-  const IS_SALARY_OVER_100K = SALARY > 100_000;
+export const generateIncomeTax = ({ salary, year }) => {
+    const yearRate = filterByYear(yearlyRate, year)[0];
 
-  // personal allowance deduction check
-  let amountOffPersonalAllowance = 0;
-  if (IS_SALARY_OVER_100K && SALARY <= 125_000) {
-    amountOffPersonalAllowance = Math.floor((SALARY - 100_000) / 2);
-  } else if (SALARY > 125_000) {
-    amountOffPersonalAllowance = TAX_FREE_ALLOWANCE;
-  }
+    const noPersonalAllowenceSalary =  yearRate.incomeLimitPersonalAllowence + (yearRate.personalAllowance * 2)
 
-  const TOTAL_TAXABLE =
-    SALARY >= TAX_FREE_ALLOWANCE
-      ? SALARY - TAX_FREE_ALLOWANCE + amountOffPersonalAllowance
-      : 0;
+    const adjustedPersonalAllowence = 
+        (salary <= yearRate.incomeLimitPersonalAllowence ? yearRate.personalAllowance
+            : (salary >= noPersonalAllowenceSalary ? 0 : 
+                yearRate.personalAllowance - (Math.floor((salary - yearRate.incomeLimitPersonalAllowence) / 2))));
 
-  // tax band 1 spec
-  const BAND_1_THRESHOLD = 50_000;
-  const IS_BAND_1 = SALARY > TAX_FREE_ALLOWANCE && SALARY <= BAND_1_THRESHOLD;
-  const BAND_1_RATE = 0.2;
+    let band1 = 0
+    let band2 = 0
+    let band3 = 0
+    
+    //How much is in first bracket
+    if(salary >= yearRate.basicRate + yearRate.personalAllowance){
+        band1 = yearRate.basicRate
+    } else if ( salary > yearRate.personalAllowance){
+        band1 = salary - adjustedPersonalAllowence
+    } else {
+        band1 = 0
+    }
+    
+    //How much is in second bracket
+    if(salary >= yearRate.higherRate){
+        band2 = yearRate.higherRate - yearRate.basicRate
+    } else if ( salary >= yearRate.basicRate + yearRate.personalAllowance){
+        band2 = salary - adjustedPersonalAllowence - yearRate.basicRate
+    } else {
+        band2 = 0
+    }
 
-  // tax band 2 spec
-  const BAND_2_THRESHOLD = 150_000;
-  const IS_BAND_2 = SALARY > BAND_1_THRESHOLD && SALARY < BAND_2_THRESHOLD;
-  const BAND_2_RATE = 0.4;
+    //How much is in third bracket
+    if(salary >= yearRate.higherRate){
+        band3 = salary - yearRate.higherRate;
+    } else {
+        band3 = 0;
+    }
 
-  const IS_BAND_3 = SALARY > BAND_2_THRESHOLD;
-  const BAND_3_RATE = 0.45;
+    const taxBracket1 = band1 * 0.2
+    const taxBracket2 = band2 * 0.4
+    const taxBracket3 = band3 * 0.45
 
-  let taxBand1 = 0;
-  // tax band 1 12_501 to 50_000
-  if (IS_BAND_1) {
-    taxBand1 = (SALARY - TAX_FREE_ALLOWANCE) * BAND_1_RATE;
-  } else if (SALARY >= BAND_1_THRESHOLD) {
-    taxBand1 = (BAND_1_THRESHOLD - TAX_FREE_ALLOWANCE) * BAND_1_RATE;
-  }
+    const totalIncomeTax = taxBracket1 + taxBracket2 + taxBracket3;
+    const takeHome = salary - totalIncomeTax;
+    const totalTaxable = (salary - adjustedPersonalAllowence ) < 0 ? 0 : salary - adjustedPersonalAllowence;
 
-  // tax band 2 50_001 to 150_000
-  let taxBand2 = 0;
-  if (IS_BAND_2) {
-    taxBand2 =
-      (SALARY - BAND_1_THRESHOLD + amountOffPersonalAllowance) * BAND_2_RATE;
-  } else if (SALARY >= BAND_2_THRESHOLD) {
-    taxBand2 =
-      (BAND_2_THRESHOLD - BAND_1_THRESHOLD + amountOffPersonalAllowance) *
-      BAND_2_RATE;
-  }
+    return {
+        totalTaxable: {
+          yearly: (totalTaxable),
+          monthly: (totalTaxable) / 12,
+          weekly: (totalTaxable) / 52,
+        },
+        taxBand1: {
+          yearly: taxBracket1,
+          monthly: taxBracket1 / 12,
+          weekly: taxBracket1 / 52,
+        },
+        taxBand2: {
+          yearly: taxBracket2,
+          monthly: taxBracket2 / 12,
+          weekly: taxBracket2 / 52,
+        },
+        taxBand3: {
+          yearly: taxBracket3,
+          monthly: taxBracket3 / 12,
+          weekly: taxBracket3 / 52,
+        },
+        total: {
+          yearly: takeHome,
+          monthly: (takeHome) / 12,
+          weekly: (takeHome) / 52,
+        },
+        allowance: yearRate.personalAllowance - adjustedPersonalAllowence,
+      };} 
 
-  // tax band 3 150_001+
-  let taxBand3 = 0;
-  if (IS_BAND_3) {
-    taxBand3 = (SALARY - BAND_2_THRESHOLD) * BAND_3_RATE;
-  }
-
-  return {
-    totalTaxable: {
-      yearly: TOTAL_TAXABLE,
-      monthly: TOTAL_TAXABLE / 12,
-      weekly: TOTAL_TAXABLE / 52,
-    },
-    taxBand1: {
-      yearly: taxBand1,
-      monthly: taxBand1 / 12,
-      weekly: taxBand1 / 52,
-    },
-    taxBand2: {
-      yearly: taxBand2,
-      monthly: taxBand2 / 12,
-      weekly: taxBand2 / 52,
-    },
-    taxBand3: {
-      yearly: taxBand3,
-      monthly: taxBand3 / 12,
-      weekly: taxBand3 / 52,
-    },
-    total: {
-      yearly: taxBand1 + taxBand2 + taxBand3,
-      monthly: (taxBand1 + taxBand2 + taxBand3) / 12,
-      weekly: (taxBand1 + taxBand2 + taxBand3) / 52,
-    },
-    allowance: TAX_FREE_ALLOWANCE - amountOffPersonalAllowance,
-  };
-};
+function filterByYear(data, year) {
+    return data.filter(e => e.year.includes(year));
+ }
