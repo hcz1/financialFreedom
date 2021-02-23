@@ -23,7 +23,6 @@ const Tax = ({
   });
   const onSubmit = useCallback(
     (values) => {
-      console.log(values);
       setOptions((prev) => ({ ...prev, ...values }));
       const params = new URLSearchParams({
         salary: values.grossSalary,

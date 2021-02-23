@@ -20,7 +20,7 @@ table {
   td {
     margin: 0;
     padding: 0.5rem;
-    border-bottom: 2px solid rgba(96, 219, 146, 0.150459);
+    border-bottom: 2px solid $input-background;
     height: 25px;
     :last-child {
       border-right: 0;

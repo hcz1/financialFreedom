@@ -10,6 +10,36 @@
       margin-left: 10px;
     }
   }
+  .select {
+    width: 100%;
+    border-radius: $input-border-radius 0 0 $input-border-radius;
+    color: $black;
+    font-size: 18px;
+    line-height: 22px;
+    font-weight: bold;
+    :global {
+      .react-select__control {
+        background-color: $input-background;
+        border: none;
+      }
+      .react-select__indicator-separator {
+        display: none;
+      }
+      .react-select__indicator {
+        color: white;
+        padding: 9px;
+        background-color: $green;
+        border-radius: 0 $input-border-radius $input-border-radius 0;
+      }
+      .react-select__option.react-select__option--is-selected {
+        background-color: $green;
+        color: $black;
+      }
+      .react-select__option.react-select__option--is-focused {
+        background-color: $input-background;
+      }
+    }
+  }
   .radioContainer {
     display: flex;
     flex-direction: row;
