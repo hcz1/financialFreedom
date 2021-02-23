@@ -28,7 +28,7 @@ const Table = ({
     year: '20/21',
   });
 
-  const { yearly: NIYearly, monthly: NIMonthly } = nationalInsurance({
+  const { yearly: NIYearly } = nationalInsurance({
     salary: adjustedSalary,
   });
 
@@ -40,34 +40,28 @@ const Table = ({
   const data = useMemo(
     () =>
       [
-        createColumns("Gross Wage", yearlySalary),
-        createColumns("Adjusted Wage", adjustedSalary),
-        createColumns("Total Taxable", totalTaxable),        
-        createColumns("Pension Contribution", pensionPercentage * yearlySalary),
-        createColumns("Student Loan", studentLoanYearly),
-        createColumns("National Insurance", NIYearly),
-        createColumns("Band 1 20%", taxBand1),
-        createColumns("Band 2 40%", taxBand2),
-        createColumns("Band 3 45%", taxBand3),
-        createColumns("Take Home", total - studentLoanYearly - NIYearly)
+        createColumns('Gross Wage', yearlySalary),
+        createColumns('Adjusted Wage', adjustedSalary),
+        createColumns('Total Taxable', totalTaxable),
+        createColumns('Pension Contribution', pensionPercentage * yearlySalary),
+        createColumns('Student Loan', studentLoanYearly),
+        createColumns('National Insurance', NIYearly),
+        createColumns('Band 1 20%', taxBand1),
+        createColumns('Band 2 40%', taxBand2),
+        createColumns('Band 3 45%', taxBand3),
+        createColumns('Take Home', total - studentLoanYearly - NIYearly),
       ].filter(Boolean),
     [
       yearlySalary,
       adjustedSalary,
-      totalTaxable.yearly,
-      totalTaxable.monthly,
+      totalTaxable,
       pensionPercentage,
+      studentLoanYearly,
       NIYearly,
-      NIMonthly,
-      taxBand1.yearly,
-      taxBand1.monthly,
-      taxBand2.yearly,
-      taxBand2.monthly,
-      taxBand3.yearly,
-      taxBand3.monthly,
-      total.yearly,
-      total.monthly,
-      studentLoanYearly
+      taxBand1,
+      taxBand2,
+      taxBand3,
+      total,
     ]
   );
   const columns = useMemo(
@@ -83,15 +77,15 @@ const Table = ({
       {
         Header: 'Month',
         accessor: 'col3',
-      },{
-
+      },
+      {
         Header: 'Week',
         accessor: 'col4',
       },
       {
         Header: 'Day',
         accessor: 'col5',
-      }
+      },
     ],
 
     []
@@ -122,12 +116,12 @@ const Table = ({
 
 export default Table;
 
-function createColumns(columnName, yearlyAmount){
+function createColumns(columnName, yearlyAmount) {
   return {
     col1: columnName,
     col2: `£${formatNumber(yearlyAmount.toFixed(2))}`,
     col3: `£${formatNumber((yearlyAmount / 12).toFixed(2))}`,
     col4: `£${formatNumber((yearlyAmount / 52).toFixed(2))}`,
     col5: `£${formatNumber((yearlyAmount / 260).toFixed(2))}`,
-  }
+  };
 }
