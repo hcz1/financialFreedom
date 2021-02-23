@@ -8,6 +8,7 @@ import Input from '../../components/input';
 import RadioButton from './RadioButton';
 import s from './style.module.scss';
 import Popper from '../../components/Popper';
+import yearlyRates from '../../data/yearlyRates.json';
 
 const multiplierArr = [
   { id: 'Year', value: '1', name: 'multiplier' },
@@ -45,11 +46,12 @@ const Form = ({
   grossSalary,
   pension,
   studentLoan,
-  onSubmit,
   multiplier,
+  taxYear,
+  onSubmit,
 }) => {
   const formik = useFormik({
-    initialValues: { grossSalary, pension, studentLoan, multiplier },
+    initialValues: { grossSalary, pension, studentLoan, multiplier, taxYear },
     onSubmit,
   });
   return (
@@ -57,6 +59,25 @@ const Form = ({
       onSubmit={formik.handleSubmit}
       className={classnames(s.form, className)}
     >
+      <Label htmlFor='taxYear'>
+        <b>Tax Year</b>
+      </Label>
+      <InputGroup>
+        <select
+          name='taxYear'
+          id='taxYear'
+          value={formik.values.taxYear}
+          touched={formik.touched.taxYear}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+        >
+          {Object.keys(yearlyRates).map((taxYearKey) => (
+            <option key={taxYearKey} value={taxYearKey}>
+              {taxYearKey}
+            </option>
+          ))}
+        </select>
+      </InputGroup>
       <Label htmlFor='grossSalary'>
         <b>I Earn</b> (pre tax)
       </Label>

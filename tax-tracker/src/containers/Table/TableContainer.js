@@ -13,6 +13,7 @@ const Table = ({
   studentLoanType,
   pensionValue,
   multiplier = 1,
+  taxYear,
 }) => {
   const pensionPercentage = pensionValue / 100;
   const adjustedSalary = (1 - pensionPercentage) * (value * multiplier);
@@ -25,7 +26,7 @@ const Table = ({
     total,
   } = generateIncomeTax({
     salary: adjustedSalary,
-    year: '20/21',
+    year: taxYear,
   });
 
   const { yearly: NIYearly } = nationalInsurance({

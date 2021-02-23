@@ -4,6 +4,7 @@ import classnames from 'classnames';
 import Form from '../Form';
 import Table from '../Table';
 import s from './style.module.scss';
+import { generateTaxYear } from '../../helpers/helpers';
 
 const Tax = ({
   className,
@@ -18,9 +19,11 @@ const Tax = ({
     studentLoan,
     pension,
     multiplier: multiplier,
+    taxYear: generateTaxYear(),
   });
   const onSubmit = useCallback(
     (values) => {
+      console.log(values);
       setOptions((prev) => ({ ...prev, ...values }));
       const params = new URLSearchParams({
         salary: values.grossSalary,
@@ -40,6 +43,7 @@ const Tax = ({
         pension={options.pension}
         studentLoan={options.studentLoan}
         multiplier={options.multiplier}
+        taxYear={options.taxYear}
         onSubmit={onSubmit}
       />
       <Table
@@ -48,6 +52,7 @@ const Tax = ({
         studentLoanType={options.studentLoan}
         pensionValue={options.pension}
         multiplier={options.multiplier}
+        taxYear={options.taxYear}
       />
     </div>
   );
