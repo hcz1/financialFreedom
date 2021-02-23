@@ -11,8 +11,10 @@ table {
     td {
       width: 116px;
       text-align: right;
+      line-height: 23px;
     }
     :first-child {
+      min-width: 150px;
       text-align: left;
     }
   }
@@ -22,6 +24,12 @@ table {
     padding: 0.5rem;
     border-bottom: 2px solid $input-background;
     height: 25px;
+    .icon {
+      min-width: 0 !important;
+      margin-left: 5px;
+      font-size: 14px;
+      display: inline;
+    }
     :last-child {
       border-right: 0;
     }
