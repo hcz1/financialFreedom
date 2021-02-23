@@ -58,7 +58,7 @@ const Form = ({
       className={classnames(s.form, className)}
     >
       <Label htmlFor='grossSalary'>
-        <b>I earn</b> (pre tax)
+        <b>I Earn</b> (pre tax)
       </Label>
       <InputGroup>
         <InputGroupAddon addonType='Prepend'>£</InputGroupAddon>
