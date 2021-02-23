@@ -37,8 +37,6 @@ const Table = ({
     type: studentLoanType,
   });
 
-  console.log(studentLoanYearly);
-
   const data = useMemo(
     () =>
       [
