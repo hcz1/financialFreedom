@@ -50,36 +50,16 @@ export const generateIncomeTax = ({ salary, year }) => {
   const totalIncomeTax = taxBracket1 + taxBracket2 + taxBracket3;
   const takeHome = salary - totalIncomeTax;
   const totalTaxable =
-    salary - adjustedPersonalAllowence < 0
+    (salary - adjustedPersonalAllowence < 0)
       ? 0
       : salary - adjustedPersonalAllowence;
 
   return {
-    totalTaxable: {
-      yearly: totalTaxable,
-      monthly: totalTaxable / 12,
-      weekly: totalTaxable / 52,
-    },
-    taxBand1: {
-      yearly: taxBracket1,
-      monthly: taxBracket1 / 12,
-      weekly: taxBracket1 / 52,
-    },
-    taxBand2: {
-      yearly: taxBracket2,
-      monthly: taxBracket2 / 12,
-      weekly: taxBracket2 / 52,
-    },
-    taxBand3: {
-      yearly: taxBracket3,
-      monthly: taxBracket3 / 12,
-      weekly: taxBracket3 / 52,
-    },
-    total: {
-      yearly: takeHome,
-      monthly: takeHome / 12,
-      weekly: takeHome / 52,
-    },
+    totalTaxable: totalTaxable,
+    taxBand1: taxBracket1,
+    taxBand2: taxBracket2,
+    taxBand3: taxBracket3,
+    total: takeHome,
     allowance: yearRate.personalAllowance - adjustedPersonalAllowence,
   };
 };

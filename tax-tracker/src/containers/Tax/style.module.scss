@@ -3,7 +3,11 @@
   display: flex;
   justify-content: space-evenly;
   flex-wrap: wrap;
+  align-items: center;
   .form {
     padding-bottom: 10px;
+  }
+  .table {
+    overflow-x: auto;
   }
 }

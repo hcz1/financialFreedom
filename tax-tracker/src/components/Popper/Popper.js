@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import s from './style.module.scss';
 
-const Popper = ({ className, children }) => {
+const Popper = ({ className, iconClassName, children }) => {
   const {
     getArrowProps,
     getTooltipProps,
@@ -16,7 +16,7 @@ const Popper = ({ className, children }) => {
   return (
     <div className={classnames(s.popper, className)}>
       <FontAwesomeIcon
-        className={s.icon}
+        className={classnames(s.icon, iconClassName)}
         forwardedRef={setTriggerRef}
         icon={faInfoCircle}
       />

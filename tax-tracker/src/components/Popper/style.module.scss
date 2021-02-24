@@ -1,5 +1,6 @@
 @import '../../common/variables.scss';
 .popper {
+  display: inline;
   .tooltip {
     color: $black;
     font-weight: 400;

@@ -4,6 +4,7 @@ import { useTable } from 'react-table';
 import TableComponent from '../../components/TableComponent/TableComponent';
 import { formatNumber } from '../../helpers/helpers';
 import { nationalInsurance, studentLoan } from '../../data';
+import yearlyRates from '../../data/yearlyRates.json';
 import { generateIncomeTax } from '../../data/incomeTax';
 import s from './style.module.scss';
 
@@ -13,6 +14,7 @@ const Table = ({
   studentLoanType,
   pensionValue,
   multiplier = 1,
+  taxYear,
 }) => {
   const pensionPercentage = pensionValue / 100;
   const adjustedSalary = (1 - pensionPercentage) * (value * multiplier);
@@ -23,120 +25,45 @@ const Table = ({
     taxBand2,
     taxBand3,
     total,
+    // allowance,
   } = generateIncomeTax({
     salary: adjustedSalary,
-    year: '20/21',
+    year: taxYear,
   });
-
-  const { yearly: NIYearly, monthly: NIMonthly } = nationalInsurance({
+  const { yearly: NIYearly } = nationalInsurance({
     salary: adjustedSalary,
   });
 
-  const { yearly: SLYearly = 0, montly: SLMonthly = 0 } = studentLoan({
+  const studentLoanYearly = studentLoan({
     salary: yearlySalary,
     type: studentLoanType,
   });
 
-  const isStudentLoan = useMemo(
-    () => ['plan_1', 'plan_2'].includes(studentLoanType),
-    [studentLoanType]
-  );
-
   const data = useMemo(
     () =>
       [
-        {
-          col1: 'Gross Wage',
-          col2: `£${formatNumber(yearlySalary.toFixed(2))}`,
-          col3: `£${formatNumber((yearlySalary / 12).toFixed(2))}`,
-        },
-
-        {
-          col1: 'Adjusted Wage',
-          col2: `£${formatNumber(adjustedSalary.toFixed(2))}`,
-          col3: `£${formatNumber((adjustedSalary / 12).toFixed(2))}`,
-        },
-
-        {
-          col1: 'Total Taxable',
-          col2: `£${formatNumber(totalTaxable.yearly.toFixed(2))}`,
-          col3: `£${formatNumber(totalTaxable.monthly.toFixed(2))}`,
-        },
-        {
-          col1: 'Pension Contribution',
-          col2: `£${formatNumber(
-            (pensionPercentage * yearlySalary).toFixed(2)
-          )}`,
-          col3: `£${formatNumber(
-            ((pensionPercentage * yearlySalary) / 12).toFixed(2)
-          )}`,
-        },
-        {
-          col1: 'Student Loan',
-          col2:
-            isStudentLoan && SLYearly
-              ? `£${formatNumber(SLYearly.toFixed(2))}`
-              : '£0.00',
-          col3:
-            isStudentLoan && SLMonthly
-              ? `£${formatNumber(SLMonthly.toFixed(2))}`
-              : '£0.00',
-        },
-        {
-          col1: 'National Insurance',
-          col2: `£${formatNumber(NIYearly.toFixed(2))}`,
-          col3: `£${formatNumber(NIMonthly.toFixed(2))}`,
-        },
-        {
-          col1: 'Band 1 20%',
-          col2: `£${formatNumber(taxBand1.yearly.toFixed(2))}`,
-          col3: `£${formatNumber(taxBand1.monthly.toFixed(2))}`,
-        },
-        {
-          col1: 'Band 2 40%',
-          col2: `£${formatNumber(taxBand2.yearly.toFixed(2))}`,
-          col3: `£${formatNumber(taxBand2.monthly.toFixed(2))}`,
-        },
-        {
-          col1: 'Band 3 45%',
-          col2: `£${formatNumber(taxBand3.yearly.toFixed(2))}`,
-          col3: `£${formatNumber(taxBand3.monthly.toFixed(2))}`,
-        },
-        {
-          col1: 'Take Home',
-          col2: `£${formatNumber(
-            (total.yearly - NIYearly - (isStudentLoan ? SLYearly : 0)).toFixed(
-              2
-            )
-          )}`,
-          col3: `£${formatNumber(
-            (
-              total.monthly -
-              NIMonthly -
-              (isStudentLoan ? SLMonthly : 0)
-            ).toFixed(2)
-          )}`,
-        },
+        createColumns('Gross Wage', yearlySalary),
+        createColumns('Adjusted Wage', adjustedSalary),
+        createColumns('Total Taxable', totalTaxable),
+        createColumns('Pension Contribution', pensionPercentage * yearlySalary),
+        createColumns('Student Loan', studentLoanYearly),
+        createColumns('National Insurance', NIYearly),
+        createColumns('Basic Rate', taxBand1),
+        createColumns('Additional Rate', taxBand2),
+        createColumns('Higher Rate', taxBand3),
+        createColumns('Take Home', total - studentLoanYearly - NIYearly),
       ].filter(Boolean),
     [
       yearlySalary,
       adjustedSalary,
-      totalTaxable.yearly,
-      totalTaxable.monthly,
+      totalTaxable,
       pensionPercentage,
-      isStudentLoan,
-      SLYearly,
-      SLMonthly,
+      studentLoanYearly,
       NIYearly,
-      NIMonthly,
-      taxBand1.yearly,
-      taxBand1.monthly,
-      taxBand2.yearly,
-      taxBand2.monthly,
-      taxBand3.yearly,
-      taxBand3.monthly,
-      total.yearly,
-      total.monthly,
+      taxBand1,
+      taxBand2,
+      taxBand3,
+      total,
     ]
   );
   const columns = useMemo(
@@ -152,6 +79,14 @@ const Table = ({
       {
         Header: 'Month',
         accessor: 'col3',
+      },
+      {
+        Header: 'Week',
+        accessor: 'col4',
+      },
+      {
+        Header: 'Day',
+        accessor: 'col5',
       },
     ],
 
@@ -174,6 +109,78 @@ const Table = ({
               </div>
             ),
           },
+          {
+            col: 'Basic Rate',
+            PopperContent: () => {
+              const taxData = yearlyRates[taxYear];
+              return (
+                <div>
+                  <p>
+                    The tax year of <b>{taxYear}</b> basic rate tax is taxed
+                    from <b>£{formatNumber(taxData.personalAllowance + 1)}</b>{' '}
+                    to{' '}
+                    <b>
+                      £
+                      {formatNumber(
+                        taxData.basicRate + taxData.personalAllowance
+                      )}{' '}
+                    </b>{' '}
+                    at a rate of
+                    <b> 20%</b>
+                    <br />
+                  </p>
+                </div>
+              );
+            },
+          },
+          {
+            col: 'Additional Rate',
+            PopperContent: () => {
+              const taxData = yearlyRates[taxYear];
+              return (
+                <div>
+                  <p style={{ marginBottom: '12px' }}>
+                    The tax year of <b>{taxYear}</b> higher rate tax is taxed
+                    from{' '}
+                    <b>
+                      £
+                      {formatNumber(
+                        taxData.basicRate + taxData.personalAllowance + 1
+                      )}
+                    </b>{' '}
+                    to <b>£{formatNumber(taxData.higherRate)}</b> at a rate of
+                    <b> 40%</b>
+                  </p>
+                  <p>
+                    Personal allowance drops <b>£2</b> for every <b>£1</b> above{' '}
+                    <b>£100,000</b>
+                    {/* <br />
+                    Your personal allowance is down{' '}
+                    <b>£{formatNumber(allowance)}</b> from{' '}
+                    <b>£{formatNumber(taxData.personalAllowance)} </b>to{' '}
+                    <b>
+                      £{formatNumber(taxData.personalAllowance - allowance)}
+                    </b> */}
+                  </p>
+                </div>
+              );
+            },
+          },
+          {
+            col: 'Higher Rate',
+            PopperContent: () => {
+              const taxData = yearlyRates[taxYear];
+              return (
+                <div>
+                  <p>
+                    The tax year of <b>{taxYear}</b> higher rate tax is taxed at{' '}
+                    <b>£{formatNumber(taxData.higherRate)}+</b> at a rate of
+                    <b> 45%</b>
+                  </p>
+                </div>
+              );
+            },
+          },
         ]}
         {...tableInstance}
       />
@@ -182,3 +189,13 @@ const Table = ({
 };
 
 export default Table;
+
+function createColumns(columnName, yearlyAmount) {
+  return {
+    col1: columnName,
+    col2: `£${formatNumber(yearlyAmount.toFixed(2))}`,
+    col3: `£${formatNumber((yearlyAmount / 12).toFixed(2))}`,
+    col4: `£${formatNumber((yearlyAmount / 52).toFixed(2))}`,
+    col5: `£${formatNumber((yearlyAmount / 260).toFixed(2))}`,
+  };
+}
