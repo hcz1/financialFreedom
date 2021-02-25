@@ -58,7 +58,7 @@ const TableComponent = ({
                       <td {...cell.getCellProps()}>
                         <span>{generateCell}</span>
                         {!!icon && (
-                          <Popper>
+                          <Popper iconClassName={s.icon}>
                             <icon.PopperContent />
                           </Popper>
                         )}

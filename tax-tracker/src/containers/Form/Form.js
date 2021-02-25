@@ -1,13 +1,16 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import classnames from 'classnames';
+import Select from 'react-select';
 import Label from '../../components/label/label';
 import InputGroup from '../../components/input-group';
 import InputGroupAddon from '../../components/input-group-add-on';
 import Input from '../../components/input';
 import RadioButton from './RadioButton';
-import s from './style.module.scss';
 import Popper from '../../components/Popper';
+import s from './style.module.scss';
+
+import yearlyRates from '../../data/yearlyRates.json';
 
 const multiplierArr = [
   { id: 'Year', value: '1', name: 'multiplier' },
@@ -45,18 +48,41 @@ const Form = ({
   grossSalary,
   pension,
   studentLoan,
-  onSubmit,
   multiplier,
+  taxYear,
+  onSubmit,
 }) => {
   const formik = useFormik({
-    initialValues: { grossSalary, pension, studentLoan, multiplier },
+    initialValues: { grossSalary, pension, studentLoan, multiplier, taxYear },
     onSubmit,
   });
+  const options = Object.keys(yearlyRates).map((taxYearKey) => ({
+    label: taxYearKey,
+    value: taxYearKey,
+  }));
+
   return (
     <form
       onSubmit={formik.handleSubmit}
       className={classnames(s.form, className)}
     >
+      <Label htmlFor='taxYear'>
+        <b>Tax Year</b>
+      </Label>
+
+      <InputGroup>
+        <Select
+          classNamePrefix='react-select'
+          className={s.select}
+          name='taxYear'
+          id='taxYear'
+          options={options}
+          value={{ label: formik.values.taxYear, value: formik.values.taxYear }}
+          onChange={(value) => {
+            formik.setFieldValue('taxYear', value.value);
+          }}
+        />
+      </InputGroup>
       <Label htmlFor='grossSalary'>
         <b>I Earn</b> (pre tax)
       </Label>
