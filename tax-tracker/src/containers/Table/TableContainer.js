@@ -4,7 +4,7 @@ import { useTable } from 'react-table';
 import TableComponent from '../../components/TableComponent/TableComponent';
 import { formatNumber } from '../../helpers/helpers';
 import { nationalInsurance, studentLoan } from '../../data';
-import yearlyRates from '../../data/yearlyRates.json';
+import yearlyRates from '../../data/staticData/yearlyRates.json';
 import { generateIncomeTax } from '../../data/incomeTax';
 import s from './style.module.scss';
 
@@ -30,13 +30,15 @@ const Table = ({
     salary: adjustedSalary,
     year: taxYear,
   });
-  const { yearly: NIYearly } = nationalInsurance({
+  const nationalInsuranceYearly = nationalInsurance({
     salary: adjustedSalary,
+    year: taxYear
   });
 
   const studentLoanYearly = studentLoan({
     salary: yearlySalary,
     type: studentLoanType,
+    year: taxYear
   });
 
   const previousYearSalary = generateIncomeTax({
@@ -52,12 +54,12 @@ const Table = ({
         createColumns('Total Taxable', totalTaxable),
         createColumns('Pension Contribution', pensionPercentage * yearlySalary),
         createColumns('Student Loan', studentLoanYearly),
-        createColumns('National Insurance', NIYearly),
+        createColumns('National Insurance', nationalInsuranceYearly),
         createColumns('Basic Rate', taxBand1),
         createColumns('Additional Rate', taxBand2),
         createColumns('Higher Rate', taxBand3),
-        createColumns('Take Home', total - studentLoanYearly - NIYearly),
-        //createColumns('Previous Year', (total - studentLoanYearly - NIYearly) - (previousYearSalary.total - studentLoanYearly - NIYearly))
+        createColumns('Take Home', total - studentLoanYearly - nationalInsuranceYearly),
+        //createColumns('Previous Year', (total - studentLoanYearly - nationalInsuranceYearly) - (previousYearSalary.total - studentLoanYearly - nationalInsuranceYearly))
       ].filter(Boolean),
     [
       yearlySalary,
@@ -65,7 +67,7 @@ const Table = ({
       totalTaxable,
       pensionPercentage,
       studentLoanYearly,
-      NIYearly,
+      nationalInsuranceYearly,
       taxBand1,
       taxBand2,
       taxBand3,
