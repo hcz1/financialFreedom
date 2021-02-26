@@ -39,6 +39,11 @@ const Table = ({
     type: studentLoanType,
   });
 
+  const previousYearSalary = generateIncomeTax({
+    salary: adjustedSalary,
+    year: "18/19",
+  })
+
   const data = useMemo(
     () =>
       [
@@ -52,6 +57,7 @@ const Table = ({
         createColumns('Additional Rate', taxBand2),
         createColumns('Higher Rate', taxBand3),
         createColumns('Take Home', total - studentLoanYearly - NIYearly),
+        //createColumns('Previous Year', (total - studentLoanYearly - NIYearly) - (previousYearSalary.total - studentLoanYearly - NIYearly))
       ].filter(Boolean),
     [
       yearlySalary,
