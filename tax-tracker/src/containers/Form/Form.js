@@ -11,7 +11,7 @@ import RadioButton from './RadioButton';
 import Popper from '../../components/Popper';
 import s from './style.module.scss';
 
-import yearlyRates from '../../data/yearlyRates.json';
+import yearlyRates from '../../data/staticData/yearlyRates.json';
 
 const multiplierArr = [
   { id: 'Year', value: '1', name: 'multiplier' },

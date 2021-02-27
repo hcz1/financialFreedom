@@ -1,20 +1,19 @@
-export const nationalInsurance = ({ salary }) => {
-  const monthlySalary = salary / 12;
-  const NI_BAND_1 = 0.12;
-  const NI_BAND_2 = 0.02;
-  let niRate = 0;
-  if (monthlySalary >= 792 && monthlySalary <= 4167) {
-    niRate = Math.round((monthlySalary - 792) * NI_BAND_1);
+import nationalInsuranceRate from './staticData/nationalInsuranceRates.json';
+
+export const nationalInsurance = ({ salary, year }) => {
+  const niRates = nationalInsuranceRate[year];
+  let niTotal = 0;
+
+  if ( salary <= niRates.threshold1) return niTotal;
+
+  if ( salary <= niRates.threshold2 ){
+    niTotal = (salary - niRates.threshold1) * niRates.rate1;
+    return niTotal;
   }
-  if (monthlySalary > 4167) {
-    niRate +=
-      (4167 - 792) * NI_BAND_1 + Math.round((monthlySalary - 4167) * NI_BAND_2);
-  }
-  return {
-    yearly: niRate * 12,
-    monthly: niRate,
-    weekly: (niRate * 12) / 52,
-  };
+
+  niTotal = (niRates.threshold2 - niRates.threshold1) * niRates.rate1;
+  niTotal += (salary - niRates.threshold2) * niRates.rate2;
+
+  return niTotal;
+  
 };
-// £183 to £962 a week (£792 to £4,167 a month)	12%
-// Over £962 a week (£4,167 a month)	2%

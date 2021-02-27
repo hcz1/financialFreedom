@@ -1,4 +1,4 @@
-import yearlyRate from './yearlyRates.json';
+import yearlyRate from './staticData/yearlyRates.json';
 
 export const generateIncomeTax = ({ salary, year }) => {
   const yearRate = yearlyRate[year];

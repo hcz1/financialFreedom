@@ -1,0 +1,10 @@
+@import '../../common/variables.scss';
+.description {
+  color: $black;
+  line-height: 24px;
+  h2 {
+    font-weight: bold;
+    line-height: 40px;
+    font-size: 20px;
+  }
+}

@@ -1,6 +1,7 @@
 import { useLocation } from 'react-router-dom';
 import queryString from 'query-string';
 import Header from './components/Header';
+import Description from './components/Description';
 import { STUDENT_LOAN_TYPES } from './helpers/constants';
 import Tax from './containers/Tax/Tax';
 import s from './App.module.scss';
@@ -21,9 +22,10 @@ const App = () => {
   };
   return (
     <div className={s.app}>
-      <div className={s.container}>
-        <Header />
+      <Header />
+      <div className={s.contentContainer}>
         <Tax className={s.tax} {...initalState} />
+        <Description className={s.description} />
       </div>
       <footer>
         <span>&#169; SimpleSalary {new Date().getFullYear()}</span>
