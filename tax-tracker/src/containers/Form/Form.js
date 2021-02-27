@@ -5,6 +5,7 @@ import Select from 'react-select';
 import Label from '../../components/label/label';
 import InputGroup from '../../components/input-group';
 import InputGroupAddon from '../../components/input-group-add-on';
+import { formatNumber } from '../../helpers/helpers';
 import Input from '../../components/input';
 import RadioButton from './RadioButton';
 import Popper from '../../components/Popper';
@@ -42,10 +43,10 @@ const studentLoanArr = [
     display: 'Plan 2',
   },
 ];
-
+const removeComma = (string) => string.replace(/,/g, '');
 const Form = ({
   className,
-  grossSalary,
+  grossSalary = '',
   pension,
   studentLoan,
   multiplier,
@@ -54,7 +55,12 @@ const Form = ({
 }) => {
   const formik = useFormik({
     initialValues: { grossSalary, pension, studentLoan, multiplier, taxYear },
-    onSubmit,
+    onSubmit: (values) => {
+      onSubmit({
+        ...values,
+        grossSalary: removeComma(values.grossSalary),
+      });
+    },
   });
   const options = Object.keys(yearlyRates).map((taxYearKey) => ({
     label: taxYearKey,
@@ -69,7 +75,6 @@ const Form = ({
       <Label htmlFor='taxYear'>
         <b>Tax Year</b>
       </Label>
-
       <InputGroup>
         <Select
           classNamePrefix='react-select'
@@ -92,8 +97,15 @@ const Form = ({
           style={{ width: '270px' }}
           error={formik.errors.grossSalary}
           touched={formik.touched.grossSalary}
-          value={formik.values.grossSalary}
-          onChange={formik.handleChange}
+          value={formatNumber(formik.values.grossSalary)}
+          onChange={({ target: { value = '' } }) => {
+            if (/^[\d,.]*$/.test(value)) {
+              formik.setFieldValue(
+                'grossSalary',
+                formatNumber(removeComma(value))
+              );
+            }
+          }}
           onBlur={formik.handleBlur}
           id='grossSalary'
           name='grossSalary'
@@ -128,6 +140,9 @@ const Form = ({
       </Label>
       <InputGroup>
         <Input
+          min={0}
+          max={100}
+          type='number'
           style={{ width: '270px' }}
           error={formik.errors.pension}
           touched={formik.touched.pension}

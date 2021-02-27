@@ -160,8 +160,8 @@ const Table = ({
                     <b> 40%</b>
                   </p>
                   <p>
-                    Personal allowance drops <b>£2</b> for every <b>£1</b> above{' '}
-                    <b>£100,000</b>
+                    Personal allowance drops <b>£1</b> for every <b>£2</b> above{' '}
+                    <b>£100,000</b> of gross salary
                     {/* <br />
                     Your personal allowance is down{' '}
                     <b>£{formatNumber(allowance)}</b> from{' '}

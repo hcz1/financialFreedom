@@ -11,7 +11,9 @@ const App = () => {
   const { search } = useLocation();
   const queryStrings = queryString.parse(search);
   const initalState = {
-    salary: parseInt(queryStrings.salary) ? parseInt(queryStrings.salary) : 0,
+    salary: parseFloat(queryStrings.salary)
+      ? parseFloat(queryStrings.salary)
+      : 0,
     studentLoan: STUDENT_LOAN_TYPES.includes(queryStrings.studentLoan)
       ? queryStrings.studentLoan
       : undefined,
