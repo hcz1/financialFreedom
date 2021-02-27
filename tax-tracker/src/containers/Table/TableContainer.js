@@ -32,33 +32,50 @@ const Table = ({
   });
   const nationalInsuranceYearly = nationalInsurance({
     salary: adjustedSalary,
-    year: taxYear
+    year: taxYear,
   });
 
   const studentLoanYearly = studentLoan({
     salary: yearlySalary,
     type: studentLoanType,
-    year: taxYear
+    year: taxYear,
   });
 
   const previousYearSalary = generateIncomeTax({
     salary: adjustedSalary,
-    year: "18/19",
-  })
+    year: '18/19',
+  });
 
   const data = useMemo(
     () =>
       [
-        createColumns('Gross Wage', yearlySalary),
-        createColumns('Adjusted Wage', adjustedSalary),
-        createColumns('Total Taxable', totalTaxable),
-        createColumns('Pension Contribution', pensionPercentage * yearlySalary),
-        createColumns('Student Loan', studentLoanYearly),
-        createColumns('National Insurance', nationalInsuranceYearly),
-        createColumns('Basic Rate', taxBand1),
-        createColumns('Additional Rate', taxBand2),
-        createColumns('Higher Rate', taxBand3),
-        createColumns('Take Home', total - studentLoanYearly - nationalInsuranceYearly),
+        createColumns('Gross Wage', yearlySalary, yearlySalary),
+        createColumns('Adjusted Wage', yearlySalary, adjustedSalary),
+        createColumns('Total Taxable', yearlySalary, totalTaxable),
+        createColumns(
+          'Pension Contribution',
+          yearlySalary,
+          pensionPercentage * yearlySalary
+        ),
+        createColumns('Student Loan', yearlySalary, studentLoanYearly),
+        createColumns(
+          'National Insurance',
+          yearlySalary,
+          nationalInsuranceYearly
+        ),
+        createColumns('Basic Rate', yearlySalary, taxBand1),
+        createColumns('Additional Rate', yearlySalary, taxBand2),
+        createColumns('Higher Rate', yearlySalary, taxBand3),
+        createColumns(
+          'Total Tax',
+          yearlySalary,
+          taxBand1 + taxBand2 + taxBand3
+        ),
+        createColumns(
+          'Take Home',
+          yearlySalary,
+          total - studentLoanYearly - nationalInsuranceYearly
+        ),
         //createColumns('Previous Year', (total - studentLoanYearly - nationalInsuranceYearly) - (previousYearSalary.total - studentLoanYearly - nationalInsuranceYearly))
       ].filter(Boolean),
     [
@@ -81,20 +98,32 @@ const Table = ({
         accessor: 'col1', // accessor is the "key" in the data
       },
       {
-        Header: 'Year',
+        Header: '%',
         accessor: 'col2',
       },
       {
-        Header: 'Month',
+        Header: 'Year',
         accessor: 'col3',
       },
       {
-        Header: 'Week',
+        Header: 'Month',
         accessor: 'col4',
       },
       {
-        Header: 'Day',
+        Header: 'Week',
         accessor: 'col5',
+      },
+      {
+        Header: 'Day',
+        accessor: 'col6',
+      },
+      {
+        Header: 'Hour',
+        accessor: 'col7',
+      },
+      {
+        Header: 'Minute',
+        accessor: 'col8',
       },
     ],
 
@@ -197,13 +226,20 @@ const Table = ({
 };
 
 export default Table;
+const roundAccurately = (number, decimalPlaces) =>
+  Number(
+    Math.round(Number(number + 'e' + decimalPlaces)) + 'e' + decimalPlaces * -1
+  );
 
-function createColumns(columnName, yearlyAmount) {
+function createColumns(columnName, yearlySalary, yearlyAmount) {
   return {
     col1: columnName,
-    col2: `£${formatNumber(yearlyAmount.toFixed(2))}`,
-    col3: `£${formatNumber((yearlyAmount / 12).toFixed(2))}`,
-    col4: `£${formatNumber((yearlyAmount / 52).toFixed(2))}`,
-    col5: `£${formatNumber((yearlyAmount / 260).toFixed(2))}`,
+    col2: `${roundAccurately((yearlyAmount / yearlySalary) * 100, 1)}%`,
+    col3: `£${formatNumber(yearlyAmount.toFixed(2))}`,
+    col4: `£${formatNumber((yearlyAmount / 12).toFixed(2))}`,
+    col5: `£${formatNumber((yearlyAmount / 52).toFixed(2))}`,
+    col6: `£${formatNumber((yearlyAmount / 260).toFixed(2))}`,
+    col7: `£${formatNumber((yearlyAmount / 260 / 8).toFixed(2))}`, // based on 8 hour working day
+    col8: `£${formatNumber((yearlyAmount / 260 / 8 / 60).toFixed(2))}`, // based on 8 hour working day
   };
 }

@@ -8,6 +8,9 @@
   align-items: center;
   h1 {
     margin-left: 16px;
+    @media screen and (min-width: $breakpoint-small) {
+      margin-left: 40px;
+    }
     span {
       color: $black;
       font-weight: 300;
