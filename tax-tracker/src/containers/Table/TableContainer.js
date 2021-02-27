@@ -41,10 +41,10 @@ const Table = ({
     year: taxYear,
   });
 
-  const previousYearSalary = generateIncomeTax({
-    salary: adjustedSalary,
-    year: '18/19',
-  });
+  // const previousYearSalary = generateIncomeTax({
+  //   salary: adjustedSalary,
+  //   year: '18/19',
+  // });
 
   const data = useMemo(
     () =>
