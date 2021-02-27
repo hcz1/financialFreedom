@@ -231,10 +231,14 @@ const roundAccurately = (number, decimalPlaces) =>
     Math.round(Number(number + 'e' + decimalPlaces)) + 'e' + decimalPlaces * -1
   );
 
+const generatePercentage = (yearlySalary, yearlyAmount) =>
+  !!yearlySalary && !!yearlyAmount
+    ? roundAccurately((yearlyAmount / yearlySalary) * 100, 1)
+    : 0;
 function createColumns(columnName, yearlySalary, yearlyAmount) {
   return {
     col1: columnName,
-    col2: `${roundAccurately((yearlyAmount / yearlySalary) * 100, 1)}%`,
+    col2: `${generatePercentage(yearlySalary, yearlyAmount)}%`,
     col3: `£${formatNumber(yearlyAmount.toFixed(2))}`,
     col4: `£${formatNumber((yearlyAmount / 12).toFixed(2))}`,
     col5: `£${formatNumber((yearlyAmount / 52).toFixed(2))}`,
