@@ -5,6 +5,7 @@ import Form from '../Form';
 import Table from '../Table';
 import s from './style.module.scss';
 import { generateTaxYear } from '../../helpers/helpers';
+import Description from '../../components/Description';
 
 const Tax = ({
   className,
@@ -45,6 +46,7 @@ const Tax = ({
         taxYear={options.taxYear}
         onSubmit={onSubmit}
       />
+      <Description className={s.description} />
       <Table
         className={s.table}
         value={parseFloat(options.grossSalary)}

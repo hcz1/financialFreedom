@@ -2,13 +2,14 @@ import React from 'react';
 import classnames from 'classnames';
 import { formatNumber, generateTaxYear } from '../../helpers/helpers';
 import studentLoanThresholds from '../../data/staticData/studentLoanRates.json';
+import TextBlock from '../TextBlock';
 import s from './style.module.scss';
 const Description = ({ className }) => {
   const currentTaxYear = generateTaxYear();
   const { plan_1, plan_2 } = studentLoanThresholds[currentTaxYear];
   return (
-    <div className={classnames(s.description, className)}>
-      <h2>How to use Simple Salary Tax Calulator</h2>
+    <TextBlock className={classnames(s.description, className)}>
+      <h2>How to use Simple Salary Tax Calcuator</h2>
       <p>
         Using Simple Salary is easier then ever, input your salary, choose how
         often you get paid your salary and hit Enter! <br />
@@ -54,26 +55,7 @@ const Description = ({ className }) => {
         <b>(Before any tax and/or pension contributions are deducted)</b>
       </p>
       <br />
-      <h2>Previous Tax Years</h2>
-      <p>
-        Checking how much you would have earned in previous years can be done
-        simply by selecting the tax year from the drop down and pressing
-        calculate.
-      </p>
-      <br />
-      <h2>Important Dates</h2>
-      <p>
-        Please remember that the tax year runs from <b>April 6th</b> to the{' '}
-        <b>April 5th</b> the next year.
-      </p>
-      <br />
-      <h2>Disclaimer</h2>
-      <p>
-        Information provided on this site is for illustrative purposes only and
-        accuracy <b>cannot</b> 100% be guaranteed. Please do not make any major
-        financial decisions without consulting a qualified specialist.
-      </p>
-    </div>
+    </TextBlock>
   );
 };
 
