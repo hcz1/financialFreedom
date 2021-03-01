@@ -44,6 +44,7 @@ const studentLoanArr = [
   },
 ];
 const removeComma = (string) => string.replace(/,/g, '');
+
 const Form = ({
   className,
   grossSalary = '',
@@ -54,7 +55,13 @@ const Form = ({
   onSubmit,
 }) => {
   const formik = useFormik({
-    initialValues: { grossSalary, pension, studentLoan, multiplier, taxYear },
+    initialValues: {
+      grossSalary: formatNumber(grossSalary),
+      pension,
+      studentLoan,
+      multiplier,
+      taxYear,
+    },
     onSubmit: (values) => {
       onSubmit({
         ...values,
@@ -97,7 +104,7 @@ const Form = ({
           style={{ width: '270px' }}
           error={formik.errors.grossSalary}
           touched={formik.touched.grossSalary}
-          value={formatNumber(formik.values.grossSalary)}
+          value={formik.values.grossSalary}
           onChange={({ target: { value = '' } }) => {
             if (/^[\d,.]*$/.test(value)) {
               formik.setFieldValue(
