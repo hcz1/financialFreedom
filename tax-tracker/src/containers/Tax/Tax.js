@@ -47,7 +47,7 @@ const Tax = ({
       />
       <Table
         className={s.table}
-        value={parseInt(options.grossSalary)}
+        value={parseFloat(options.grossSalary)}
         studentLoanType={options.studentLoan}
         pensionValue={options.pension}
         multiplier={options.multiplier}

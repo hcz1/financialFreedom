@@ -9,6 +9,11 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.1/cookieconsent.min.css"
     />
     <script
+      data-ad-client="ca-pub-5795581320311376"
+      async
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+    ></script>
+    <script
       src="https://cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.1/cookieconsent.min.js"
       data-cfasync="false"
     ></script>
@@ -69,7 +74,7 @@
         dataLayer.push(arguments);
       }
       var host = window.location.hostname;
-      if (host !== 'localhost') {
+      if (host !== 'localhost' || !host.includes('develop')) {
         gtag('js', new Date());
         gtag('config', 'G-E59QD38NLN', { anonymize_ip: true });
       }
