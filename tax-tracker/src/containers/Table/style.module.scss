@@ -1,5 +1,9 @@
 @import '../../common/variables.scss';
-.table {
+.tableBtnContainer {
   color: $black;
   width: 100%;
+  .tableContainer {
+    overflow-x: auto;
+    margin-bottom: 16px;
+  }
 }

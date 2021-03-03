@@ -1,12 +1,93 @@
 import React, { useMemo } from 'react';
 import classnames from 'classnames';
 import { useTable } from 'react-table';
+import { CSVLink } from 'react-csv';
 import TableComponent from '../../components/TableComponent/TableComponent';
 import { formatNumber } from '../../helpers/helpers';
 import { nationalInsurance, studentLoan } from '../../data';
 import yearlyRates from '../../data/staticData/yearlyRates.json';
 import { generateIncomeTax } from '../../data/incomeTax';
 import s from './style.module.scss';
+import Button from '../../components/Button';
+
+const icons = ({ taxYear }) => [
+  {
+    col: 'Adjusted Wage',
+    PopperContent: () => (
+      <div>
+        <p style={{ marginBottom: '12px' }}>
+          <b>Adjusted wage</b> is your salary minus the amount you pay into your
+          pension
+        </p>
+        <p>The adjusted wage is what your tax is based on</p>
+      </div>
+    ),
+  },
+  {
+    col: 'Basic Rate',
+    PopperContent: () => {
+      const taxData = yearlyRates[taxYear];
+      return (
+        <div>
+          <p>
+            The tax year of <b>{taxYear}</b> basic rate tax is taxed from{' '}
+            <b>£{formatNumber(taxData.personalAllowance + 1)}</b> to{' '}
+            <b>
+              £{formatNumber(taxData.basicRate + taxData.personalAllowance)}{' '}
+            </b>{' '}
+            at a rate of
+            <b> 20%</b>
+            <br />
+          </p>
+        </div>
+      );
+    },
+  },
+  {
+    col: 'Additional Rate',
+    PopperContent: () => {
+      const taxData = yearlyRates[taxYear];
+      return (
+        <div>
+          <p style={{ marginBottom: '12px' }}>
+            The tax year of <b>{taxYear}</b> higher rate tax is taxed from{' '}
+            <b>
+              £{formatNumber(taxData.basicRate + taxData.personalAllowance + 1)}
+            </b>{' '}
+            to <b>£{formatNumber(taxData.higherRate)}</b> at a rate of
+            <b> 40%</b>
+          </p>
+          <p>
+            Personal allowance drops <b>£1</b> for every <b>£2</b> above{' '}
+            <b>£100,000</b> of gross salary
+            {/* <br />
+            Your personal allowance is down{' '}
+            <b>£{formatNumber(allowance)}</b> from{' '}
+            <b>£{formatNumber(taxData.personalAllowance)} </b>to{' '}
+            <b>
+              £{formatNumber(taxData.personalAllowance - allowance)}
+            </b> */}
+          </p>
+        </div>
+      );
+    },
+  },
+  {
+    col: 'Higher Rate',
+    PopperContent: () => {
+      const taxData = yearlyRates[taxYear];
+      return (
+        <div>
+          <p>
+            The tax year of <b>{taxYear}</b> higher rate tax is taxed at{' '}
+            <b>£{formatNumber(taxData.higherRate)}+</b> at a rate of
+            <b> 45%</b>
+          </p>
+        </div>
+      );
+    },
+  },
+];
 
 const Table = ({
   className,
@@ -130,97 +211,23 @@ const Table = ({
     []
   );
   const tableInstance = useTable({ columns, data });
+  const csvData = [
+    columns.map(({ Header }, i) => (i === 0 ? 'SimpleSalary' : Header)),
+    ...data.map((row) => Object.values(row)),
+    ['www.SimpleSalary.com'],
+  ];
   return (
-    <div className={classnames(s.table, className)}>
-      <TableComponent
-        icons={[
-          {
-            col: 'Adjusted Wage',
-            PopperContent: () => (
-              <div>
-                <p style={{ marginBottom: '12px' }}>
-                  <b>Adjusted wage</b> is your salary minus the amount you pay
-                  into your pension
-                </p>
-                <p>The adjusted wage is what your tax is based on</p>
-              </div>
-            ),
-          },
-          {
-            col: 'Basic Rate',
-            PopperContent: () => {
-              const taxData = yearlyRates[taxYear];
-              return (
-                <div>
-                  <p>
-                    The tax year of <b>{taxYear}</b> basic rate tax is taxed
-                    from <b>£{formatNumber(taxData.personalAllowance + 1)}</b>{' '}
-                    to{' '}
-                    <b>
-                      £
-                      {formatNumber(
-                        taxData.basicRate + taxData.personalAllowance
-                      )}{' '}
-                    </b>{' '}
-                    at a rate of
-                    <b> 20%</b>
-                    <br />
-                  </p>
-                </div>
-              );
-            },
-          },
-          {
-            col: 'Additional Rate',
-            PopperContent: () => {
-              const taxData = yearlyRates[taxYear];
-              return (
-                <div>
-                  <p style={{ marginBottom: '12px' }}>
-                    The tax year of <b>{taxYear}</b> higher rate tax is taxed
-                    from{' '}
-                    <b>
-                      £
-                      {formatNumber(
-                        taxData.basicRate + taxData.personalAllowance + 1
-                      )}
-                    </b>{' '}
-                    to <b>£{formatNumber(taxData.higherRate)}</b> at a rate of
-                    <b> 40%</b>
-                  </p>
-                  <p>
-                    Personal allowance drops <b>£1</b> for every <b>£2</b> above{' '}
-                    <b>£100,000</b> of gross salary
-                    {/* <br />
-                    Your personal allowance is down{' '}
-                    <b>£{formatNumber(allowance)}</b> from{' '}
-                    <b>£{formatNumber(taxData.personalAllowance)} </b>to{' '}
-                    <b>
-                      £{formatNumber(taxData.personalAllowance - allowance)}
-                    </b> */}
-                  </p>
-                </div>
-              );
-            },
-          },
-          {
-            col: 'Higher Rate',
-            PopperContent: () => {
-              const taxData = yearlyRates[taxYear];
-              return (
-                <div>
-                  <p>
-                    The tax year of <b>{taxYear}</b> higher rate tax is taxed at{' '}
-                    <b>£{formatNumber(taxData.higherRate)}+</b> at a rate of
-                    <b> 45%</b>
-                  </p>
-                </div>
-              );
-            },
-          },
-        ]}
-        {...tableInstance}
-      />
+    <div className={classnames(s.tableBtnContainer, className)}>
+      <div className={s.tableContainer}>
+        <TableComponent
+          className={s.table}
+          icons={icons({ taxYear })}
+          {...tableInstance}
+        />
+      </div>
+      <CSVLink data={csvData}>
+        <Button>Download CSV file</Button>
+      </CSVLink>
     </div>
   );
 };
