@@ -214,7 +214,7 @@ const Table = ({
   const csvData = [
     columns.map(({ Header }, i) => (i === 0 ? 'SimpleSalary' : Header)),
     ...data.map((row) => Object.values(row)),
-    ['www.SimpleSalary.com'],
+    ['www.SimpleSalary.co.uk'],
   ];
   return (
     <div className={classnames(s.tableBtnContainer, className)}>
