@@ -12,6 +12,7 @@ import Popper from '../../components/Popper';
 import s from './style.module.scss';
 
 import yearlyRates from '../../data/staticData/yearlyRates.json';
+import Button from '../../components/Button';
 
 const multiplierArr = [
   { id: 'Year', value: '1', name: 'multiplier' },
@@ -187,9 +188,7 @@ const Form = ({
           </RadioButton>
         ))}
       </InputGroup>
-      <button className={s.btn} type='submit'>
-        Calculate my taxes
-      </button>
+      <Button className={s.btn}>Calculate my taxes</Button>
     </form>
   );
 };

@@ -59,23 +59,7 @@
     }
   }
   .btn {
-    cursor: pointer;
     width: 343px;
     height: 44px;
-    background-color: $green;
-    color: white;
-    border-radius: 4px;
-    border: 0;
-    text-align: center;
-    font-size: 18px;
-    line-height: 22px;
-    font-weight: bold;
-    &:disabled {
-      background-color: lightgray;
-    }
-    &:hover:enabled {
-      transition: 0.5s;
-      background-color: darken($green-hex, 10%);
-    }
   }
 }
