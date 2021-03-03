@@ -1,0 +1,63 @@
+{
+    "21/22": {
+        "threshold1": 9504,
+        "threshold2": 50004,
+        "rate1": 0.12,
+        "rate2": 0.02
+    },
+    "20/21": {
+        "threshold1": 9504,
+        "threshold2": 50004,
+        "rate1": 0.12,
+        "rate2": 0.02
+    },
+    "19/20": {
+        "threshold1": 8628,
+        "threshold2": 50004,
+        "rate1": 0.12,
+        "rate2": 0.02
+    },
+    "18/19": {
+        "threshold1": 8424,
+        "threshold2": 46356,
+        "rate1": 0.12,
+        "rate2": 0.02
+    },
+    "17/18": {
+        "threshold1": 8160,
+        "threshold2": 45032,
+        "rate1": 0.12,
+        "rate2": 0.02
+    },
+    "16/17": {
+        "threshold1": 8060,
+        "threshold2": 43004,
+        "rate1": 0.12,
+        "rate2": 0.02
+    },
+    "15/16": {
+        "threshold1": 8060,
+        "threshold2": 42380,
+        "rate1": 0.12,
+        "rate2": 0.02
+    },
+    "14/15": {
+        "threshold1": 7956,
+        "threshold2": 41860,
+        "rate1": 0.12,
+        "rate2": 0.02
+    },
+    "13/14": {
+        "threshold1": 7748,
+        "threshold2": 41444,
+        "rate1": 0.12,
+        "rate2": 0.02
+    },
+    "12/13": {
+        "threshold1": 7592,
+        "threshold2": 42484,
+        "rate1": 0.12,
+        "rate2": 0.02
+    }
+  }
+  

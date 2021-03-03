@@ -4,6 +4,7 @@ import Header from './components/Header';
 import { STUDENT_LOAN_TYPES } from './helpers/constants';
 import Tax from './containers/Tax/Tax';
 import s from './App.module.scss';
+import ExtraInfo from './components/ExtraInfo';
 import 'react-popper-tooltip/dist/styles.css';
 
 const App = () => {
@@ -21,9 +22,10 @@ const App = () => {
   };
   return (
     <div className={s.app}>
-      <div className={s.container}>
-        <Header />
+      <Header className={s.header} />
+      <div className={s.contentContainer}>
         <Tax className={s.tax} {...initalState} />
+        <ExtraInfo />
       </div>
       <footer>
         <span>&#169; SimpleSalary {new Date().getFullYear()}</span>

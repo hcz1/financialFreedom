@@ -1,13 +1,27 @@
 @import '../../common/variables.scss';
 .tax {
   display: flex;
-  justify-content: space-evenly;
   flex-wrap: wrap;
-  align-items: center;
   .form {
-    padding-bottom: 10px;
+    margin: 0px 28px 0 0;
+  }
+  .description {
+    flex: 1;
   }
   .table {
+    margin: 28px 0;
     overflow-x: auto;
+  }
+  @media screen and (max-width: 1132px) {
+    .form {
+      margin: 0 auto;
+      order: 1;
+    }
+    .description {
+      order: 3;
+    }
+    .table {
+      order: 2;
+    }
   }
 }

@@ -74,7 +74,7 @@
         dataLayer.push(arguments);
       }
       var host = window.location.hostname;
-      if (host !== 'localhost') {
+      if (host !== 'localhost' || !host.includes('develop')) {
         gtag('js', new Date());
         gtag('config', 'G-E59QD38NLN', { anonymize_ip: true });
       }

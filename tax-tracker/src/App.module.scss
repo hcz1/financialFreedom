@@ -4,10 +4,10 @@
   min-height: 100vh;
   flex-direction: column;
   justify-content: space-between;
-  .container {
-    .tax {
-      max-width: 1500px;
-      margin: 32px auto;
+  .contentContainer {
+    margin: 16px;
+    @media screen and (min-width: $breakpoint-small) {
+      margin: 16px 40px;
     }
   }
   footer {
