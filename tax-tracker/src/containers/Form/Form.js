@@ -148,6 +148,7 @@ const Form = ({
       </Label>
       <InputGroup>
         <Input
+          step='.01'
           min={0}
           max={100}
           type='number'
