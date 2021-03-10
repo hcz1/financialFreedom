@@ -240,7 +240,7 @@ const roundAccurately = (number, decimalPlaces) =>
 
 const generatePercentage = (yearlySalary, yearlyAmount) =>
   !!yearlySalary && !!yearlyAmount
-    ? roundAccurately((yearlyAmount / yearlySalary) * 100, 1)
+    ? roundAccurately((yearlyAmount / yearlySalary) * 100, 2)
     : 0;
 function createColumns(columnName, yearlySalary, yearlyAmount) {
   return {
