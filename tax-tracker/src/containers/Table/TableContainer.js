@@ -6,7 +6,7 @@ import TableComponent from '../../components/TableComponent/TableComponent';
 import { formatNumber } from '../../helpers/helpers';
 import { nationalInsurance, studentLoan } from '../../data';
 import yearlyRates from '../../data/staticData/yearlyRates.json';
-import { generateIncomeTax } from '../../data/incomeTax';
+import { calculate } from '../../data/incomeTax_old';
 import s from './style.module.scss';
 import Button from '../../components/Button';
 
@@ -89,148 +89,147 @@ const icons = ({ taxYear }) => [
   },
 ];
 
-const Table = ({
-  className,
-  value,
-  studentLoanType,
-  pensionValue,
-  multiplier = 1,
-  taxYear,
-}) => {
-  const pensionPercentage = pensionValue / 100;
-  const adjustedSalary = (1 - pensionPercentage) * (value * multiplier);
-  const yearlySalary = value * multiplier;
-  const {
-    totalTaxable,
-    taxBand1,
-    taxBand2,
-    taxBand3,
-    total,
-    // allowance,
-  } = generateIncomeTax({
-    salary: adjustedSalary,
-    year: taxYear,
-  });
-  const nationalInsuranceYearly = nationalInsurance({
-    salary: adjustedSalary,
-    year: taxYear,
-  });
+const Table = React.forwardRef(
+  (
+    {
+      className,
+      value,
+      studentLoanType,
+      pensionValue,
+      multiplier = 1,
+      taxYear,
+      scottish,
+    },
+    ref
+  ) => {
+    const pensionPercentage = pensionValue / 100;
+    const adjustedSalary = (1 - pensionPercentage) * (value * multiplier);
+    const yearlySalary = value * multiplier;
 
-  const studentLoanYearly = studentLoan({
-    salary: yearlySalary,
-    type: studentLoanType,
-    year: taxYear,
-  });
+    const { rates, totalIncomeTaxable } = calculate({
+      salary: adjustedSalary,
+      year: taxYear,
+      country: scottish ? 'scotland' : 'england',
+    });
 
-  // const previousYearSalary = generateIncomeTax({
-  //   salary: adjustedSalary,
-  //   year: '18/19',
-  // });
+    const totalTax = Object.values(rates).reduce((a, b) => (a += b));
+    const takeHome = adjustedSalary - totalTax;
+    const nationalInsuranceYearly = nationalInsurance({
+      salary: yearlySalary,
+      year: taxYear,
+    });
 
-  const data = useMemo(
-    () =>
+    const studentLoanYearly = studentLoan({
+      salary: yearlySalary,
+      type: studentLoanType,
+      year: taxYear,
+    });
+
+    // const previousYearSalary = generateIncomeTax({
+    //   salary: adjustedSalary,
+    //   year: '18/19',
+    // });
+
+    const data = useMemo(
+      () =>
+        [
+          createColumns('Gross Wage', yearlySalary, yearlySalary),
+          createColumns('Adjusted Wage', yearlySalary, adjustedSalary),
+          createColumns('Total Taxable', yearlySalary, totalIncomeTaxable),
+          createColumns(
+            'Pension Contribution',
+            yearlySalary,
+            pensionPercentage * yearlySalary
+          ),
+          createColumns('Student Loan', yearlySalary, studentLoanYearly),
+          createColumns(
+            'National Insurance',
+            yearlySalary,
+            nationalInsuranceYearly
+          ),
+          ...Object.keys(rates).map((key) =>
+            createColumns(key, yearlySalary, rates[key])
+          ),
+          createColumns('Total Tax', yearlySalary, totalTax),
+          createColumns(
+            'Take Home',
+            yearlySalary,
+            takeHome - studentLoanYearly - nationalInsuranceYearly
+          ),
+          //createColumns('Previous Year', (total - studentLoanYearly - nationalInsuranceYearly) - (previousYearSalary.total - studentLoanYearly - nationalInsuranceYearly))
+        ].filter(Boolean),
       [
-        createColumns('Gross Wage', yearlySalary, yearlySalary),
-        createColumns('Adjusted Wage', yearlySalary, adjustedSalary),
-        createColumns('Total Taxable', yearlySalary, totalTaxable),
-        createColumns(
-          'Pension Contribution',
-          yearlySalary,
-          pensionPercentage * yearlySalary
-        ),
-        createColumns('Student Loan', yearlySalary, studentLoanYearly),
-        createColumns(
-          'National Insurance',
-          yearlySalary,
-          nationalInsuranceYearly
-        ),
-        createColumns('Basic Rate', yearlySalary, taxBand1),
-        createColumns('Additional Rate', yearlySalary, taxBand2),
-        createColumns('Higher Rate', yearlySalary, taxBand3),
-        createColumns(
-          'Total Tax',
-          yearlySalary,
-          taxBand1 + taxBand2 + taxBand3
-        ),
-        createColumns(
-          'Take Home',
-          yearlySalary,
-          total - studentLoanYearly - nationalInsuranceYearly
-        ),
-        //createColumns('Previous Year', (total - studentLoanYearly - nationalInsuranceYearly) - (previousYearSalary.total - studentLoanYearly - nationalInsuranceYearly))
-      ].filter(Boolean),
-    [
-      yearlySalary,
-      adjustedSalary,
-      totalTaxable,
-      pensionPercentage,
-      studentLoanYearly,
-      nationalInsuranceYearly,
-      taxBand1,
-      taxBand2,
-      taxBand3,
-      total,
-    ]
-  );
-  const columns = useMemo(
-    () => [
-      {
-        Header: '',
-        accessor: 'col1', // accessor is the "key" in the data
-      },
-      {
-        Header: '%',
-        accessor: 'col2',
-      },
-      {
-        Header: 'Year',
-        accessor: 'col3',
-      },
-      {
-        Header: 'Month',
-        accessor: 'col4',
-      },
-      {
-        Header: 'Week',
-        accessor: 'col5',
-      },
-      {
-        Header: 'Day',
-        accessor: 'col6',
-      },
-      {
-        Header: 'Hour',
-        accessor: 'col7',
-      },
-      {
-        Header: 'Minute',
-        accessor: 'col8',
-      },
-    ],
+        yearlySalary,
+        adjustedSalary,
+        totalIncomeTaxable,
+        pensionPercentage,
+        studentLoanYearly,
+        nationalInsuranceYearly,
+        rates,
+        totalTax,
+        takeHome,
+      ]
+    );
+    const columns = useMemo(
+      () => [
+        {
+          Header: '',
+          accessor: 'col1', // accessor is the "key" in the data
+        },
+        {
+          Header: '%',
+          accessor: 'col2',
+        },
+        {
+          Header: 'Year',
+          accessor: 'col3',
+        },
+        {
+          Header: 'Month',
+          accessor: 'col4',
+        },
+        {
+          Header: 'Week',
+          accessor: 'col5',
+        },
+        {
+          Header: 'Day',
+          accessor: 'col6',
+        },
+        {
+          Header: 'Hour',
+          accessor: 'col7',
+        },
+        {
+          Header: 'Minute',
+          accessor: 'col8',
+        },
+      ],
 
-    []
-  );
-  const tableInstance = useTable({ columns, data });
-  const csvData = [
-    columns.map(({ Header }, i) => (i === 0 ? 'SimpleSalary' : Header)),
-    ...data.map((row) => Object.values(row)),
-    ['www.SimpleSalary.co.uk'],
-  ];
-  return (
-    <div className={classnames(s.tableBtnContainer, className)}>
-      <div className={s.tableContainer}>
-        <TableComponent
-          className={s.table}
-          icons={icons({ taxYear })}
-          {...tableInstance}
-        />
+      []
+    );
+    const tableInstance = useTable({ columns, data });
+    const csvData = [
+      columns.map(({ Header }, i) => (i === 0 ? 'SimpleSalary' : Header)),
+      ...data.map((row) => Object.values(row)),
+      ['www.SimpleSalary.co.uk'],
+    ];
+    return (
+      <div ref={ref} className={classnames(s.tableBtnContainer, className)}>
+        <div className={s.tableContainer}>
+          <TableComponent
+            className={s.table}
+            icons={icons({ taxYear })}
+            {...tableInstance}
+          />
+        </div>
+        <CSVLink data={csvData}>
+          <Button>Download CSV file</Button>
+        </CSVLink>
       </div>
-      <CSVLink data={csvData}>
-        <Button>Download CSV file</Button>
-      </CSVLink>
-    </div>
-  );
-};
+    );
+  }
+);
 
 export default Table;
 const roundAccurately = (number, decimalPlaces) =>

@@ -1,6 +1,98 @@
 import yearlyRate from './staticData/yearlyRates.json';
 
-export const generateIncomeTax = ({ salary, year }) => {
+export const generateIncomeTax = ({ salary, year, scottish }) => {
+  return !scottish
+    ? getEnglandIncomeTax({ salary, year })
+    : getScottishIncomeTax({ salary, year });
+};
+const getScottishIncomeTax = ({ salary, year }) => {
+  const yearRate = yearlyRate[year];
+  const yearRateScottish = yearlyRate[year].scotland;
+
+  let starterRate = 0;
+  let basicRate = 0;
+  let intermediateRate = 0;
+  let higherRate = 0;
+  let topRate = 0;
+
+  //How much is in starterRate bracket
+  if (salary >= yearRateScottish.starterRate.taxableIncome) {
+    starterRate =
+      yearRateScottish.starterRate.taxableIncome -
+      yearRateScottish.personalAllowance;
+  } else if (
+    salary < yearRateScottish.starterRate.taxableIncome &&
+    salary > yearRateScottish.personalAllowance
+  ) {
+    starterRate = salary - yearRateScottish.personalAllowance;
+  }
+  //How much is in basicRate bracket
+  if (salary >= yearRateScottish.basicRate.taxableIncome) {
+    basicRate =
+      yearRateScottish.basicRate.taxableIncome -
+      yearRateScottish.starterRate.taxableIncome;
+  } else if (
+    salary < yearRateScottish.basicRate.taxableIncome &&
+    salary > yearRateScottish.starterRate.taxableIncome
+  ) {
+    basicRate = salary - yearRateScottish.starterRate.taxableIncome;
+  }
+
+  //How much is in intermediateRate bracket
+  if (salary >= yearRateScottish.intermediateRate.taxableIncome) {
+    intermediateRate =
+      yearRateScottish.intermediateRate.taxableIncome -
+      yearRateScottish.basicRate.taxableIncome;
+  } else if (
+    salary < yearRateScottish.intermediateRate.taxableIncome &&
+    salary > yearRateScottish.basicRate.taxableIncome
+  ) {
+    intermediateRate = salary - yearRateScottish.basicRate.taxableIncome;
+  }
+
+  //How much is in higherRate bracket
+  if (salary >= yearRateScottish.higherRate.taxableIncome) {
+    higherRate =
+      yearRateScottish.higherRate.taxableIncome -
+      yearRateScottish.intermediateRate.taxableIncome;
+  } else if (
+    salary < yearRateScottish.higherRate.taxableIncome &&
+    salary > yearRateScottish.intermediateRate.taxableIncome
+  ) {
+    higherRate = salary - yearRateScottish.intermediateRate.taxableIncome;
+  }
+  // PA
+  if (
+    salary >=
+    yearRate.incomeLimitPersonalAllowence + yearRate.personalAllowance * 2
+  ) {
+    console.log(yearRateScottish.personalAllowance);
+    higherRate += yearRateScottish.personalAllowance;
+  } else if (
+    salary <
+      yearRate.incomeLimitPersonalAllowence + yearRate.personalAllowance * 2 &&
+    salary > yearRate.incomeLimitPersonalAllowence + 1
+  ) {
+    higherRate += Math.floor(
+      (salary - yearRate.incomeLimitPersonalAllowence) / 2
+    );
+  }
+
+  //How much is in topRate bracket
+  if (salary > yearRateScottish.topRate.taxableIncome) {
+    topRate = salary - yearRateScottish.topRate.taxableIncome;
+  }
+
+  return {
+    // totalTaxable: totalTaxable,
+    starterRate: starterRate * yearRateScottish.starterRate.taxRate,
+    basicRate: basicRate * yearRateScottish.basicRate.taxRate,
+    intermediateRate,
+    higherRate,
+    topRate,
+  };
+};
+const getEnglandIncomeTax = ({ salary, year }) => {
   const yearRate = yearlyRate[year];
 
   const noPersonalAllowenceSalary =
@@ -50,7 +142,7 @@ export const generateIncomeTax = ({ salary, year }) => {
   const totalIncomeTax = taxBracket1 + taxBracket2 + taxBracket3;
   const takeHome = salary - totalIncomeTax;
   const totalTaxable =
-    (salary - adjustedPersonalAllowence < 0)
+    salary - adjustedPersonalAllowence < 0
       ? 0
       : salary - adjustedPersonalAllowence;
 

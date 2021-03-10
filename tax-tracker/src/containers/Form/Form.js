@@ -1,5 +1,5 @@
 import React from 'react';
-import { useFormik } from 'formik';
+import { useFormik, Field, FormikProvider } from 'formik';
 import classnames from 'classnames';
 import Select from 'react-select';
 import Label from '../../components/label/label';
@@ -52,6 +52,7 @@ const Form = ({
   pension,
   studentLoan,
   multiplier,
+  scottish = false,
   taxYear,
   onSubmit,
 }) => {
@@ -62,6 +63,7 @@ const Form = ({
       studentLoan,
       multiplier,
       taxYear,
+      scottish,
     },
     onSubmit: (values) => {
       onSubmit({
@@ -143,6 +145,17 @@ const Form = ({
           </RadioButton>
         ))}
       </InputGroup>
+      <Label htmlFor='scottish'>
+        <b>Are you a Scottish resident?</b>
+      </Label>
+      <InputGroup>
+        <Checkbox
+          type='checkbox'
+          id='scottish'
+          name='scottish'
+          formik={formik}
+        />
+      </InputGroup>
       <Label htmlFor='pension'>
         <b>My Pension Contribution</b>
       </Label>
@@ -189,9 +202,38 @@ const Form = ({
           </RadioButton>
         ))}
       </InputGroup>
-      <Button className={s.btn}>Calculate my taxes</Button>
+      <Button type='submit' className={s.btn}>
+        Calculate my taxes
+      </Button>
     </form>
   );
 };
 
 export default Form;
+
+interface Props {
+  id: string;
+  name: string;
+  className: string;
+}
+
+export const Checkbox = ({
+  id,
+  name,
+  formik,
+  className,
+}: Props): JSX.Element => (
+  <FormikProvider value={formik}>
+    <Field name={name}>
+      {({ field, form, meta }) => (
+        <input
+          id={id}
+          {...field}
+          type='checkbox'
+          className={className}
+          checked={field.value}
+        />
+      )}
+    </Field>
+  </FormikProvider>
+);
