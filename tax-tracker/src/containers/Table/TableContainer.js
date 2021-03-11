@@ -4,90 +4,10 @@ import { useTable } from 'react-table';
 import { CSVLink } from 'react-csv';
 import TableComponent from '../../components/TableComponent/TableComponent';
 import { formatNumber } from '../../helpers/helpers';
-import { nationalInsurance, studentLoan } from '../../data';
-import yearlyRates from '../../data/staticData/yearlyRates.json';
-import { calculate } from '../../data/incomeTax_old';
+import { nationalInsurance, studentLoan, calculateIncomeTax } from '../../data';
+import { icons } from './Icons/Icons';
 import s from './style.module.scss';
 import Button from '../../components/Button';
-
-const icons = ({ taxYear }) => [
-  {
-    col: 'Adjusted Wage',
-    PopperContent: () => (
-      <div>
-        <p style={{ marginBottom: '12px' }}>
-          <b>Adjusted wage</b> is your salary minus the amount you pay into your
-          pension
-        </p>
-        <p>The adjusted wage is what your tax is based on</p>
-      </div>
-    ),
-  },
-  {
-    col: 'Basic Rate',
-    PopperContent: () => {
-      const taxData = yearlyRates[taxYear];
-      return (
-        <div>
-          <p>
-            The tax year of <b>{taxYear}</b> basic rate tax is taxed from{' '}
-            <b>£{formatNumber(taxData.personalAllowance + 1)}</b> to{' '}
-            <b>
-              £{formatNumber(taxData.basicRate + taxData.personalAllowance)}{' '}
-            </b>{' '}
-            at a rate of
-            <b> 20%</b>
-            <br />
-          </p>
-        </div>
-      );
-    },
-  },
-  {
-    col: 'Additional Rate',
-    PopperContent: () => {
-      const taxData = yearlyRates[taxYear];
-      return (
-        <div>
-          <p style={{ marginBottom: '12px' }}>
-            The tax year of <b>{taxYear}</b> higher rate tax is taxed from{' '}
-            <b>
-              £{formatNumber(taxData.basicRate + taxData.personalAllowance + 1)}
-            </b>{' '}
-            to <b>£{formatNumber(taxData.higherRate)}</b> at a rate of
-            <b> 40%</b>
-          </p>
-          <p>
-            Personal allowance drops <b>£1</b> for every <b>£2</b> above{' '}
-            <b>£100,000</b> of gross salary
-            {/* <br />
-            Your personal allowance is down{' '}
-            <b>£{formatNumber(allowance)}</b> from{' '}
-            <b>£{formatNumber(taxData.personalAllowance)} </b>to{' '}
-            <b>
-              £{formatNumber(taxData.personalAllowance - allowance)}
-            </b> */}
-          </p>
-        </div>
-      );
-    },
-  },
-  {
-    col: 'Higher Rate',
-    PopperContent: () => {
-      const taxData = yearlyRates[taxYear];
-      return (
-        <div>
-          <p>
-            The tax year of <b>{taxYear}</b> higher rate tax is taxed at{' '}
-            <b>£{formatNumber(taxData.higherRate)}+</b> at a rate of
-            <b> 45%</b>
-          </p>
-        </div>
-      );
-    },
-  },
-];
 
 const Table = React.forwardRef(
   (
@@ -105,11 +25,11 @@ const Table = React.forwardRef(
     const pensionPercentage = pensionValue / 100;
     const adjustedSalary = (1 - pensionPercentage) * (value * multiplier);
     const yearlySalary = value * multiplier;
-
-    const { rates, totalIncomeTaxable } = calculate({
+    const country = scottish ? 'scotland' : 'england';
+    const { rates, totalIncomeTaxable } = calculateIncomeTax({
       salary: adjustedSalary,
       year: taxYear,
-      country: scottish ? 'scotland' : 'england',
+      country,
     });
 
     const totalTax = Object.values(rates).reduce((a, b) => (a += b));
@@ -134,7 +54,9 @@ const Table = React.forwardRef(
       () =>
         [
           createColumns('Gross Wage', yearlySalary, yearlySalary),
-          createColumns('Adjusted Wage', yearlySalary, adjustedSalary),
+          pensionValue
+            ? createColumns('Adjusted Wage', yearlySalary, adjustedSalary)
+            : undefined,
           createColumns('Total Taxable', yearlySalary, totalIncomeTaxable),
           createColumns(
             'Pension Contribution',
@@ -160,6 +82,7 @@ const Table = React.forwardRef(
         ].filter(Boolean),
       [
         yearlySalary,
+        pensionValue,
         adjustedSalary,
         totalIncomeTaxable,
         pensionPercentage,
@@ -219,7 +142,7 @@ const Table = React.forwardRef(
         <div className={s.tableContainer}>
           <TableComponent
             className={s.table}
-            icons={icons({ taxYear })}
+            icons={icons({ taxYear, country })}
             {...tableInstance}
           />
         </div>
