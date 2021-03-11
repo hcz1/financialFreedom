@@ -58,12 +58,16 @@ const Table = React.forwardRef(
             ? createColumns('Adjusted Wage', yearlySalary, adjustedSalary)
             : undefined,
           createColumns('Total Taxable', yearlySalary, totalIncomeTaxable),
-          createColumns(
-            'Pension Contribution',
-            yearlySalary,
-            pensionPercentage * yearlySalary
-          ),
-          createColumns('Student Loan', yearlySalary, studentLoanYearly),
+          pensionValue
+            ? createColumns(
+                'Pension Contribution',
+                yearlySalary,
+                pensionPercentage * yearlySalary
+              )
+            : undefined,
+          studentLoanType !== 'none'
+            ? createColumns('Student Loan', yearlySalary, studentLoanYearly)
+            : undefined,
           createColumns(
             'National Insurance',
             yearlySalary,
@@ -83,6 +87,7 @@ const Table = React.forwardRef(
       [
         yearlySalary,
         pensionValue,
+        studentLoanType,
         adjustedSalary,
         totalIncomeTaxable,
         pensionPercentage,
