@@ -19,6 +19,7 @@ const App = () => {
       : undefined,
     pension: parseFloat(queryStrings.pension) || 0,
     multiplier: queryStrings.multiplier,
+    scottish: queryStrings.scottish || false,
   };
   return (
     <div className={s.app}>

@@ -1,65 +1,48 @@
 import yearlyRate from './staticData/yearlyRates.json';
 
-export const generateIncomeTax = ({ salary, year }) => {
-  const yearRate = yearlyRate[year];
+export const calculateIncomeTax = ({ salary = 0, year, country }) => {
+  const {
+    personalAllowance,
+    incomeLimitPersonalAllowance,
+    taxRates,
+  } = yearlyRate[year][country];
 
-  const noPersonalAllowenceSalary =
-    yearRate.incomeLimitPersonalAllowence + yearRate.personalAllowance * 2;
+  const rates = {};
+  let totalIncomeTaxable = salary === 0 ? 0 : salary - personalAllowance;
 
-  const adjustedPersonalAllowence =
-    salary <= yearRate.incomeLimitPersonalAllowence
-      ? yearRate.personalAllowance
-      : salary >= noPersonalAllowenceSalary
-      ? 0
-      : yearRate.personalAllowance -
-        Math.floor((salary - yearRate.incomeLimitPersonalAllowence) / 2);
-
-  let band1 = 0;
-  let band2 = 0;
-  let band3 = 0;
-
-  //How much is in first bracket
-  if (salary >= yearRate.basicRate + yearRate.personalAllowance) {
-    band1 = yearRate.basicRate;
-  } else if (salary > yearRate.personalAllowance) {
-    band1 = salary - adjustedPersonalAllowence;
-  } else {
-    band1 = 0;
+  for (let i = 1; i < taxRates.length; i++) {
+    const { taxableIncome: taxableIncomePrev } = taxRates[i - 1];
+    const { name, rate, taxableIncome } = taxRates[i];
+    const isHighestTaxRate = i + 1 === taxRates.length;
+    if (salary >= taxableIncome) {
+      if (!isHighestTaxRate) {
+        rates[name] = (taxableIncome - taxableIncomePrev) * rate;
+      } else {
+        rates[name] = (salary - taxableIncome) * rate;
+      }
+    } else if (salary < taxableIncome && salary > taxableIncomePrev) {
+      rates[name] = (salary - taxableIncomePrev) * rate;
+    } else {
+      rates[name] = 0;
+    }
+    // calculate the removal of personal allowance in the correct tax band
+    if (taxableIncome > incomeLimitPersonalAllowance && !isHighestTaxRate) {
+      if (salary >= incomeLimitPersonalAllowance + personalAllowance * 2) {
+        rates[name] = (rates[name] / rate + personalAllowance) * rate;
+        totalIncomeTaxable += personalAllowance;
+      } else if (
+        salary < incomeLimitPersonalAllowance + personalAllowance * 2 &&
+        salary > incomeLimitPersonalAllowance + 1
+      ) {
+        rates[name] =
+          (rates[name] / rate +
+            Math.floor((salary - incomeLimitPersonalAllowance) / 2)) *
+          rate;
+        totalIncomeTaxable += Math.floor(
+          (salary - incomeLimitPersonalAllowance) / 2
+        );
+      }
+    }
   }
-
-  //How much is in second bracket
-  if (salary >= yearRate.higherRate) {
-    band2 = yearRate.higherRate - yearRate.basicRate;
-  } else if (salary >= yearRate.basicRate + yearRate.personalAllowance) {
-    band2 = salary - adjustedPersonalAllowence - yearRate.basicRate;
-  } else {
-    band2 = 0;
-  }
-
-  //How much is in third bracket
-  if (salary >= yearRate.higherRate) {
-    band3 = salary - yearRate.higherRate;
-  } else {
-    band3 = 0;
-  }
-
-  const taxBracket1 = band1 * 0.2;
-  const taxBracket2 = band2 * 0.4;
-  const taxBracket3 = band3 * 0.45;
-
-  const totalIncomeTax = taxBracket1 + taxBracket2 + taxBracket3;
-  const takeHome = salary - totalIncomeTax;
-  const totalTaxable =
-    (salary - adjustedPersonalAllowence < 0)
-      ? 0
-      : salary - adjustedPersonalAllowence;
-
-  return {
-    totalTaxable: totalTaxable,
-    taxBand1: taxBracket1,
-    taxBand2: taxBracket2,
-    taxBand3: taxBracket3,
-    total: takeHome,
-    allowance: yearRate.personalAllowance - adjustedPersonalAllowence,
-  };
+  return { rates, totalIncomeTaxable };
 };

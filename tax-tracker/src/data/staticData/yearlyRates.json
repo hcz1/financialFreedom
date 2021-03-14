@@ -1,62 +1,556 @@
 {
   "21/22": {
-    "personalAllowance": 12570,
-    "basicRate": 37700,
-    "higherRate": 150000,
-    "incomeLimitPersonalAllowence": 100000
+    "england": {
+      "personalAllowance": 12570,
+      "incomeLimitPersonalAllowance": 100000,
+      "taxRates": [
+        {
+          "name": "personalAllowance",
+          "rate": 0,
+          "taxableIncome": 12570
+        },
+        {
+          "name": "Basic Rate",
+          "rate": 0.2,
+          "taxableIncome": 50270
+        },
+        {
+          "name": "Additional Rate",
+          "rate": 0.4,
+          "taxableIncome": 150000
+        },
+        {
+          "name": "Higher Rate",
+          "rate": 0.45,
+          "taxableIncome": 150000
+        }
+      ]
+    },
+    "scotland": {
+      "personalAllowance": 12570,
+      "incomeLimitPersonalAllowance": 100000,
+      "taxRates": [
+        {
+          "name": "personalAllowance",
+          "rate": 0,
+          "taxableIncome": 12570
+        },
+        {
+          "name": "Starter Rate",
+          "rate": 0.19,
+          "taxableIncome": 14667
+        },
+        {
+          "name": "Baisc Rate",
+          "rate": 0.2,
+          "taxableIncome": 25296
+        },
+        {
+          "name": "Intermediate Rate",
+          "rate": 0.21,
+          "taxableIncome": 43662
+        },
+        {
+          "name": "Higher Rate",
+          "rate": 0.41,
+          "taxableIncome": 150000
+        },
+        {
+          "name": "Top Rate",
+          "rate": 0.46,
+          "taxableIncome": 150000
+        }
+      ]
+    }
   },
   "20/21": {
-    "personalAllowance": 12500,
-    "basicRate": 37500,
-    "higherRate": 150000,
-    "incomeLimitPersonalAllowence": 100000
+    "england": {
+      "personalAllowance": 12500,
+      "incomeLimitPersonalAllowance": 100000,
+      "taxRates": [
+        {
+          "name": "personalAllowance",
+          "rate": 0,
+          "taxableIncome": 12500
+        },
+        {
+          "name": "Basic Rate",
+          "rate": 0.2,
+          "taxableIncome": 50000
+        },
+        {
+          "name": "Additional Rate",
+          "rate": 0.4,
+          "taxableIncome": 150000
+        },
+        {
+          "name": "Higher Rate",
+          "rate": 0.45,
+          "taxableIncome": 150000
+        }
+      ]
+    },
+    "scotland": {
+      "personalAllowance": 12500,
+      "incomeLimitPersonalAllowance": 100000,
+      "taxRates": [
+        {
+          "name": "personalAllowance",
+          "rate": 0,
+          "taxableIncome": 12500
+        },
+        {
+          "name": "Starter Rate",
+          "rate": 0.19,
+          "taxableIncome": 14585
+        },
+        {
+          "name": "Baisc Rate",
+          "rate": 0.2,
+          "taxableIncome": 25158
+        },
+        {
+          "name": "Intermediate Rate",
+          "rate": 0.21,
+          "taxableIncome": 43430
+        },
+        {
+          "name": "Higher Rate",
+          "rate": 0.41,
+          "taxableIncome": 150000
+        },
+        {
+          "name": "Top Rate",
+          "rate": 0.46,
+          "taxableIncome": 150000
+        }
+      ]
+    }
   },
   "19/20": {
-    "personalAllowance": 12500,
-    "basicRate": 37500,
-    "higherRate": 150000,
-    "incomeLimitPersonalAllowence": 100000
+    "england": {
+      "personalAllowance": 12500,
+      "incomeLimitPersonalAllowance": 100000,
+      "taxRates": [
+        {
+          "name": "personalAllowance",
+          "rate": 0,
+          "taxableIncome": 12500
+        },
+        {
+          "name": "Basic Rate",
+          "rate": 0.2,
+          "taxableIncome": 50000
+        },
+        {
+          "name": "Additional Rate",
+          "rate": 0.4,
+          "taxableIncome": 150000
+        },
+        {
+          "name": "Higher Rate",
+          "rate": 0.45,
+          "taxableIncome": 150000
+        }
+      ]
+    },
+    "scotland": {
+      "personalAllowance": 12500,
+      "incomeLimitPersonalAllowance": 100000,
+      "taxRates": [
+        {
+          "name": "personalAllowance",
+          "rate": 0,
+          "taxableIncome": 12500
+        },
+        {
+          "name": "Starter Rate",
+          "rate": 0.19,
+          "taxableIncome": 14549
+        },
+        {
+          "name": "Baisc Rate",
+          "rate": 0.2,
+          "taxableIncome": 24944
+        },
+        {
+          "name": "Intermediate Rate",
+          "rate": 0.21,
+          "taxableIncome": 43430
+        },
+        {
+          "name": "Higher Rate",
+          "rate": 0.41,
+          "taxableIncome": 150000
+        },
+        {
+          "name": "Top Rate",
+          "rate": 0.46,
+          "taxableIncome": 150000
+        }
+      ]
+    }
   },
   "18/19": {
-    "personalAllowance": 11850,
-    "basicRate": 34500,
-    "higherRate": 150000,
-    "incomeLimitPersonalAllowence": 100000
+    "england": {
+      "personalAllowance": 11850,
+      "incomeLimitPersonalAllowance": 100000,
+      "taxRates": [
+        {
+          "name": "personalAllowance",
+          "rate": 0,
+          "taxableIncome": 12500
+        },
+        {
+          "name": "Basic Rate",
+          "rate": 0.2,
+          "taxableIncome": 45000
+        },
+        {
+          "name": "Additional Rate",
+          "rate": 0.4,
+          "taxableIncome": 150000
+        },
+        {
+          "name": "Higher Rate",
+          "rate": 0.45,
+          "taxableIncome": 150000
+        }
+      ]
+    },
+    "scotland": {
+      "personalAllowance": 11850,
+      "incomeLimitPersonalAllowance": 100000,
+      "taxRates": [
+        {
+          "name": "personalAllowance",
+          "rate": 0,
+          "taxableIncome": 11850
+        },
+        {
+          "name": "Starter Rate",
+          "rate": 0.19,
+          "taxableIncome": 13850
+        },
+        {
+          "name": "Baisc Rate",
+          "rate": 0.2,
+          "taxableIncome": 24000
+        },
+        {
+          "name": "Intermediate Rate",
+          "rate": 0.21,
+          "taxableIncome": 43430
+        },
+        {
+          "name": "Higher Rate",
+          "rate": 0.41,
+          "taxableIncome": 150000
+        },
+        {
+          "name": "Top Rate",
+          "rate": 0.46,
+          "taxableIncome": 150000
+        }
+      ]
+    }
   },
   "17/18": {
-    "personalAllowance": 11500,
-    "basicRate": 33500,
-    "higherRate": 150000,
-    "incomeLimitPersonalAllowence": 100000
+    "england": {
+      "personalAllowance": 11500,
+      "incomeLimitPersonalAllowance": 100000,
+      "taxRates": [
+        {
+          "name": "personalAllowance",
+          "rate": 0,
+          "taxableIncome": 11500
+        },
+        {
+          "name": "Basic Rate",
+          "rate": 0.2,
+          "taxableIncome": 45000
+        },
+        {
+          "name": "Higher Rate",
+          "rate": 0.4,
+          "taxableIncome": 150000
+        },
+        {
+          "name": "Additional Rate",
+          "rate": 0.45,
+          "taxableIncome": 150000
+        }
+      ]
+    },
+    "scotland": {
+      "personalAllowance": 11500,
+      "incomeLimitPersonalAllowance": 100000,
+      "taxRates": [
+        {
+          "name": "personalAllowance",
+          "rate": 0,
+          "taxableIncome": 11500
+        },
+        {
+          "name": "Basic Rate",
+          "rate": 0.2,
+          "taxableIncome": 43000
+        },
+        {
+          "name": "Higher Rate",
+          "rate": 0.4,
+          "taxableIncome": 150000
+        },
+        {
+          "name": "Additional Rate",
+          "rate": 0.45,
+          "taxableIncome": 150000
+        }
+      ]
+    }
   },
   "16/17": {
-    "personalAllowance": 11000,
-    "basicRate": 32000,
-    "higherRate": 150000,
-    "incomeLimitPersonalAllowence": 100000
+    "england": {
+      "personalAllowance": 11000,
+      "incomeLimitPersonalAllowance": 100000,
+      "taxRates": [
+        {
+          "name": "personalAllowance",
+          "rate": 0,
+          "taxableIncome": 11000
+        },
+        {
+          "name": "Basic Rate",
+          "rate": 0.2,
+          "taxableIncome": 43000
+        },
+        {
+          "name": "Higher Rate",
+          "rate": 0.4,
+          "taxableIncome": 150000
+        },
+        {
+          "name": "Additional Rate",
+          "rate": 0.45,
+          "taxableIncome": 150000
+        }
+      ]
+    },
+    "scotland": {
+      "personalAllowance": 11000,
+      "incomeLimitPersonalAllowance": 100000,
+      "taxRates": [
+        {
+          "name": "personalAllowance",
+          "rate": 0,
+          "taxableIncome": 11000
+        },
+        {
+          "name": "Basic Rate",
+          "rate": 0.2,
+          "taxableIncome": 43000
+        },
+        {
+          "name": "Higher Rate",
+          "rate": 0.4,
+          "taxableIncome": 150000
+        },
+        {
+          "name": "Additional Rate",
+          "rate": 0.45,
+          "taxableIncome": 150000
+        }
+      ]
+    }
   },
   "15/16": {
-    "personalAllowance": 10600,
-    "basicRate": 31785,
-    "higherRate": 150000,
-    "incomeLimitPersonalAllowence": 100000
+    "england": {
+      "personalAllowance": 10600,
+      "incomeLimitPersonalAllowance": 100000,
+      "taxRates": [
+        {
+          "name": "personalAllowance",
+          "rate": 0,
+          "taxableIncome": 10600
+        },
+        {
+          "name": "Basic Rate",
+          "rate": 0.2,
+          "taxableIncome": 42385
+        },
+        {
+          "name": "Higher Rate",
+          "rate": 0.4,
+          "taxableIncome": 150000
+        },
+        {
+          "name": "Additional Rate",
+          "rate": 0.45,
+          "taxableIncome": 150000
+        }
+      ]
+    }
   },
   "14/15": {
-    "personalAllowance": 10000,
-    "basicRate": 31865,
-    "higherRate": 150000,
-    "incomeLimitPersonalAllowence": 100000
+    "england": {
+      "personalAllowance": 10000,
+      "incomeLimitPersonalAllowance": 100000,
+      "taxRates": [
+        {
+          "name": "personalAllowance",
+          "rate": 0,
+          "taxableIncome": 10000
+        },
+        {
+          "name": "Basic Rate",
+          "rate": 0.2,
+          "taxableIncome": 41865
+        },
+        {
+          "name": "Higher Rate",
+          "rate": 0.4,
+          "taxableIncome": 150000
+        },
+        {
+          "name": "Additional Rate",
+          "rate": 0.45,
+          "taxableIncome": 150000
+        }
+      ]
+    },
+    "scotland": {
+      "personalAllowance": 10000,
+      "incomeLimitPersonalAllowance": 100000,
+      "taxRates": [
+        {
+          "name": "personalAllowance",
+          "rate": 0,
+          "taxableIncome": 10000
+        },
+        {
+          "name": "Basic Rate",
+          "rate": 0.2,
+          "taxableIncome": 41865
+        },
+        {
+          "name": "Higher Rate",
+          "rate": 0.4,
+          "taxableIncome": 150000
+        },
+        {
+          "name": "Additional Rate",
+          "rate": 0.45,
+          "taxableIncome": 150000
+        }
+      ]
+    }
   },
   "13/14": {
-    "personalAllowance": 9440,
-    "basicRate": 32010,
-    "higherRate": 150000,
-    "incomeLimitPersonalAllowence": 100000
+    "england": {
+      "personalAllowance": 9440,
+      "incomeLimitPersonalAllowance": 100000,
+      "taxRates": [
+        {
+          "name": "personalAllowance",
+          "rate": 0,
+          "taxableIncome": 9440
+        },
+        {
+          "name": "Basic Rate",
+          "rate": 0.2,
+          "taxableIncome": 41450
+        },
+        {
+          "name": "Higher Rate",
+          "rate": 0.4,
+          "taxableIncome": 150000
+        },
+        {
+          "name": "Additional Rate",
+          "rate": 0.45,
+          "taxableIncome": 150000
+        }
+      ]
+    },
+    "scotland": {
+      "personalAllowance": 9440,
+      "incomeLimitPersonalAllowance": 100000,
+      "taxRates": [
+        {
+          "name": "personalAllowance",
+          "rate": 0,
+          "taxableIncome": 9440
+        },
+        {
+          "name": "Basic Rate",
+          "rate": 0.2,
+          "taxableIncome": 41450
+        },
+        {
+          "name": "Higher Rate",
+          "rate": 0.4,
+          "taxableIncome": 150000
+        },
+        {
+          "name": "Additional Rate",
+          "rate": 0.45,
+          "taxableIncome": 150000
+        }
+      ]
+    }
   },
   "12/13": {
-    "personalAllowance": 8105,
-    "basicRate": 34370,
-    "higherRate": 150000,
-    "incomeLimitPersonalAllowence": 100000
+    "england": {
+      "personalAllowance": 8105,
+      "incomeLimitPersonalAllowance": 100000,
+      "taxRates": [
+        {
+          "name": "personalAllowance",
+          "rate": 0,
+          "taxableIncome": 8105
+        },
+        {
+          "name": "Basic Rate",
+          "rate": 0.2,
+          "taxableIncome": 42475
+        },
+        {
+          "name": "Higher Rate",
+          "rate": 0.4,
+          "taxableIncome": 150000
+        },
+        {
+          "name": "Additional Rate",
+          "rate": 0.45,
+          "taxableIncome": 150000
+        }
+      ]
+    },
+    "scotland": {
+      "personalAllowance": 8105,
+      "incomeLimitPersonalAllowance": 100000,
+      "taxRates": [
+        {
+          "name": "personalAllowance",
+          "rate": 0,
+          "taxableIncome": 8105
+        },
+        {
+          "name": "Basic Rate",
+          "rate": 0.2,
+          "taxableIncome": 42475
+        },
+        {
+          "name": "Higher Rate",
+          "rate": 0.4,
+          "taxableIncome": 150000
+        },
+        {
+          "name": "Additional Rate",
+          "rate": 0.45,
+          "taxableIncome": 150000
+        }
+      ]
+    }
   }
 }
