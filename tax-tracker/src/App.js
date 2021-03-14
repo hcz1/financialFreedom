@@ -17,8 +17,9 @@ const App = () => {
     studentLoan: STUDENT_LOAN_TYPES.includes(queryStrings.studentLoan)
       ? queryStrings.studentLoan
       : undefined,
-    pension: parseInt(queryStrings.pension) || 0,
+    pension: parseFloat(queryStrings.pension) || 0,
     multiplier: queryStrings.multiplier,
+    scottish: queryStrings.scottish || false,
   };
   return (
     <div className={s.app}>

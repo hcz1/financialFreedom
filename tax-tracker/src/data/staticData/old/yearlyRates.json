@@ -1,0 +1,85 @@
+{
+  "21/22": {
+    "personalAllowance": 12570,
+    "basicRate": 37700,
+    "higherRate": 150000,
+    "incomeLimitPersonalAllowence": 100000
+  },
+  "20/21": {
+    "personalAllowance": 12500,
+    "basicRate": 37500,
+    "higherRate": 150000,
+    "incomeLimitPersonalAllowence": 100000,
+    "scotland": {
+      "personalAllowance": 12500,
+      "starterRate": {
+        "taxRate": 0.19,
+        "taxableIncome": 14585
+      },
+      "basicRate": {
+        "taxRate": 0.2,
+        "taxableIncome": 25158
+      },
+      "intermediateRate": {
+        "taxRate": 0.21,
+        "taxableIncome": 43430
+      },
+      "higherRate": {
+        "taxRate": 0.41,
+        "taxableIncome": 150000
+      },
+      "topRate": {
+        "taxRate": 0.46,
+        "taxableIncome": 150000
+      }
+    }
+  },
+  "19/20": {
+    "personalAllowance": 12500,
+    "basicRate": 37500,
+    "higherRate": 150000,
+    "incomeLimitPersonalAllowence": 100000
+  },
+  "18/19": {
+    "personalAllowance": 11850,
+    "basicRate": 34500,
+    "higherRate": 150000,
+    "incomeLimitPersonalAllowence": 100000
+  },
+  "17/18": {
+    "personalAllowance": 11500,
+    "basicRate": 33500,
+    "higherRate": 150000,
+    "incomeLimitPersonalAllowence": 100000
+  },
+  "16/17": {
+    "personalAllowance": 11000,
+    "basicRate": 32000,
+    "higherRate": 150000,
+    "incomeLimitPersonalAllowence": 100000
+  },
+  "15/16": {
+    "personalAllowance": 10600,
+    "basicRate": 31785,
+    "higherRate": 150000,
+    "incomeLimitPersonalAllowence": 100000
+  },
+  "14/15": {
+    "personalAllowance": 10000,
+    "basicRate": 31865,
+    "higherRate": 150000,
+    "incomeLimitPersonalAllowence": 100000
+  },
+  "13/14": {
+    "personalAllowance": 9440,
+    "basicRate": 32010,
+    "higherRate": 150000,
+    "incomeLimitPersonalAllowence": 100000
+  },
+  "12/13": {
+    "personalAllowance": 8105,
+    "basicRate": 34370,
+    "higherRate": 150000,
+    "incomeLimitPersonalAllowence": 100000
+  }
+}
