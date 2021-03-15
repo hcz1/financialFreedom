@@ -1,83 +1,143 @@
 {
     "21/22": {
-        "plan_1":19895,    
-        "plan_2":27295,
-        "post_grad": 21000,
-        "plan_1_rate": 0.09,
-        "plan_2_rate": 0.09,
-        "post_grad_rate": 0.06
+        "plan_1":{
+            "threshold":19895,
+            "rate":0.09
+        },    
+        "plan_2":{
+            "threshold":27295,
+            "rate":0.09
+        },   
+        "post_grad":{
+            "threshold":21000,
+            "rate":0.06
+        }
     },
     "20/21": {
-        "plan_1":19390,
-        "plan_2":26575,
-        "post_grad": 21000,
-        "plan_1_rate": 0.09,
-        "plan_2_rate": 0.09,
-        "post_grad_rate": 0.06
+        "plan_1":{
+            "threshold":19390,
+            "rate":0.09
+        },    
+        "plan_2":{
+            "threshold":26575,
+            "rate":0.09
+        },   
+        "post_grad":{
+            "threshold":21000,
+            "rate":0.06
+        }
     },
     "19/20": {
-        "plan_1":18935,
-        "plan_2":25725,
-        "post_grad": 21000,
-        "plan_1_rate": 0.09,
-        "plan_2_rate": 0.09,
-        "post_grad_rate": 0.06
+        "plan_1":{
+            "threshold":18935,
+            "rate":0.09
+        },    
+        "plan_2":{
+            "threshold":25725,
+            "rate":0.09
+        },   
+        "post_grad":{
+            "threshold":21000,
+            "rate":0.06
+        }
     },
     "18/19": {
-        "plan_1":18330,
-        "plan_2":25000,
-        "post_grad": 21000,
-        "plan_1_rate": 0.09,
-        "plan_2_rate": 0.09,
-        "post_grad_rate": 0.06
+        "plan_1":{
+            "threshold":18330,
+            "rate":0.09
+        },    
+        "plan_2":{
+            "threshold":25000,
+            "rate":0.09
+        },   
+        "post_grad":{
+            "threshold":21000,
+            "rate":0.06
+        }
     },
     "17/18": {
-        "plan_1":17775,
-        "plan_2":21000,
-        "post_grad": 21000,
-        "plan_1_rate": 0.09,
-        "plan_2_rate": 0.09,
-        "post_grad_rate": 0.06
+        "plan_1":{
+            "threshold":17775,
+            "rate":0.09
+        },    
+        "plan_2":{
+            "threshold":21000,
+            "rate":0.09
+        },   
+        "post_grad":{
+            "threshold":21000,
+            "rate":0.06
+        }
     },
     "16/17": {
-        "plan_1":17495,
-        "plan_2":21000,
-        "post_grad": 21000,
-        "plan_1_rate": 0.09,
-        "plan_2_rate": 0.09,
-        "post_grad_rate": 0.06
+        "plan_1":{
+            "threshold":17495,
+            "rate":0.09
+        },    
+        "plan_2":{
+            "threshold":21000,
+            "rate":0.09
+        },   
+        "post_grad":{
+            "threshold":21000,
+            "rate":0.06
+        }
     },
     "15/16": {
-        "plan_1":17335,
-        "plan_2":21000,
-        "post_grad": 21000,
-        "plan_1_rate": 0.09,
-        "plan_2_rate": 0.09,
-        "post_grad_rate": 0.06
+        "plan_1":{
+            "threshold":17335,
+            "rate":0.09
+        },    
+        "plan_2":{
+            "threshold":21000,
+            "rate":0.09
+        },   
+        "post_grad":{
+            "threshold":21000,
+            "rate":0.06
+        }
     },
     "14/15": {
-        "plan_1":16910,
-        "plan_2":21000,
-        "post_grad": 21000,
-        "plan_1_rate": 0.09,
-        "plan_2_rate": 0.09,
-        "post_grad_rate": 0.06
+        "plan_1":{
+            "threshold":16910,
+            "rate":0.09
+        },    
+        "plan_2":{
+            "threshold":21000,
+            "rate":0.09
+        },   
+        "post_grad":{
+            "threshold":21000,
+            "rate":0.06
+        }
     },
     "13/14": {
-        "plan_1":16365,
-        "plan_2":21000,
-        "post_grad": 21000,
-        "plan_1_rate": 0.09,
-        "plan_2_rate": 0.09,
-        "post_grad_rate": 0.06
+        "plan_1":{
+            "threshold":16365,
+            "rate":0.09
+        },    
+        "plan_2":{
+            "threshold":21000,
+            "rate":0.09
+        },   
+        "post_grad":{
+            "threshold":21000,
+            "rate":0.06
+        }
     },
     "12/13": {
-        "plan_1":15795,
-        "plan_2":21000,
-        "post_grad": 21000,
-        "plan_1_rate": 0.09,
-        "plan_2_rate": 0.09,
-        "post_grad_rate": 0.06
+        "plan_1":{
+            "threshold":15795,
+            "rate":0.09
+        },    
+        "plan_2":{
+            "threshold":21000,
+            "rate":0.09
+        },   
+        "post_grad":{
+            "threshold":21000,
+            "rate":0.06
+        }
     }
 }
   
