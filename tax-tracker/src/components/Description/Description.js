@@ -49,8 +49,8 @@ const Description = ({ className }) => {
         gross pay is above the threshold is how much is taken from your pay. If
         your gross pay below the threshold then no amount is deducted. <br />
         The threshold for current year are{' '}
-        <b>Plan 1: £{formatNumber(plan_1)}</b> and{' '}
-        <b>Plan 2: £{formatNumber(plan_2)}</b>. These deductions are based on
+        <b>Plan 1: £{formatNumber(plan_1.threshold)}</b> and{' '}
+        <b>Plan 2: £{formatNumber(plan_2.threshold)}</b>. These deductions are based on
         gross pay{' '}
         <b>(Before any tax and/or pension contributions are deducted)</b>
       </p>

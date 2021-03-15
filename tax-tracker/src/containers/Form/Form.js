@@ -43,6 +43,13 @@ const studentLoanArr = [
     name: 'studentLoan',
     display: 'Plan 2',
   },
+  {
+    id: 'post_grad',
+    value: 'post_grad',
+    type: 'radio',
+    name: 'studentLoan',
+    display: 'Post Grad',
+  }
 ];
 const removeComma = (string) => string.replace(/,/g, '');
 
@@ -183,10 +190,10 @@ const Form = ({
           <p>Plan 2: Your course started post 2012</p>
         </Popper>
       </Label>
-      <InputGroup className={s.radioContainer}>
+      <InputGroup className={classnames(s.radioContainer, s.horitonzal)}>
         {studentLoanArr.map((item, key) => (
           <RadioButton
-            className={classnames(s.radio, s.third)}
+            className={classnames(s.radio)}
             key={key}
             id={item.id}
             value={item.value}
