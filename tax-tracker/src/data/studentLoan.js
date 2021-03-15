@@ -9,5 +9,5 @@ export const studentLoan = ({ salary, type, year }) => {
 
   if (salary < studentLoanThreshold) return 0;
   
-  return (salary - studentLoanThreshold) * 0.09
+  return (salary - studentLoanThreshold) * slRate[type + "_rate"];
 };
