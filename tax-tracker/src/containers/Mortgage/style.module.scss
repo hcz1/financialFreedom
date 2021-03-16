@@ -1,0 +1,12 @@
+.mortgage {
+  display: flex;
+  align-items: center;
+  .chartContainer {
+    width: calc(100% - 200px);
+    height: 500px;
+    .chart {
+      width: calc(100% - 200px);
+      height: 500px;
+    }
+  }
+}
