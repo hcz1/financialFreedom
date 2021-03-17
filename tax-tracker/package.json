@@ -23,6 +23,7 @@
     "react-scripts": "4.0.1",
     "react-select": "^4.1.0",
     "react-table": "^7.6.3",
+    "tiny-mortgage": "^1.0.5",
     "web-vitals": "^0.2.4"
   },
   "scripts": {

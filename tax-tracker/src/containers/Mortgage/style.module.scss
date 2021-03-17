@@ -1,11 +1,13 @@
 .mortgage {
   display: flex;
   align-items: center;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
   .chartContainer {
-    width: calc(100% - 200px);
+    width: 700px;
     height: 500px;
     .chart {
-      width: calc(100% - 200px);
+      width: 700px;
       height: 500px;
     }
   }

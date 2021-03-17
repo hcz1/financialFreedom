@@ -1,12 +1,9 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import s from './style.module.scss';
 import { Line } from 'react-chartjs-2';
 import MortgageForm from './MortgageForm/MortgageForm';
 import { formatNumber } from '../../helpers/helpers';
-
-function calculate_balance(PMT, IR, NP) {
-  return (PMT * (1 - Math.pow(1 + IR, -NP))) / IR;
-}
+import MortgageCalc from 'tiny-mortgage';
 
 const Mortgage = () => {
   const [mortgage, setMortgage] = useState({
@@ -18,35 +15,25 @@ const Mortgage = () => {
     totalPayed: 0,
   });
   const handleSubmit = (values) => {
-    const { rate: rateStr, mortgageDebt, term: termStr } = values;
-    const term = parseInt(termStr);
-    const principle = parseFloat(mortgageDebt);
-    const rate = parseFloat(rateStr);
-    const interest = rate / 100 / 12;
-    const payments = term * 12;
-    const x = Math.pow(1 + interest, payments);
-    const monthly = (principle * x * interest) / (x - 1);
-    const yearly = [];
-    console.log({ principle, rate, monthly });
-    for (let i = term; i >= 0; i--) {
-      yearly.push({
-        year: i,
-        debt: calculate_balance(monthly, interest, i * 12),
-      });
+    const { rate, mortgageDebt: principle, deposit, term } = values;
+    const m = new MortgageCalc(principle, deposit, rate, term);
+    const debt = principle * (1 - m.downpayment);
+    const yearly = [debt];
+    for (let i = 12; i <= term * 12; i += 12) {
+      yearly.push(m.getSpecificMonth(i).newLoanAmount);
     }
-    const totalPayments = monthly * payments;
-    const totalInterest = totalPayments - principle;
-    const totalPayed = totalInterest + principle;
-    console.log(yearly);
     setMortgage({
-      totalInterest: formatNumber(totalInterest.toFixed(2)),
-      term,
+      monthly: formatNumber(m.monthlyPayment.toFixed(2)),
+      totalInterest: formatNumber((m.getTotal() - debt).toFixed(2)),
+      totalPayed: formatNumber(m.getTotal().toFixed(2)),
       yearly,
-      principle,
-      monthly: formatNumber(monthly.toFixed(2)),
-      totalPayed: formatNumber(totalPayed.toFixed(2)),
+      term,
     });
   };
+  const labels = useMemo(
+    () => Array.from({ length: mortgage.term + 1 }).map((_, i) => i),
+    [mortgage.term]
+  );
   return (
     <div className={s.mortgage}>
       <MortgageForm onSubmit={handleSubmit} />
@@ -57,15 +44,43 @@ const Mortgage = () => {
         <Line
           className={s.chart}
           data={{
-            labels: Array(mortgage.term)
-              .fill(0)
-              .map((_, i) => i + 1),
+            labels,
+            xAxisID: 'Year',
             datasets: [
               {
-                label: 'payments',
-                data: mortgage.yearly.map((item) => item.debt),
+                label: 'Year Owing',
+                data: mortgage.yearly,
+                fill: false,
+                borderColor: 'rgba(96, 219, 146, 0.150459)',
+                backgroundColor: 'rgba(96, 219, 146, 1)',
               },
             ],
+          }}
+          options={{
+            scales: {
+              yAxes: [
+                {
+                  ticks: {
+                    callback: function (label, index, labels) {
+                      return (
+                        '£' +
+                        label.toLocaleString(navigator.language, {
+                          minimumFractionDigits: 0,
+                        })
+                      );
+                    },
+                  },
+                },
+              ],
+              xAxes: [
+                {
+                  scaleLabel: {
+                    display: true,
+                    labelString: 'Year',
+                  },
+                },
+              ],
+            },
           }}
         />
       </div>

@@ -17,6 +17,7 @@ const MortgageForm = ({ onSubmit }) => {
     initialValues: {
       mortgageDebt: 0,
       term: 0,
+      deposit: 0,
       type: 'repayment',
       rate: 0,
     },
@@ -30,6 +31,7 @@ const MortgageForm = ({ onSubmit }) => {
       <InputGroup>
         <InputGroupAddon addonType='Prepend'>£</InputGroupAddon>
         <Input
+          type='number'
           style={{ width: '270px' }}
           error={formik.errors.mortgageDebt}
           touched={formik.touched.mortgageDebt}
@@ -39,6 +41,25 @@ const MortgageForm = ({ onSubmit }) => {
           id='mortgageDebt'
           name='mortgageDebt'
         />
+      </InputGroup>
+      <Label htmlFor='deposit'>
+        <b>Deposit *</b>
+      </Label>
+      <InputGroup>
+        <Input
+          min={0}
+          max={100}
+          type='number'
+          step='.01'
+          error={formik.errors.deposit}
+          touched={formik.touched.deposit}
+          value={formik.values.deposit}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          id='deposit'
+          name='deposit'
+        />
+        <InputGroupAddon addonType='Append'>%</InputGroupAddon>
       </InputGroup>
       <Label htmlFor='type'>
         <b>Type *</b>
@@ -69,6 +90,7 @@ const MortgageForm = ({ onSubmit }) => {
       </Label>
       <InputGroup>
         <Input
+          type='number'
           error={formik.errors.rate}
           touched={formik.touched.rate}
           value={formik.values.rate}
@@ -84,6 +106,8 @@ const MortgageForm = ({ onSubmit }) => {
       </Label>
       <InputGroup>
         <Input
+          type='number'
+          step='1'
           error={formik.errors.term}
           touched={formik.touched.term}
           value={formik.values.term}
