@@ -29,6 +29,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "generate": "plop",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -53,6 +54,9 @@
   "devDependencies": {
     "@types/react-csv": "^1.1.1",
     "eslint": "^7.11.0",
+    "inquirer": "^8.0.0",
+    "inquirer-directory": "^2.2.0",
+    "plop": "^2.7.4",
     "stylelint": "^13.10.0",
     "stylelint-config-recommended-scss": "^4.2.0",
     "stylelint-config-standard": "^20.0.0",
