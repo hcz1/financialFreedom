@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import classnames from 'classnames';
 import { Line } from 'react-chartjs-2';
+import { formatNumber } from '../../../helpers/helpers';
 import s from './style.module.scss';
 const MortgageChart = ({
   className,
@@ -35,6 +36,12 @@ const MortgageChart = ({
           ],
         }}
         options={{
+          tooltips: {
+            callbacks: {
+              label: (item, data) => '£' + formatNumber(item.value),
+              title: ([{ label }], data) => 'Year ' + label,
+            },
+          },
           scales: {
             yAxes: [
               {
