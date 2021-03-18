@@ -10,6 +10,8 @@ const MortgageChart = ({
   totalPayed,
   yearly,
   term,
+  rate,
+  debt,
 }) => {
   const labels = useMemo(
     () => Array.from({ length: term + 1 }).map((_, i) => i),
@@ -17,9 +19,28 @@ const MortgageChart = ({
   );
   return (
     <div className={classnames(s.mortgageChart, className)}>
-      <h2>Per month: £{monthly}</h2>
-      <h2>Total interest: £{totalInterest}</h2>
-      <h2>Total Paid: £{totalPayed}</h2>
+      {yearly && yearly[0] && rate && (
+        <>
+          {' '}
+          <div className={s.row}>
+            <div>
+              <h2>Per month:</h2>
+              <p>Assuming interest rate stays at {rate}%</p>
+            </div>
+            <span>£{monthly}</span>
+          </div>
+          <div className={s.row}>
+            <div>
+              <h2>Total Paid:</h2>
+              <p>
+                Mortgage Debt: £{debt} + Total Interest: £{totalInterest}
+              </p>
+            </div>
+            <span>£{totalPayed}</span>
+          </div>
+        </>
+      )}
+
       <Line
         className={s.chart}
         data={{
@@ -27,7 +48,7 @@ const MortgageChart = ({
           xAxisID: 'Year',
           datasets: [
             {
-              label: 'Year Owing',
+              label: 'Mortgage Debt',
               data: yearly,
               fill: false,
               borderColor: 'rgba(96, 219, 146, 0.150459)',

@@ -17,6 +17,8 @@ const Mortgage = () => {
     totalInterest: 0,
     principle: 0,
     totalPayed: 0,
+    rate: 0,
+    debt: 0,
   });
   const handleSubmit = (values) => {
     const { rate, mortgageDebt: principle, deposit, term, type } = values;
@@ -31,10 +33,12 @@ const Mortgage = () => {
 
     setMortgage({
       monthly: formatNumber(monthly.toFixed(2)),
-      totalInterest: formatNumber(totalInterest.toFixed(2)),
+      totalInterest: formatNumber(totalInterest),
       totalPayed: formatNumber(totalPayed.toFixed(2)),
       yearly,
       term,
+      rate,
+      debt: formatNumber(debt),
     });
   };
   return (

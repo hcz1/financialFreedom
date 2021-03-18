@@ -1,9 +1,6 @@
 .mortgage {
   display: flex;
-  align-items: center;
   justify-content: space-evenly;
+  align-items: center;
   flex-wrap: wrap;
-  .chartContainer {
-    width: 700px;
-  }
 }

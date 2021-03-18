@@ -1,2 +1,15 @@
 .mortgageChart {
+  position: relative;
+  width: 55vw;
+  .row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    h2,
+    span {
+      line-height: 40px;
+      font-size: 30px;
+    }
+  }
 }
