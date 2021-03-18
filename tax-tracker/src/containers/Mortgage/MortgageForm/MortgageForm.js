@@ -91,6 +91,7 @@ const MortgageForm = ({ onSubmit }) => {
       <InputGroup>
         <Input
           type='number'
+          step='.01'
           error={formik.errors.rate}
           touched={formik.touched.rate}
           value={formik.values.rate}
