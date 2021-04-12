@@ -1,15 +1,23 @@
+@import '../../../common/variables.scss';
+
 .mortgageChart {
+  margin-bottom: 18vh;
   position: relative;
-  width: 55vw;
+  width: 100vw;
+  height: 50vh;
+  @media screen and (min-width: $breakpoint-large) {
+    width: 55vw;
+  }
   .row {
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 5px;
+    margin: 0 10px;
     h2,
     span {
       line-height: 40px;
-      font-size: 30px;
+      font-size: 3vh;
     }
   }
 }

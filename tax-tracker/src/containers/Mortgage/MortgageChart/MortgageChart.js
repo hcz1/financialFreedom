@@ -21,22 +21,28 @@ const MortgageChart = ({
     <div className={classnames(s.mortgageChart, className)}>
       {yearly && yearly[0] && rate && (
         <>
-          {' '}
           <div className={s.row}>
             <div>
               <h2>Per month:</h2>
-              <p>Assuming interest rate stays at {rate}%</p>
+              <p>
+                Assuming interest rate stays at <b>{rate}%</b>
+              </p>
             </div>
-            <span>£{monthly}</span>
+            <span>
+              <b>£{monthly}</b>
+            </span>
           </div>
           <div className={s.row}>
             <div>
               <h2>Total Paid:</h2>
               <p>
-                Mortgage Debt: £{debt} + Total Interest: £{totalInterest}
+                Mortgage Debt: <b>£{debt}</b> + Total Interest:{' '}
+                <b>£{totalInterest}</b>
               </p>
             </div>
-            <span>£{totalPayed}</span>
+            <span>
+              <b>£{totalPayed}</b>
+            </span>
           </div>
         </>
       )}
@@ -57,6 +63,8 @@ const MortgageChart = ({
           ],
         }}
         options={{
+          responsive: true,
+          maintainAspectRatio: false,
           tooltips: {
             callbacks: {
               label: (item, data) => '£' + formatNumber(item.value),

@@ -29,7 +29,7 @@ const App = () => {
       <div className={s.contentContainer}>
         <Switch>
           <Route path='/mortgage'>
-            <Mortgage />
+            <Mortgage className={s.mortgage} />
           </Route>
           <Route path='/'>
             <IncomeTax className={s.tax} {...initalState} />
