@@ -1,8 +1,10 @@
-import { useLocation } from 'react-router-dom';
+import { useLocation, Route, Switch } from 'react-router-dom';
 import queryString from 'query-string';
 import Header from './components/Header';
 import { STUDENT_LOAN_TYPES } from './helpers/constants';
-import Tax from './containers/Tax/Tax';
+import Mortgage from './containers/Mortgage';
+import Footer from './components/Footer';
+import IncomeTax from './containers/IncomeTax';
 import s from './App.module.scss';
 import ExtraInfo from './components/ExtraInfo';
 import 'react-popper-tooltip/dist/styles.css';
@@ -25,18 +27,17 @@ const App = () => {
     <div className={s.app}>
       <Header className={s.header} />
       <div className={s.contentContainer}>
-        <Tax className={s.tax} {...initalState} />
-        <ExtraInfo />
+        <Switch>
+          <Route path='/mortgage'>
+            <Mortgage className={s.mortgage} />
+          </Route>
+          <Route path='/'>
+            <IncomeTax className={s.tax} {...initalState} />
+            <ExtraInfo />
+          </Route>
+        </Switch>
       </div>
-      <footer>
-        <span>&#169; SimpleSalary {new Date().getFullYear()}</span>
-        <span>
-          <a href='terms-and-conditions.html'>Terms & Conditions</a>
-        </span>
-        <span style={{ cursor: 'pointer' }} onClick={() => window.popup.open()}>
-          Cookie Policy
-        </span>
-      </footer>
+      <Footer />
     </div>
   );
 };

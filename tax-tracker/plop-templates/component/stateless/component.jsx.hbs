@@ -1,0 +1,14 @@
+import React from 'react'
+import classnames from 'classnames'
+
+import style from './{{kebabCase component_name}}.module.scss'
+
+export const {{pascalCase component_name}} = ({
+  className,
+}) => (
+  <div className={classnames(style.{{camelCase component_name}}, className)}>
+    {/* Some content Here */}
+  </div>
+)
+
+export default {{pascalCase component_name}}

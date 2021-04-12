@@ -2,17 +2,17 @@ import React from 'react';
 import { useFormik, Field, FormikProvider } from 'formik';
 import classnames from 'classnames';
 import Select from 'react-select';
-import Label from '../../components/label/label';
-import InputGroup from '../../components/input-group';
-import InputGroupAddon from '../../components/input-group-add-on';
-import { formatNumber } from '../../helpers/helpers';
-import Input from '../../components/input';
-import RadioButton from './RadioButton';
-import Popper from '../../components/Popper';
+import Label from '../../../components/label/label';
+import InputGroup from '../../../components/input-group';
+import InputGroupAddon from '../../../components/input-group-add-on';
+import { formatNumber } from '../../../helpers/helpers';
+import Input from '../../../components/input';
+import RadioButton from '../../../components/RadioButton';
+import Popper from '../../../components/Popper';
 import s from './style.module.scss';
 
-import yearlyRates from '../../data/staticData/yearlyRates.json';
-import Button from '../../components/Button';
+import yearlyRates from '../../../data/staticData/yearlyRates.json';
+import Button from '../../../components/Button';
 
 const multiplierArr = [
   { id: 'Year', value: '1', name: 'multiplier' },
@@ -49,7 +49,7 @@ const studentLoanArr = [
     type: 'radio',
     name: 'studentLoan',
     display: 'Post Grad',
-  }
+  },
 ];
 const removeComma = (string) => string.replace(/,/g, '');
 
