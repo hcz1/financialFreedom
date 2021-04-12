@@ -23,11 +23,13 @@
     "react-scripts": "4.0.1",
     "react-select": "^4.1.0",
     "react-table": "^7.6.3",
+    "tiny-mortgage": "^1.0.5",
     "web-vitals": "^0.2.4"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "generate": "plop",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -52,6 +54,9 @@
   "devDependencies": {
     "@types/react-csv": "^1.1.1",
     "eslint": "^7.11.0",
+    "inquirer": "^8.0.0",
+    "inquirer-directory": "^2.2.0",
+    "plop": "^2.7.4",
     "stylelint": "^13.10.0",
     "stylelint-config-recommended-scss": "^4.2.0",
     "stylelint-config-standard": "^20.0.0",

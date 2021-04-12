@@ -1,7 +1,7 @@
 import { useCallback, useState, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import classnames from 'classnames';
-import Form from '../Form';
+import SalaryForm from './SalaryForm';
 import Table from '../Table';
 import s from './style.module.scss';
 import { generateTaxYear } from '../../helpers/helpers';
@@ -49,7 +49,7 @@ const Tax = ({
 
   return (
     <div className={classnames(s.tax, className)}>
-      <Form
+      <SalaryForm
         className={s.form}
         grossSalary={options.grossSalary}
         pension={options.pension}
