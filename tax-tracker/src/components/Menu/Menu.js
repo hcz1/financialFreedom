@@ -13,6 +13,10 @@ export const Menu = ({ className, open, ...props }) => {
       aria-hidden={!isHidden}
       {...props}
     >
+      <Link to={{ pathname: '/' }} tabIndex={tabIndex}>
+        <span aria-hidden='true'>💵</span>
+        Income Tax
+      </Link>
       <Link to={{ pathname: '/mortgage' }} tabIndex={tabIndex}>
         <span aria-hidden='true'>🏠</span>
         Mortgage
