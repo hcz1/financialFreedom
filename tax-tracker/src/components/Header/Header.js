@@ -22,7 +22,7 @@ const Header = ({ className }) => {
       </Link>
       <div ref={node}>
         <Burger open={open} setOpen={setOpen} />
-        <Menu id={menuId} open={open} />
+        <Menu id={menuId} open={open} setOpen={setOpen} />
       </div>
     </div>
   );

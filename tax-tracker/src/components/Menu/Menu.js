@@ -4,7 +4,7 @@ import classnames from 'classnames';
 import style from './menu.module.scss';
 import { Link } from 'react-router-dom';
 
-export const Menu = ({ className, open, ...props }) => {
+export const Menu = ({ className, open, setOpen, ...props }) => {
   const isHidden = open ? true : false;
   const tabIndex = isHidden ? 0 : -1;
   return (
@@ -13,11 +13,19 @@ export const Menu = ({ className, open, ...props }) => {
       aria-hidden={!isHidden}
       {...props}
     >
-      <Link to={{ pathname: '/' }} tabIndex={tabIndex}>
+      <Link
+        to={{ pathname: '/' }}
+        tabIndex={tabIndex}
+        onClick={() => setOpen(false)}
+      >
         <span aria-hidden='true'>💵</span>
         Income Tax
       </Link>
-      <Link to={{ pathname: '/mortgage' }} tabIndex={tabIndex}>
+      <Link
+        to={{ pathname: '/mortgage' }}
+        tabIndex={tabIndex}
+        onClick={() => setOpen(false)}
+      >
         <span aria-hidden='true'>🏠</span>
         Mortgage
       </Link>
