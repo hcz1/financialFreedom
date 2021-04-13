@@ -7,8 +7,9 @@
   transform: translateX(100%);
   &.open {
     transform: translateX(0);
+    box-shadow: -10px 0px 10px 1px #aaaaaa;
   }
-  height: 100vh;
+  height: 100%;
   text-align: left;
   padding: 2rem;
   position: absolute;
@@ -17,6 +18,7 @@
   transition: transform 0.3s ease-in-out;
   @media (max-width: 576px) {
     width: 100%;
+    padding: unset;
   }
   a {
     font-size: 2rem;
