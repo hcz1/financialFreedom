@@ -1,0 +1,51 @@
+.burger {
+  position: relative;
+  top: 5%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 2rem;
+  height: 2rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 100;
+  margin-right: 20px;
+
+  &:focus {
+    outline: none;
+  }
+
+  div {
+    width: 2rem;
+    height: 0.25rem;
+    background: #0d0c1d;
+    border-radius: 10px;
+    transition: all 0.3s linear;
+    transform-origin: 1px;
+
+    &:first-of-type {
+      transform: rotate(0);
+      &.open {
+        transform: rotate(45deg);
+      }
+    }
+
+    &:nth-of-type(2) {
+      opacity: 1;
+      transform: translateX(0);
+      &.open {
+        transform: translateX(20px);
+        opacity: 0;
+      }
+    }
+
+    &:nth-of-type(3) {
+      transform: rotate(0);
+      &.open {
+        transform: rotate(-45deg);
+      }
+    }
+  }
+}
