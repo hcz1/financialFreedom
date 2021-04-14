@@ -1,6 +1,6 @@
 @import '../../../common/variables.scss';
 .form {
-  width: 343px;
+  max-width: 343px;
   .popper {
     display: inline;
     margin-left: 5px;
@@ -59,7 +59,7 @@
     }
   }
   .btn {
-    width: 343px;
+    max-width: 343px;
     height: 44px;
   }
 }
