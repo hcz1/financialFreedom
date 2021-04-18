@@ -13,10 +13,10 @@ export const Menu = ({ className, open, setOpen, ...props }) => {
   const tabIndex = isHidden ? 0 : -1;
   const ref = useRef(null);
   useEffect(() => {
-    !open && enableBodyScroll(ref);
-    open && disableBodyScroll(ref);
+    !open && enableBodyScroll(ref.current);
+    open && disableBodyScroll(ref.current);
     return () => {
-      clearAllBodyScrollLocks(ref);
+      clearAllBodyScrollLocks();
     };
   }, [open]);
   return (
