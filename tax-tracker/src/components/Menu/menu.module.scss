@@ -1,12 +1,12 @@
 .menu {
-  display: flex;
+  display: none;
+  position: absolute;
   flex-direction: column;
   justify-content: center;
   background: #effffa;
   z-index: 1;
-  transform: translateX(100%);
   &.open {
-    transform: translateX(0);
+    display: flex;
     box-shadow: -10px 0px 10px 1px #aaaaaa;
   }
   height: 100%;
