@@ -1,13 +1,14 @@
+import React from 'react';
 import { useLocation, Route, Switch } from 'react-router-dom';
 import queryString from 'query-string';
 import Header from './components/Header';
 import { STUDENT_LOAN_TYPES } from './helpers/constants';
-import Mortgage from './containers/Mortgage';
 import Footer from './components/Footer';
 import IncomeTax from './containers/IncomeTax';
 import s from './App.module.scss';
 import ExtraInfo from './components/ExtraInfo';
 import 'react-popper-tooltip/dist/styles.css';
+const Mortgage = React.lazy(() => import('./containers/Mortgage'));
 
 const App = () => {
   const { search } = useLocation();
@@ -28,9 +29,9 @@ const App = () => {
       <Header className={s.header} />
       <div className={s.contentContainer}>
         <Switch>
-          <Route path='/mortgage'>
-            <Mortgage className={s.mortgage} />
-          </Route>
+          <Route path='/mortgage' render={() => <Mortgage />} />
+          {/* <Mortgage className={s.mortgage} /> */}
+          {/* </Route> */}
           <Route path='/'>
             <IncomeTax className={s.tax} {...initalState} />
             <ExtraInfo />
