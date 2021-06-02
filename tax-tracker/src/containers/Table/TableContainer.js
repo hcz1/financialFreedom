@@ -1,13 +1,14 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import classnames from 'classnames';
 import { useTable } from 'react-table';
 import { CSVLink } from 'react-csv';
+import { Pie } from 'react-chartjs-2';
 import TableComponent from '../../components/TableComponent/TableComponent';
+import Button from '../../components/Button';
 import { formatNumber } from '../../helpers/helpers';
 import { nationalInsurance, studentLoan, calculateIncomeTax } from '../../data';
 import { icons } from './Icons/Icons';
 import s from './style.module.scss';
-import Button from '../../components/Button';
 
 const Table = React.forwardRef(
   (
@@ -22,8 +23,10 @@ const Table = React.forwardRef(
     },
     ref
   ) => {
+    const [isPieChart, setIsPieChart] = useState(false);
     const pensionPercentage = pensionValue / 100;
     const adjustedSalary = (1 - pensionPercentage) * (value * multiplier);
+    const pensionAmount = pensionPercentage * (value * multiplier);
     const yearlySalary = value * multiplier;
     const country = scottish ? 'scotland' : 'england';
     const { rates, totalIncomeTaxable } = calculateIncomeTax({
@@ -144,15 +147,67 @@ const Table = React.forwardRef(
     ];
     return (
       <div ref={ref} className={classnames(s.tableBtnContainer, className)}>
-        <div className={s.tableContainer}>
-          <TableComponent
-            className={s.table}
-            icons={icons({ taxYear, country })}
-            {...tableInstance}
+        <Button
+          className={s.switchBtn}
+          onClick={() => {
+            setIsPieChart((prev) => !prev);
+          }}
+        >
+          Show {isPieChart ? 'Table' : 'Pie Chart'}
+        </Button>
+        {isPieChart ? (
+          <Pie
+            options={{
+              tooltips: {
+                callbacks: {
+                  label: ({ index }, { datasets: [{ data }], labels }) => {
+                    return `${labels[index]}: £${formatNumber(
+                      data[index].toFixed(2)
+                    )}`;
+                  },
+                },
+              },
+            }}
+            data={{
+              datasets: [
+                {
+                  data: [
+                    takeHome,
+                    totalTax,
+                    nationalInsuranceYearly,
+                    studentLoanType !== 'none' ? studentLoanYearly : undefined,
+                    pensionValue ? pensionAmount : undefined,
+                  ].filter(Boolean),
+                  borderColor: ['rgba(96, 219, 146, 0.150459)'],
+                  backgroundColor: [
+                    'rgb(96, 219, 146)',
+                    '#7960db',
+                    '#dbaa60',
+                    '#db6c60',
+                    '#DBCF60',
+                  ],
+                },
+              ],
+              labels: [
+                'Take Home',
+                'Yearly Tax',
+                'National Insurance',
+                studentLoanType !== 'none' ? 'Student Loan' : undefined,
+                pensionValue ? 'Pension' : undefined,
+              ].filter(Boolean),
+            }}
           />
-        </div>
+        ) : (
+          <div className={s.tableContainer}>
+            <TableComponent
+              className={s.table}
+              icons={icons({ taxYear, country })}
+              {...tableInstance}
+            />
+          </div>
+        )}
         <CSVLink data={csvData}>
-          <Button>Download CSV file</Button>
+          <Button className={s.csvBtn}>Download CSV file</Button>
         </CSVLink>
       </div>
     );
