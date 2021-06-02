@@ -2,7 +2,7 @@ import React, { useMemo, useState } from 'react';
 import classnames from 'classnames';
 import { useTable } from 'react-table';
 import { CSVLink } from 'react-csv';
-import { Pie } from 'react-chartjs-2';
+import PieChart from '../IncomeTax/pie-chart';
 import TableComponent from '../../components/TableComponent/TableComponent';
 import Button from '../../components/Button';
 import { formatNumber } from '../../helpers/helpers';
@@ -156,46 +156,14 @@ const Table = React.forwardRef(
           Show {isPieChart ? 'Table' : 'Pie Chart'}
         </Button>
         {isPieChart ? (
-          <Pie
-            options={{
-              tooltips: {
-                callbacks: {
-                  label: ({ index }, { datasets: [{ data }], labels }) => {
-                    return `${labels[index]}: £${formatNumber(
-                      data[index].toFixed(2)
-                    )}`;
-                  },
-                },
-              },
-            }}
-            data={{
-              datasets: [
-                {
-                  data: [
-                    takeHome,
-                    totalTax,
-                    nationalInsuranceYearly,
-                    studentLoanType !== 'none' ? studentLoanYearly : undefined,
-                    pensionValue ? pensionAmount : undefined,
-                  ].filter(Boolean),
-                  borderColor: ['rgba(96, 219, 146, 0.150459)'],
-                  backgroundColor: [
-                    'rgb(96, 219, 146)',
-                    '#7960db',
-                    '#dbaa60',
-                    '#db6c60',
-                    '#DBCF60',
-                  ],
-                },
-              ],
-              labels: [
-                'Take Home',
-                'Yearly Tax',
-                'National Insurance',
-                studentLoanType !== 'none' ? 'Student Loan' : undefined,
-                pensionValue ? 'Pension' : undefined,
-              ].filter(Boolean),
-            }}
+          <PieChart
+            takeHome={takeHome}
+            totalTax={totalTax}
+            nationalInsuranceYearly={nationalInsuranceYearly}
+            studentLoanType={studentLoanType}
+            studentLoanYearly={studentLoanYearly}
+            pensionValue={pensionValue}
+            pensionAmount={pensionAmount}
           />
         ) : (
           <div className={s.tableContainer}>
