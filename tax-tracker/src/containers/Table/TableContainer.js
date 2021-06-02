@@ -26,6 +26,7 @@ const Table = React.forwardRef(
     const [isPieChart, setIsPieChart] = useState(false);
     const pensionPercentage = pensionValue / 100;
     const adjustedSalary = (1 - pensionPercentage) * (value * multiplier);
+    const pensionAmount = pensionPercentage * (value * multiplier);
     const yearlySalary = value * multiplier;
     const country = scottish ? 'scotland' : 'england';
     const { rates, totalIncomeTaxable } = calculateIncomeTax({
@@ -159,8 +160,11 @@ const Table = React.forwardRef(
             options={{
               tooltips: {
                 callbacks: {
-                  label: ({ index }, { datasets: [{ data }] }) =>
-                    `£${formatNumber(data[index].toFixed(2))}`,
+                  label: ({ index }, { datasets: [{ data }], labels }) => {
+                    return `${labels[index]}: £${formatNumber(
+                      data[index].toFixed(2)
+                    )}`;
+                  },
                 },
               },
             }}
@@ -172,6 +176,7 @@ const Table = React.forwardRef(
                     totalTax,
                     nationalInsuranceYearly,
                     studentLoanType !== 'none' ? studentLoanYearly : undefined,
+                    pensionValue ? pensionAmount : undefined,
                   ].filter(Boolean),
                   borderColor: ['rgba(96, 219, 146, 0.150459)'],
                   backgroundColor: [
@@ -179,6 +184,7 @@ const Table = React.forwardRef(
                     '#7960db',
                     '#dbaa60',
                     '#db6c60',
+                    '#DBCF60',
                   ],
                 },
               ],
@@ -187,6 +193,7 @@ const Table = React.forwardRef(
                 'Yearly Tax',
                 'National Insurance',
                 studentLoanType !== 'none' ? 'Student Loan' : undefined,
+                pensionValue ? 'Pension' : undefined,
               ].filter(Boolean),
             }}
           />
